@@ -34,7 +34,6 @@ export default function AdminOrdersPage() {
   const [updatingOrderId, setUpdatingOrderId] = useState<string | null>(null)
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const router = useRouter()
   const { user } = useAuth()
 
   useEffect(() => {

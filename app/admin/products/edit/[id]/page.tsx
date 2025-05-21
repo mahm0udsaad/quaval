@@ -2,7 +2,7 @@
 
 import { useParams } from "next/navigation"
 import ProductForm from "../../components/product-form"
-
+export const dynamic = 'force-dynamic'
 export default function EditProductPage() {
   const params = useParams()
   const productId = Number.parseInt(params.id as string)

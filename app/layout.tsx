@@ -1,3 +1,4 @@
+import { AuthProvider } from "./[locale]/contexts/AuthContext"
 import "./globals.css"
 import type React from "react"
 
@@ -13,5 +14,9 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  return children;
+  return (
+    <AuthProvider>
+      {children}
+    </AuthProvider>
+  )
 }
