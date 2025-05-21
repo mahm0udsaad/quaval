@@ -9,6 +9,9 @@ import { type Banner, getBanners, createBanner, updateBanner, deleteBanner, uplo
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useToast } from "@/hooks/use-toast"
+import ProtectedRoute from "@/app/[locale]/components/ProtectedRoute"
+
+export const dynamic = 'force-dynamic'
 
 export default function BannersPage() {
   const [banners, setBanners] = useState<Banner[]>([])
@@ -96,86 +99,88 @@ export default function BannersPage() {
   }
 
   return (
-    <div>
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold">Banners Management</h1>
-        <div className="flex space-x-2">
-          <Button variant="outline" onClick={fetchBanners} disabled={isLoading}>
-            <RefreshCcw className={`w-4 h-4 mr-2 ${isLoading ? "animate-spin" : ""}`} />
-            Refresh
-          </Button>
-          <Button
-            onClick={() => {
-              setEditingBanner(null)
-              setIsModalOpen(true)
-            }}
-            disabled={isLoading}
-          >
-            <Plus className="w-5 h-5 mr-2" />
-            Add Banner
-          </Button>
+    <ProtectedRoute>
+      <div>
+        <div className="flex items-center justify-between mb-6">
+          <h1 className="text-2xl font-bold">Banners Management</h1>
+          <div className="flex space-x-2">
+            <Button variant="outline" onClick={fetchBanners} disabled={isLoading}>
+              <RefreshCcw className={`w-4 h-4 mr-2 ${isLoading ? "animate-spin" : ""}`} />
+              Refresh
+            </Button>
+            <Button
+              onClick={() => {
+                setEditingBanner(null)
+                setIsModalOpen(true)
+              }}
+              disabled={isLoading}
+            >
+              <Plus className="w-5 h-5 mr-2" />
+              Add Banner
+            </Button>
+          </div>
         </div>
-      </div>
 
-      {isLoading ? (
-        <div className="space-y-4">
-          {[...Array(3)].map((_, i) => (
-            <div key={i} className="bg-white rounded-lg shadow p-4">
-              <div className="flex items-center">
-                <Skeleton className="h-32 w-48" />
-                <div className="ml-4 space-y-2 flex-1">
-                  <Skeleton className="h-4 w-[250px]" />
-                  <Skeleton className="h-4 w-[200px]" />
+        {isLoading ? (
+          <div className="space-y-4">
+            {[...Array(3)].map((_, i) => (
+              <div key={i} className="bg-white rounded-lg shadow p-4">
+                <div className="flex items-center">
+                  <Skeleton className="h-32 w-48" />
+                  <div className="ml-4 space-y-2 flex-1">
+                    <Skeleton className="h-4 w-[250px]" />
+                    <Skeleton className="h-4 w-[200px]" />
+                  </div>
+                  <Skeleton className="h-10 w-20" />
                 </div>
-                <Skeleton className="h-10 w-20" />
               </div>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <div className="grid gap-6">
-          {banners.map((banner) => (
-            <div key={banner.id} className="bg-white rounded-lg shadow p-6">
-              <div className="flex items-start space-x-4">
-                <div className="relative h-32 w-48">
-                  <Image
-                    src={banner.image || "/placeholder.svg"}
-                    alt={banner.title}
-                    fill
-                    className="object-cover rounded-lg"
-                  />
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-lg font-semibold">{banner.title}</h3>
-                  <p className="text-gray-600 mt-1">{banner.description}</p>
-                  <div className="mt-2 text-sm text-gray-500">
-                    Button: {banner.button_text} → {banner.button_link}
+            ))}
+          </div>
+        ) : (
+          <div className="grid gap-6">
+            {banners.map((banner) => (
+              <div key={banner.id} className="bg-white rounded-lg shadow p-6">
+                <div className="flex items-start space-x-4">
+                  <div className="relative h-32 w-48">
+                    <Image
+                      src={banner.image || "/placeholder.svg"}
+                      alt={banner.title}
+                      fill
+                      className="object-cover rounded-lg"
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-lg font-semibold">{banner.title}</h3>
+                    <p className="text-gray-600 mt-1">{banner.description}</p>
+                    <div className="mt-2 text-sm text-gray-500">
+                      Button: {banner.button_text} → {banner.button_link}
+                    </div>
+                  </div>
+                  <div className="flex space-x-2">
+                    <button
+                      onClick={() => {
+                        setEditingBanner(banner)
+                        setIsModalOpen(true)
+                      }}
+                      className="text-blue-600 hover:text-blue-900"
+                    >
+                      <Pencil className="w-5 h-5" />
+                    </button>
+                    <button onClick={() => handleDelete(banner.id)} className="text-red-600 hover:text-red-900">
+                      <Trash2 className="w-5 h-5" />
+                    </button>
                   </div>
                 </div>
-                <div className="flex space-x-2">
-                  <button
-                    onClick={() => {
-                      setEditingBanner(banner)
-                      setIsModalOpen(true)
-                    }}
-                    className="text-blue-600 hover:text-blue-900"
-                  >
-                    <Pencil className="w-5 h-5" />
-                  </button>
-                  <button onClick={() => handleDelete(banner.id)} className="text-red-600 hover:text-red-900">
-                    <Trash2 className="w-5 h-5" />
-                  </button>
-                </div>
               </div>
-            </div>
-          ))}
-        </div>
-      )}
+            ))}
+          </div>
+        )}
 
-      {isModalOpen && (
-        <BannerModal banner={editingBanner} onClose={() => setIsModalOpen(false)} onSave={handleSaveBanner} />
-      )}
-    </div>
+        {isModalOpen && (
+          <BannerModal banner={editingBanner} onClose={() => setIsModalOpen(false)} onSave={handleSaveBanner} />
+        )}
+      </div>
+    </ProtectedRoute>
   )
 }
 
