@@ -6,10 +6,6 @@ import { useAuth } from "@/app/[locale]/contexts/AuthContext"
 import ProtectedRoute from "@/app/[locale]/components/ProtectedRoute"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Loader2 } from "lucide-react"
-// Add imports for the SQL components
-import { UserTablesSQL } from "@/app/admin/components/user-tables-sql"
-import { OrdersTableSQL } from "@/app/admin/components/orders-table-sql"
-import { NotificationsTableSQL } from "@/app/admin/components/notifications-table-sql"
 
 export default function AdminDashboardPage() {
   const { user, isLoading } = useAuth()
@@ -96,22 +92,6 @@ export default function AdminDashboardPage() {
             </div>
           </CardContent>
         </Card>
-
-        {/* Database Setup Tabs */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-          <Card>
-            <CardHeader>
-              <CardTitle>Database Setup</CardTitle>
-              <CardDescription>Set up your database tables and initial data</CardDescription>
-            </CardHeader>
-            <CardContent className="flex flex-col gap-4">
-              <UserTablesSQL />
-              <OrdersTableSQL />
-              <NotificationsTableSQL />
-            </CardContent>
-          </Card>
-          {/* Other cards... */}
-        </div>
       </div>
     </ProtectedRoute>
   )
