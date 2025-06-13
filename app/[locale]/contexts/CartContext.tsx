@@ -23,6 +23,7 @@ interface CartContextType {
   removeFromCart: (id: number) => void
   updateQuantity: (id: number, quantity: number) => void
   clearCart: () => void
+  clearCartFromSupabase: () => Promise<void>
 }
 
 // Initialize with default values
@@ -32,6 +33,7 @@ const CartContext = createContext<CartContextType>({
   removeFromCart: () => {},
   updateQuantity: () => {},
   clearCart: () => {},
+  clearCartFromSupabase: async () => {},
 })
 
 // Then update the CartProvider component to include saving to Supabase
@@ -55,6 +57,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const loadUserCart = async () => {
       if (user) {
+        console.log('🛒 [CART CONTEXT] Loading user cart for:', user.id)
         try {
           const { data, error } = await supabase
             .from("user_settings")
@@ -62,12 +65,19 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
             .eq("user_id", user.id)
             .single()
 
-          if (data && !error && data.cart_items) {
+          if (error) {
+            console.log('🛒 [CART CONTEXT] No existing user settings found:', error.message)
+            // User doesn't have settings yet, keep current cart
+          } else if (data && data.cart_items && Array.isArray(data.cart_items) && data.cart_items.length > 0) {
+            console.log('🛒 [CART CONTEXT] Found existing cart with', data.cart_items.length, 'items')
             setCartItemsState(data.cart_items)
             localStorage.setItem("cart", JSON.stringify(data.cart_items))
+          } else {
+            console.log('🛒 [CART CONTEXT] User has empty cart in database')
+            // User has empty cart in database, this is normal after checkout
           }
         } catch (error) {
-          console.error("Error loading user cart:", error)
+          console.error("🛒 [CART CONTEXT] Error loading user cart:", error)
         }
       }
     }
@@ -75,70 +85,77 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     loadUserCart()
   }, [user])
 
-  // Save cart to localStorage and Supabase
+  // Save cart to localStorage and Supabase (without updating state)
   const saveCart = async (items: CartItem[]) => {
-    setCartItemsState(items)
+    console.log('🛒 [CART CONTEXT] Saving cart:', items.length, 'items')
     localStorage.setItem("cart", JSON.stringify(items))
+    console.log('🛒 [CART CONTEXT] Cart saved to localStorage')
 
     // Save to Supabase if user is logged in
     if (user) {
+      console.log('🛒 [CART CONTEXT] User logged in, saving to Supabase')
       try {
-        // First check if the user already has a record
-        const { data, error: fetchError } = await supabase
+        // First try to update existing record
+        const { error: updateError } = await supabase
           .from("user_settings")
-          .select("id")
-          .eq("user_id", user.id)
-          .maybeSingle()
-
-        if (fetchError) {
-          console.error("Error checking user settings:", fetchError)
-          return
-        }
-
-        if (data) {
-          // Update existing record
-          const { error: updateError } = await supabase
-            .from("user_settings")
-            .update({
-              cart_items: items,
-              updated_at: new Date().toISOString(),
-            })
-            .eq("user_id", user.id)
-
-          if (updateError) {
-            console.error("Error updating user cart:", updateError)
-          }
-        } else {
-          // Insert new record
-          const { error: insertError } = await supabase.from("user_settings").insert({
-            user_id: user.id,
+          .update({
             cart_items: items,
             updated_at: new Date().toISOString(),
           })
+          .eq("user_id", user.id)
 
-          if (insertError) {
-            console.error("Error inserting user cart:", insertError)
+        if (updateError) {
+          console.log('🛒 [CART CONTEXT] Update failed, trying upsert:', updateError.message)
+          
+          // If update fails (no existing record), try upsert
+          const { error: upsertError } = await supabase
+            .from("user_settings")
+            .upsert({
+              user_id: user.id,
+              cart_items: items,
+              email_notifications: true,
+              marketing_emails: true,
+              updated_at: new Date().toISOString(),
+            })
+
+          if (upsertError) {
+            console.error("🛒 [CART CONTEXT] Error upserting user cart:", upsertError)
+          } else {
+            console.log('🛒 [CART CONTEXT] Cart upserted to Supabase successfully')
           }
+        } else {
+          console.log('🛒 [CART CONTEXT] Cart updated in Supabase successfully')
         }
       } catch (error) {
-        console.error("Error saving user cart:", error)
+        console.error("🛒 [CART CONTEXT] Error saving user cart:", error)
       }
+    } else {
+      console.log('🛒 [CART CONTEXT] No user logged in, skipping Supabase save')
     }
   }
 
   const addToCart = (product: CartItem) => {
+    console.log('🛒 [CART CONTEXT] Adding to cart:', product.name, 'quantity:', product.quantity)
+    
     setCartItemsState((prevItems) => {
+      console.log('🛒 [CART CONTEXT] Previous cart items:', prevItems.length)
+      
       const existingItem = prevItems.find((item) => item.id === product.id)
       let newItems
 
       if (existingItem) {
+        console.log('🛒 [CART CONTEXT] Item exists, updating quantity from', existingItem.quantity, 'to', existingItem.quantity + product.quantity)
         newItems = prevItems.map((item) =>
           item.id === product.id ? { ...item, quantity: item.quantity + product.quantity } : item,
         )
       } else {
+        console.log('🛒 [CART CONTEXT] New item, adding to cart')
         newItems = [...prevItems, product]
       }
 
+      console.log('🛒 [CART CONTEXT] New cart items:', newItems.length)
+      
+      // Save to storage and Supabase after state update
       saveCart(newItems)
       return newItems
     })
@@ -166,8 +183,37 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   }
 
   const clearCart = () => {
+    console.log('🛒 [CART CONTEXT] Clearing cart')
     setCartItemsState([])
-    saveCart([])
+    // Only clear localStorage, don't save empty cart to Supabase immediately
+    // This prevents interference with checkout process
+    localStorage.setItem("cart", JSON.stringify([]))
+  }
+
+  const clearCartFromSupabase = async () => {
+    console.log('🛒 [CART CONTEXT] Clearing cart from Supabase')
+    try {
+      if (user) {
+        console.log('🛒 [CART CONTEXT] User found, clearing Supabase cart for user:', user.id)
+        const { error } = await supabase
+          .from("user_settings")
+          .update({
+            cart_items: [],
+            updated_at: new Date().toISOString(),
+          })
+          .eq("user_id", user.id)
+          
+        if (error) {
+          console.error("🛒 [CART CONTEXT] Error clearing user cart:", error)
+        } else {
+          console.log('🛒 [CART CONTEXT] Supabase cart cleared successfully')
+        }
+      } else {
+        console.log('🛒 [CART CONTEXT] No user found, skipping Supabase clear')
+      }
+    } catch (error) {
+      console.error("🛒 [CART CONTEXT] Error clearing user cart:", error)
+    }
   }
 
   return (
@@ -178,6 +224,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         removeFromCart,
         updateQuantity,
         clearCart,
+        clearCartFromSupabase,
       }}
     >
       {children}

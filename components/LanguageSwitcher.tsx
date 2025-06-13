@@ -2,7 +2,7 @@
 
 import { useTranslation } from '@/hooks/useTranslation';
 import { useRouter, usePathname } from 'next/navigation';
-import Cookies from 'js-cookie';
+import  Cookies from 'js-cookie';
 import { 
   DropdownMenu,
   DropdownMenuContent,
@@ -33,7 +33,7 @@ export default function LanguageSwitcher() {
     
     // Navigate to the new path
     router.push(newPath);
-    router.refresh();
+    window.location.reload();
   };
   
   return (

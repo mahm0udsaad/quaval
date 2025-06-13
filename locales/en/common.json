@@ -231,6 +231,7 @@
     "whatHappensNext": "What Happens Next?",
     "orderConfirmation": "Order Confirmation",
     "emailConfirmation": "You will receive an email confirmation with your order details.",
+    "emailConfirmationSent": "Email confirmation has been sent to your inbox.",
     "orderProcessing": "Order Processing",
     "processingDescription": "Our team will process your order and prepare it for shipping.",
     "shipping": "Shipping",

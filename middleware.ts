@@ -13,6 +13,7 @@ function getLocale(request: NextRequest) {
   if (
     pathname.startsWith('/_next/') ||
     pathname.startsWith('/api/') ||
+    pathname.startsWith('/admin/') ||
     pathname.startsWith('/images/') ||
     pathname.includes('/favicon.') ||
     pathname.includes('.png') ||

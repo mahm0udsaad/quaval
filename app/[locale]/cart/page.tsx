@@ -27,6 +27,7 @@ import {
 } from "@/components/ui/tooltip"
 import { Badge } from "@/components/ui/badge"
 import { toast } from "@/components/ui/use-toast"
+import { useRouter } from "next/navigation"
 
 // Extend the CartItem interface with additional properties
 interface SavedItem {
@@ -49,6 +50,7 @@ export default function CartPage() {
   const [savedItems, setSavedItems] = useState<SavedItem[]>([])
   const [showRemoveConfirm, setShowRemoveConfirm] = useState<string | null>(null)
   const [recentlyUpdated, setRecentlyUpdated] = useState<string | null>(null)
+  const router = useRouter()
 
   // Calculate total in CAD first, then convert to selected currency
   const totalInCAD = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
@@ -63,9 +65,14 @@ export default function CartPage() {
 
   // Simulate checkout loading
   const handleCheckout = () => {
+    console.log('🛒 [CART] Starting checkout process')
+    console.log('🛒 [CART] Current cart items:', cartItems.length, 'items')
+    console.log('🛒 [CART] Cart items:', cartItems)
+    
     setLoading(true)
     setTimeout(() => {
-      window.location.href = "/checkout"
+      console.log('🛒 [CART] Navigating to checkout page')
+      router.push("/checkout")
     }, 800)
   }
 
@@ -518,15 +525,6 @@ export default function CartPage() {
                     <path d="M16 8V5L19 2L20 4L22 5L19 8H16ZM16 8L12 11.9999M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                   {t('cart.fastShipping')}
-                </div>
-              </div>
-              
-              <div className="flex justify-center mt-6">
-                <div className="flex gap-2">
-                  <Image src="/visa.svg" alt="Visa" width={32} height={20} />
-                  <Image src="/mastercard.svg" alt="Mastercard" width={32} height={20} />
-                  <Image src="/amex.svg" alt="American Express" width={32} height={20} />
-                  <Image src="/paypal.svg" alt="PayPal" width={32} height={20} />
                 </div>
               </div>
             </div>

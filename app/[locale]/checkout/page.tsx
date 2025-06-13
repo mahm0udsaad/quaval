@@ -1,6 +1,6 @@
 "use client"
 
-import type React from "react"
+import React from "react"
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
@@ -32,6 +32,24 @@ import Image from "next/image"
 import { StripeProvider } from "./stripe-provider"
 import { PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js"
 import { useTranslate } from "@/lib/i18n-client"
+import { sendOrderConfirmationEmail } from "@/lib/email/action"
+
+// CartItem interface for type safety
+interface CartItem {
+  id: number
+  name: string
+  partNumber?: string
+  price: number
+  quantity: number
+  image?: string
+}
+
+// Helper function to generate order number
+function generateOrderNumber(): string {
+  const timestamp = Date.now().toString()
+  const random = Math.random().toString(36).substring(2, 8).toUpperCase()
+  return `ORD-${timestamp.slice(-6)}${random}`
+}
 
 // Main checkout page component
 export default function CheckoutPage() {
@@ -54,6 +72,7 @@ export default function CheckoutPage() {
   })
   const [step, setStep] = useState(1) // 1: Information, 2: Payment
   const [profileLoaded, setProfileLoaded] = useState(false)
+  const [orderNumber, setOrderNumber] = useState<string>("")
 
   // Calculate total
   const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
@@ -66,6 +85,13 @@ export default function CheckoutPage() {
   const convertedShipping = convertPrice(shipping)
   const convertedTax = convertPrice(tax)
   const convertedTotal = convertPrice(total)
+
+  // Generate order number when component mounts
+  useEffect(() => {
+    if (!orderNumber) {
+      setOrderNumber(generateOrderNumber())
+    }
+  }, [orderNumber])
 
   // Load user profile data if logged in
   useEffect(() => {
@@ -616,6 +642,12 @@ export default function CheckoutPage() {
                             clientSecret={clientSecret}
                             email={email}
                             shippingAddress={shippingAddress}
+                            orderNumber={orderNumber}
+                            cartItems={cartItems}
+                            subtotal={subtotal}
+                            shipping={shipping}
+                            tax={tax}
+                            total={total}
                             onBack={handleBackToInformation}
                           />
                         </StripeProvider>
@@ -800,6 +832,12 @@ function CheckoutForm({
   clientSecret,
   email,
   shippingAddress,
+  orderNumber,
+  cartItems,
+  subtotal,
+  shipping,
+  tax,
+  total,
   onBack,
 }: {
   clientSecret: string
@@ -812,6 +850,12 @@ function CheckoutForm({
     postalCode: string
     country: string
   }
+  orderNumber: string
+  cartItems: CartItem[]
+  subtotal: number
+  shipping: number
+  tax: number
+  total: number
   onBack: () => void
 }) {
   const [isLoading, setIsLoading] = useState(false)
@@ -846,10 +890,13 @@ function CheckoutForm({
       return
     }
 
+    // Save shipping address to session storage for success page
+    sessionStorage.setItem("shippingAddress", JSON.stringify(shippingAddress))
+
     const { error: submitError } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: `${window.location.origin}/checkout/success`,
+        return_url: `${window.location.origin}/checkout/success?order=${orderNumber}`,
         payment_method_data: {
           billing_details: {
             name: shippingAddress.name,
@@ -865,12 +912,14 @@ function CheckoutForm({
         },
       },
     })
-
+    
+    console.log('submitError', submitError)
     if (submitError) {
       setError(submitError.message || t('checkout.error'))
+      setIsLoading(false)
     }
-
-    setIsLoading(false)
+    // Note: If payment succeeds, Stripe will redirect to success page
+    // The success page will handle email sending and cart clearing
   }
 
   return (
@@ -884,7 +933,13 @@ function CheckoutForm({
 
       <div className="mb-4">
         <div className="p-4 border rounded-md bg-white">
-          <PaymentElement className="payment-element" />
+          <PaymentElement 
+            className="payment-element" 
+            options={{
+              layout: 'tabs',
+              paymentMethodOrder: ['card'],
+            }}
+          />
         </div>
       </div>
 
