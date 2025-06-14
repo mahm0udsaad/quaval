@@ -95,7 +95,7 @@ export type OrderItem = {
 }
 
 export type Order = {
-  id: number
+  id: string
   user_id: string
   order_number: string
   status: OrderStatus
@@ -110,7 +110,14 @@ export type Order = {
     postal_code: string
     country: string
   }
-  items?: OrderItem[]
+  items: Array<{
+    id: string
+    name: string
+    price: number
+    quantity: number
+    partNumber?: string
+    image?: string
+  }>
 }
 
 export const AVAILABLE_COUNTRIES = [
@@ -424,16 +431,10 @@ export async function getUserOrders(userId: string): Promise<Order[]> {
   return data || []
 }
 
-export async function getOrderById(id: number): Promise<Order | null> {
+export async function getOrderById(id: string): Promise<Order | null> {
   const { data, error } = await supabase
     .from("orders")
-    .select(`
-      *,
-      items:order_items(
-        *,
-        product:products(*)
-      )
-    `)
+    .select("*")
     .eq("id", id)
     .single()
 

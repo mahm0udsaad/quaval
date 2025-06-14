@@ -2,8 +2,6 @@
 
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import { SeedDatabaseButton } from "./components/seed-database"
-import { SQLInstructionsModal } from "./components/sql-instructions-modal"
 import { Database, Loader2 } from "lucide-react"
 import { supabase } from "@/lib/supabase"
 
@@ -71,7 +69,6 @@ export default function AdminDashboard() {
             <Database className="mr-2 h-4 w-4" />
             SQL Setup
           </Button>
-          <SeedDatabaseButton />
         </div>
       </div>
 
@@ -133,7 +130,6 @@ export default function AdminDashboard() {
         </div>
       </div>
 
-      <SQLInstructionsModal open={showSqlModal} onClose={() => setShowSqlModal(false)} />
     </div>
   )
 }

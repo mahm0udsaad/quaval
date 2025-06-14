@@ -19,6 +19,22 @@ const getResources = (locale: string, namespace: string) => {
   }
 }
 
+// Custom localStorage detector for i18next
+const customDetector = {
+  name: 'customLocalStorage',
+  lookup() {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('preferredLanguage') || 'en'
+    }
+    return 'en'
+  },
+  cacheUserLanguage(lng: string) {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('preferredLanguage', lng)
+    }
+  }
+}
+
 i18next
   .use(initReactI18next)
   .use(LanguageDetector)
@@ -30,13 +46,17 @@ i18next
     defaultNS: 'common',
     fallbackNS: 'common',
     detection: {
-      order: ['path', 'htmlTag', 'cookie', 'navigator'],
+      order: ['customLocalStorage', 'path', 'htmlTag', 'cookie', 'navigator'],
       caches: ['cookie'],
+      lookupLocalStorage: 'preferredLanguage',
     },
     react: {
       useSuspense: false,
     },
   })
+
+// Add custom detector
+i18next.services.languageDetector.addDetector(customDetector)
 
 export function useTranslate() {
   const { t, i18n } = useTranslation()
@@ -48,7 +68,12 @@ export function useTranslate() {
   useEffect(() => {
     document.documentElement.lang = locale
     document.documentElement.dir = 'ltr'
-  }, [locale])
+    
+    // Sync i18next language with current locale
+    if (i18n.language !== locale) {
+      i18n.changeLanguage(locale)
+    }
+  }, [locale, i18n])
 
   // Change language
   const changeLanguage = useCallback((language: Language) => {
@@ -58,17 +83,26 @@ export function useTranslate() {
     // If the language is already selected, do nothing
     if (language === currentLang) return
 
-    // Get the pathname without the locale
-    const pathWithoutLocale = pathname.replace(`/${currentLang}`, '') || '/'
-    
-    // Build the new path with the new locale
-    const newPath = `/${language}${pathWithoutLocale}`
-    
-    // Change the language
-    i18n.changeLanguage(language)
-    
-    // Navigate to the new path
-    router.push(newPath)
+    try {
+      // Save to localStorage
+      localStorage.setItem('preferredLanguage', language)
+      
+      // Change the i18next language
+      i18n.changeLanguage(language)
+
+      // Get the pathname without the locale
+      const pathWithoutLocale = pathname.replace(`/${currentLang}`, '') || '/'
+      
+      // Build the new path with the new locale
+      const newPath = `/${language}${pathWithoutLocale}`
+      
+      // Navigate to the new path
+      router.push(newPath)
+      
+      console.log(`Language changed to: ${language}`)
+    } catch (error) {
+      console.error('Error changing language:', error)
+    }
   }, [locale, router, i18n])
 
   return {

@@ -26,8 +26,10 @@ export default function OrderDetailsPage({ params }: { params: { id: string } })
 
       try {
         setIsLoading(true)
-        const orderId = Number.parseInt(params.id)
-        if (isNaN(orderId)) {
+        const orderId = params.id
+        
+        // Validate UUID format (basic check)
+        if (!orderId || orderId.length < 10) {
           setError("Invalid order ID")
           return
         }
@@ -111,13 +113,13 @@ export default function OrderDetailsPage({ params }: { params: { id: string } })
                     <div>
                       <h3 className="text-lg font-medium mb-3">Items</h3>
                       <div className="space-y-4">
-                        {order.items?.map((item) => (
-                          <div key={item.id} className="flex items-start space-x-4">
+                        {order.items?.map((item, index) => (
+                          <div key={item.id || index} className="flex items-start space-x-4">
                             <div className="h-20 w-20 relative flex-shrink-0 bg-gray-100 rounded-md overflow-hidden">
-                              {item.product?.images?.[0] ? (
+                              {item.image ? (
                                 <Image
-                                  src={item.product.images[0] || "/placeholder.svg"}
-                                  alt={item.product.part_number}
+                                  src={item.image || "/placeholder.svg"}
+                                  alt={item.partNumber || item.name}
                                   fill
                                   className="object-cover"
                                 />
@@ -129,12 +131,10 @@ export default function OrderDetailsPage({ params }: { params: { id: string } })
                             </div>
                             <div className="flex-1">
                               <h4 className="font-medium">
-                                <Link href={`/products/${item.product_id}`} className="hover:underline">
-                                  {item.product?.part_number || "Product"}
-                                </Link>
+                                {item.name}
                               </h4>
                               <p className="text-sm text-gray-500">
-                                {item.product?.family_brand} {item.product?.family_name}
+                                {item.partNumber && `Part #: ${item.partNumber}`}
                               </p>
                               <div className="flex justify-between mt-1">
                                 <p className="text-sm">Qty: {item.quantity}</p>
@@ -150,15 +150,15 @@ export default function OrderDetailsPage({ params }: { params: { id: string } })
 
                     <div className="flex justify-between text-sm">
                       <span>Subtotal</span>
-                      <span>${(order.total * 0.9).toFixed(2)}</span>
+                      <span>${(order.items?.reduce((sum, item) => sum + (item.price * item.quantity), 0) || 0).toFixed(2)}</span>
                     </div>
                     <div className="flex justify-between text-sm">
                       <span>Shipping</span>
-                      <span>$0.00</span>
+                      <span>$15.00</span>
                     </div>
                     <div className="flex justify-between text-sm">
-                      <span>Tax</span>
-                      <span>${(order.total * 0.1).toFixed(2)}</span>
+                      <span>Tax (HST)</span>
+                      <span>${((order.items?.reduce((sum, item) => sum + (item.price * item.quantity), 0) || 0) * 0.13).toFixed(2)}</span>
                     </div>
                     <Separator />
                     <div className="flex justify-between font-medium">
@@ -183,7 +183,7 @@ export default function OrderDetailsPage({ params }: { params: { id: string } })
                     <p className="font-medium">{order.shipping_address.name}</p>
                     <p>{order.shipping_address.address}</p>
                     <p>
-                      {order.shipping_address.city}, {order.shipping_address.state} {order.shipping_address.postal_code}
+                      {order.shipping_address.city}, {order.shipping_address.state} {order.shipping_address.postalCode}
                     </p>
                     <p>{order.shipping_address.country}</p>
                   </div>

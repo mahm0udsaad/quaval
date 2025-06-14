@@ -32,7 +32,6 @@ import Image from "next/image"
 import { StripeProvider } from "./stripe-provider"
 import { PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js"
 import { useTranslate } from "@/lib/i18n-client"
-import { sendOrderConfirmationEmail } from "@/lib/email/action"
 
 // CartItem interface for type safety
 interface CartItem {

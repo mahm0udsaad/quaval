@@ -8,7 +8,6 @@ import Link from "next/link"
 import { Card, CardContent } from "@/components/ui/card"
 import { useAuth } from "@/app/[locale]/contexts/AuthContext"
 import { useCart } from "@/app/[locale]/contexts/CartContext"
-import { useCurrency } from "@/app/[locale]/contexts/CurrencyContext"
 import { supabase } from "@/lib/supabase"
 import { useTranslate } from "@/lib/i18n-client"
 import { sendOrderConfirmationEmail } from "@/lib/email/action"
@@ -40,39 +39,97 @@ export default function CheckoutSuccessPage() {
   const { t } = useTranslate()
   const { user } = useAuth()
   const { cartItems, clearCart, clearCartFromSupabase } = useCart()
-  const { selectedCurrency, convertPrice } = useCurrency()
 
   useEffect(() => {
-    // Use order from URL or generate a new one
-    const finalOrderNumber = order || Math.random().toString(36).substring(2, 8).toUpperCase()
-    setOrderNumber(finalOrderNumber)
+    console.log('🔄 Single useEffect triggered with:', {
+      hasOrder: !!order,
+      hasUser: !!user,
+      cartItemsCount: cartItems.length,
+      orderProcessed,
+      processingRefCurrent: processingRef.current
+    })
 
-    // Check if this order has already been processed
-    const processedOrders = sessionStorage.getItem('processedOrders')
-    const processedOrdersList = processedOrders ? JSON.parse(processedOrders) : []
-    
-    if (processedOrdersList.includes(finalOrderNumber)) {
-      console.log('🚀 Order already processed:', finalOrderNumber)
-      setOrderProcessed(true)
-      return
+    // STEP 1: Component initialization and cleanup (runs once on mount)
+    if (!processingRef.current && !orderProcessed) {
+      console.log('🧹 Initializing component and cleaning up stale data')
+      
+      // Reset processing flags when component mounts
+      processingRef.current = false
+      setOrderProcessed(false)
+      
+      // Clean up old processed orders from sessionStorage
+      try {
+        const processedOrders = sessionStorage.getItem('processedOrders')
+        if (processedOrders) {
+          const ordersList = JSON.parse(processedOrders)
+          // Keep only recent orders (this is a simple cleanup)
+          if (ordersList.length > 10) {
+            const recentOrders = ordersList.slice(-5) // Keep last 5 orders
+            sessionStorage.setItem('processedOrders', JSON.stringify(recentOrders))
+          }
+        }
+      } catch (error) {
+        console.log('Error cleaning up processed orders:', error)
+        sessionStorage.removeItem('processedOrders')
+      }
     }
 
-    // Process the successful order only once
+    // STEP 2: Order number handling
+    let finalOrderNumber = order
+    
+    if (!finalOrderNumber) {
+      // Generate a new order number if not in URL
+      finalOrderNumber = `ORD-${Date.now().toString(36).toUpperCase()}${Math.random().toString(36).substring(2, 8).toUpperCase()}`
+      console.log('🆕 Generated new order number:', finalOrderNumber)
+    } else {
+      console.log('🔗 Using order number from URL:', finalOrderNumber)
+    }
+    
+    setOrderNumber(finalOrderNumber)
+    console.log('🎯 Order number set:', finalOrderNumber)
+
+    // STEP 3: Order processing logic
+    // Only process if we have user, cart items, and haven't processed yet
     if (user && cartItems.length > 0 && !orderProcessed && !processingRef.current) {
-      console.log('🚀 Processing new order:', finalOrderNumber)
-      setOrderProcessed(true) // Set flag immediately to prevent duplicate calls
-      processingRef.current = true // Set ref to prevent React Strict Mode issues
+      console.log('✅ All conditions met for order processing:', finalOrderNumber)
       
-      // Mark order as processed
+      // Set processing flags immediately to prevent any race conditions
+      console.log('🔒 Setting processing flags to prevent duplicates')
+      setOrderProcessed(true)
+      processingRef.current = true
+      
+      // Check sessionStorage for already processed orders
+      const processedOrders = sessionStorage.getItem('processedOrders')
+      const processedOrdersList = processedOrders ? JSON.parse(processedOrders) : []
+      
+      if (processedOrdersList.includes(finalOrderNumber)) {
+        console.log('🚀 Order already processed in session:', finalOrderNumber)
+        return
+      }
+      
+      // Mark as processed in session immediately
       processedOrdersList.push(finalOrderNumber)
       sessionStorage.setItem('processedOrders', JSON.stringify(processedOrdersList))
+      console.log('📝 Marked order as processed in session:', finalOrderNumber)
       
+      // Process the order
+      console.log('🚀 Starting order processing:', finalOrderNumber)
       processSuccessfulOrder(finalOrderNumber)
-    } else if (cartItems.length === 0) {
-      // Cart is already empty, just set the order number
-      console.log('Cart already empty, order may have been processed')
+    } else {
+      console.log('❌ Conditions not met for processing:', {
+        hasUser: !!user,
+        hasCartItems: cartItems.length > 0,
+        notProcessed: !orderProcessed,
+        refNotProcessing: !processingRef.current
+      })
+      
+      if (cartItems.length === 0) {
+        console.log('Cart already empty, order may have been processed')
+      } else if (orderProcessed) {
+        console.log('Order already processed, skipping')
+      }
     }
-  }, [order, user, cartItems, orderProcessed])
+  }, [user, cartItems, order]) // Minimal dependencies for optimal performance
 
   const processSuccessfulOrder = async (orderNum: string) => {
     try {
@@ -105,40 +162,64 @@ export default function CheckoutSuccessPage() {
       }
 
       console.log('📍 Shipping address found:', shippingAddress.name, shippingAddress.city)
-      console.log('📍 Full shipping address details:', {
-        name: shippingAddress.name,
-        address: shippingAddress.address,
-        city: shippingAddress.city,
-        state: shippingAddress.state,
-        postalCode: shippingAddress.postalCode,
-        country: shippingAddress.country
-      })
 
-      // Save order to database
+      // Save order to database with proper order_number
       console.log('💾 Saving order to database...')
-      const { data: orderData, error: orderError } = await supabase
-        .from("orders")
-        .insert({
-          user_id: user.id,
-          status: "confirmed",
-          total: total,
-          items: cartItems,
-          order_number: orderNum,
-          shipping_address: shippingAddress,
-          created_at: new Date().toISOString(),
-        })
-        .select()
-        .single()
+      
+      // Use upsert-like logic to prevent duplicates
+      try {
+        // First, try to insert the order
+        const { data: orderData, error: orderError } = await supabase
+          .from("orders")
+          .insert({
+            user_id: user.id,
+            user_email: user.email,
+            status: "pending",
+            total: total,
+            items: cartItems,
+            order_number: orderNum,
+            shipping_address: shippingAddress,
+            created_at: new Date().toISOString(),
+          })
+          .select()
+          .single()
 
-      if (orderError) {
-        console.error("❌ Error saving order:", orderError)
-      } else {
-        console.log("✅ Order saved successfully:", orderData?.id)
+        if (orderError) {
+          // Check if it's a duplicate key error (order already exists)
+          if (orderError.code === '23505' || orderError.message.includes('duplicate')) {
+            console.log('✅ Order already exists in database (duplicate key):', orderNum)
+            // Fetch the existing order
+            const { data: existingOrder } = await supabase
+              .from("orders")
+              .select("id, order_number")
+              .eq("order_number", orderNum)
+              .single()
+            
+            if (existingOrder) {
+              console.log('✅ Found existing order:', existingOrder.order_number)
+            }
+          } else {
+            console.error("❌ Error saving order:", orderError)
+            console.error("❌ Full error details:", {
+              message: orderError.message,
+              code: orderError.code,
+              details: orderError.details,
+              hint: orderError.hint
+            })
+            throw orderError // Re-throw non-duplicate errors
+          }
+        } else {
+          console.log("✅ Order saved successfully:", orderData?.id)
+          console.log("✅ Order number in database:", orderData?.order_number)
+        }
+      } catch (dbError) {
+        console.error("❌ Database operation failed:", dbError)
+        // Continue with email sending even if database save fails
       }
 
-      // Send confirmation email with detailed logging
+      // Send confirmation email with real order data
       console.log('📧 Starting email sending process...')
-      
+
       // Check if email was already sent for this order
       const sentEmails = sessionStorage.getItem('sentEmails')
       const sentEmailsList = sentEmails ? JSON.parse(sentEmails) : []
@@ -148,12 +229,19 @@ export default function CheckoutSuccessPage() {
         setEmailSent(true)
       } else {
         try {
+          console.log('📧 Preparing email with REAL order data...')
           console.log('📧 Email recipient:', user.email)
-          console.log('📧 Order details for email:', {
+          console.log('📧 Real order details for email:', {
             orderNumber: orderNum,
             customerName: shippingAddress.name,
             itemCount: cartItems.length,
-            total: total
+            total: total,
+            realItems: cartItems.map(item => ({
+              name: item.name,
+              partNumber: item.partNumber,
+              price: item.price,
+              quantity: item.quantity
+            }))
           })
 
           const emailResult = await sendOrderConfirmationEmail({
@@ -185,6 +273,7 @@ export default function CheckoutSuccessPage() {
 
           if (emailResult.success) {
             console.log('✅ Order confirmation email sent successfully to:', user.email)
+            console.log('✅ Email contained real order data for order:', orderNum)
             setEmailSent(true)
             
             // Mark email as sent for this order

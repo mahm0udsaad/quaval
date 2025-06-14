@@ -26,7 +26,7 @@ let stripe: Stripe | null = null
 try {
   if (stripeSecretKey) {
     stripe = new Stripe(stripeSecretKey, {
-      apiVersion: "2023-10-16",
+      apiVersion: "2025-04-30.basil",
     })
   }
 } catch (error) {
@@ -63,38 +63,18 @@ export async function createPaymentIntent(
     const tax = Math.round(amount * 0.13) // 13% tax
     const totalAmount = amount + shipping + tax
 
-    // Create a new order in the database
-    let orderId: string | undefined
-
-    if (userId) {
-      const { data, error } = await supabase
-        .from("orders")
-        .insert({
-          user_id: userId,
-          items: cartItems,
-          status: "pending",
-          total: totalAmount / 100, // Convert back to dollars
-          created_at: new Date().toISOString(),
-          shipping_info: shippingAddress, // Store shipping information
-          updated_at: new Date().toISOString(),
-        })
-        .select("id")
-        .single()
-
-      if (error) {
-        console.error("Error creating order:", error)
-      } else {
-        orderId = data.id
-      }
-    }
+    // DO NOT create order here - orders should only be created after successful payment
+    // The success page will handle order creation with proper order numbers
 
     // Create a payment intent
     const paymentIntent = await stripe.paymentIntents.create({
       amount: totalAmount,
       currency: "cad",
       metadata: {
-        orderId: orderId || "guest-order",
         userId: userId || "guest",
+        // Store cart and shipping data in metadata for success page
+        cartItems: JSON.stringify(cartItems),
+        ...(shippingAddress && { shippingAddress: JSON.stringify(shippingAddress) }),
       },
       receipt_email: email,
       automatic_payment_methods: {
@@ -151,30 +131,8 @@ export async function createCheckoutSession(
       quantity: item.quantity,
     }))
 
-    // Create a new order in the database
-    let orderId: string | undefined
-
-    if (userId) {
-      const { data, error } = await supabase
-        .from("orders")
-        .insert({
-          user_id: userId,
-          items: cartItems,
-          status: "pending",
-          total: cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0),
-          created_at: new Date().toISOString(),
-          shipping_info: shippingAddress, // Store shipping information
-          updated_at: new Date().toISOString(),
-        })
-        .select("id")
-        .single()
-
-      if (error) {
-        console.error("Error creating order:", error)
-      } else {
-        orderId = data.id
-      }
-    }
+    // DO NOT create order here - orders should only be created after successful payment
+    // The success page will handle order creation with proper order numbers
 
     // Get the site URL with fallback
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
@@ -187,7 +145,9 @@ export async function createCheckoutSession(
       success_url: `${siteUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${siteUrl}/checkout/cancel`,
       metadata: {
-        orderId: orderId || "guest-order",
+        userId: userId || "guest",
+        cartItems: JSON.stringify(cartItems),
+        ...(shippingAddress && { shippingAddress: JSON.stringify(shippingAddress) }),
       },
       customer_email: email,
       shipping_address_collection: {

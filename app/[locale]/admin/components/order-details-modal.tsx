@@ -17,8 +17,10 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
-import { Loader2, Mail, Package } from "lucide-react"
+import { Loader2, Mail, Package, Truck, Send } from "lucide-react"
 import { supabase } from "@/lib/supabase"
+import { getOrderStatusUpdateTemplate, OrderStatusUpdateData } from "@/lib/email/template"
+import { sendOrderStatusUpdateEmail } from "@/lib/email/action"
 
 type OrderDetailsModalProps = {
   order: any
@@ -27,101 +29,61 @@ type OrderDetailsModalProps = {
   onStatusChange: (orderId: string, newStatus: string) => Promise<void>
 }
 
-const emailTemplates = {
-  pending: `Dear Customer,
-
-Thank you for your order #{{orderNumber}}. We have received your order and are processing it. 
-You will receive another email once your order has been processed.
-
-Best regards,
-Quaval Bearings Team`,
-
-  processing: `Dear Customer,
-
-Your order #{{orderNumber}} is now being processed. We are preparing your items for shipment.
-You will receive a notification once your order has been shipped.
-
-Best regards,
-Quaval Bearings Team`,
-
-  shipped: `Dear Customer,
-
-Great news! Your order #{{orderNumber}} has been shipped and is on its way to you.
-You can track your package using the following tracking number: {{trackingNumber}}
-
-Estimated delivery date: {{estimatedDelivery}}
-
-Best regards,
-Quaval Bearings Team`,
-
-  delivered: `Dear Customer,
-
-Your order #{{orderNumber}} has been delivered. We hope you are satisfied with your purchase.
-If you have any questions or concerns, please don't hesitate to contact us.
-
-We would appreciate if you could take a moment to review your purchase.
-
-Best regards,
-Quaval Bearings Team`,
-
-  cancelled: `Dear Customer,
-
-Your order #{{orderNumber}} has been cancelled as requested.
-If you have any questions or would like to place a new order, please contact our customer service.
-
-Best regards,
-Quaval Bearings Team`,
-}
-
 export function OrderDetailsModal({ order, isOpen, onOpenChange, onStatusChange }: OrderDetailsModalProps) {
-  const [emailSubject, setEmailSubject] = useState(`Update on your order #${order?.id?.slice(-6).toUpperCase()}`)
+  const [emailSubject, setEmailSubject] = useState(`Update on your order #${order?.order_number || order?.id?.slice(-6).toUpperCase()}`)
   const [emailBody, setEmailBody] = useState("")
-  const [trackingNumber, setTrackingNumber] = useState("")
+  const [awbNumber, setAwbNumber] = useState(order?.awb_number || "")
   const [estimatedDelivery, setEstimatedDelivery] = useState("")
   const [isSending, setIsSending] = useState(false)
   const [emailSent, setEmailSent] = useState(false)
   const [updatingStatus, setUpdatingStatus] = useState(false)
   const [selectedStatus, setSelectedStatus] = useState(order?.status || "pending")
   const [userEmail, setUserEmail] = useState<string | null>(null)
+  const [isUpdatingAwb, setIsUpdatingAwb] = useState(false)
 
-  // Format the shipping address from shipping_info
-  const shippingAddress = order?.shipping_info
-    ? typeof order.shipping_info === "string"
-      ? JSON.parse(order.shipping_info)
-      : order.shipping_info
+  // Format the shipping address from shipping_address
+  const shippingAddress = order?.shipping_address
+    ? typeof order.shipping_address === "string"
+      ? JSON.parse(order.shipping_address)
+      : order.shipping_address
     : null
 
-  // Fetch user email when modal opens
+  // Set user email from order data when modal opens
   useEffect(() => {
-    const fetchUserEmail = async () => {
-      if (order?.user_id && isOpen) {
-        const { data, error } = await supabase.from("profiles").select("email").eq("id", order.user_id).single()
+    if (isOpen && order?.user_email) {
+      setUserEmail(order.user_email)
+    }
+  }, [isOpen, order?.user_email])
 
-        if (!error && data) {
-          setUserEmail(data.email)
-        } else {
-          // Try to get from auth.users as fallback
-          const { data: userData, error: userError } = await supabase.auth.admin.getUserById(order.user_id)
-          if (!userError && userData?.user) {
-            setUserEmail(userData.user.email)
-          }
-        }
+  // Generate email template based on status
+  const generateEmailTemplate = (status: string) => {
+    if (!order) return ""
+
+    const orderData: OrderStatusUpdateData = {
+      customerName: shippingAddress?.name || "Valued Customer",
+      orderNumber: order.order_number || order.id?.slice(-6).toUpperCase() || "",
+      orderDate: new Date(order.created_at).toLocaleDateString(),
+      orderStatus: status.charAt(0).toUpperCase() + status.slice(1) as 'Processing' | 'Shipped' | 'Delivered',
+      items: order.cart?.map((item: any) => ({
+        name: item.name || item.title || "Product",
+        model: item.partNumber || item.model || "",
+        quantity: item.quantity || 1,
+        innerDiameter: item.innerDiameter || "",
+        outerDiameter: item.outerDiameter || "",
+      })) || [],
+      trackingInfo: awbNumber ? {
+        number: awbNumber,
+        url: `https://track.example.com/${awbNumber}` // Replace with actual tracking URL
+      } : undefined,
+      estimatedDelivery: estimatedDelivery || "3-5 business days",
+      progress: {
+        processing: status === "processing" || status === "shipped" || status === "delivered",
+        shipped: status === "shipped" || status === "delivered",
+        delivered: status === "delivered"
       }
     }
 
-    fetchUserEmail()
-  }, [order?.user_id, isOpen])
-
-  // Handle email template selection
-  const handleTemplateSelect = (status: string) => {
-    let template = emailTemplates[status as keyof typeof emailTemplates] || ""
-
-    // Replace placeholders
-    template = template.replace(/{{orderNumber}}/g, order?.id?.slice(-6).toUpperCase() || "")
-    template = template.replace(/{{trackingNumber}}/g, trackingNumber || "[Add Tracking Number]")
-    template = template.replace(/{{estimatedDelivery}}/g, estimatedDelivery || "[Add Estimated Delivery Date]")
-
-    setEmailBody(template)
+    return getOrderStatusUpdateTemplate(orderData)
   }
 
   // Handle status change
@@ -131,38 +93,81 @@ export function OrderDetailsModal({ order, isOpen, onOpenChange, onStatusChange 
     await onStatusChange(order.id, newStatus)
     setUpdatingStatus(false)
 
-    // Auto-select email template for the new status
-    handleTemplateSelect(newStatus)
+    // Auto-generate email template for the new status
+    const template = generateEmailTemplate(newStatus)
+    setEmailBody(template)
+    setEmailSubject(`Your order #${order?.order_number || order?.id?.slice(-6).toUpperCase()} has been ${newStatus}`)
+  }
+
+  // Update AWB number
+  const handleAwbUpdate = async () => {
+    if (!awbNumber.trim()) return
+
+    setIsUpdatingAwb(true)
+    try {
+      const { error } = await supabase
+        .from("orders")
+        .update({ awb_number: awbNumber })
+        .eq("id", order.id)
+
+      if (error) {
+        console.error("Error updating AWB number:", error)
+      } else {
+        // Update local state if needed
+        console.log("AWB number updated successfully")
+      }
+    } catch (err) {
+      console.error("Error updating AWB number:", err)
+    } finally {
+      setIsUpdatingAwb(false)
+    }
   }
 
   // Send email function
-  const sendEmail = async () => {
+  const sendEmailNotification = async () => {
+    if (!userEmail) {
+      console.error("No email address available")
+      return
+    }
+
     setIsSending(true)
 
     try {
-      // In a real application, you would send the email here
-      // For now, we'll just simulate a delay
-      await new Promise((resolve) => setTimeout(resolve, 1500))
-
-      // Log the email details
-      console.log("Email sent:", {
-        to: userEmail || order.user_email,
-        subject: emailSubject,
-        body: emailBody,
-      })
-
-      // Create a notification for the user
-      if (order.user_id) {
-        await supabase.from("notifications").insert({
-          user_id: order.user_id,
-          message: `We sent you an email about your order #${order.id.slice(-6).toUpperCase()}`,
-          type: "info",
-          read: false,
-        })
+      const emailData = {
+        email: userEmail,
+        customerName: shippingAddress?.name || "Valued Customer",
+        orderNumber: order.order_number || order.id?.slice(-6).toUpperCase() || "",
+        orderDate: new Date(order.created_at).toLocaleDateString(),
+        orderStatus: selectedStatus.charAt(0).toUpperCase() + selectedStatus.slice(1),
+        awbNumber: awbNumber || undefined,
+        estimatedDelivery: estimatedDelivery || "3-5 business days",
+        items: order.cart?.map((item: any) => ({
+          name: item.name || item.title || "Product",
+          partNumber: item.partNumber || item.model || "",
+          quantity: item.quantity || 1,
+          innerDiameter: item.innerDiameter || "",
+          outerDiameter: item.outerDiameter || "",
+        })) || []
       }
+      
+      const result = await sendOrderStatusUpdateEmail(emailData)
+      
+      if (result.success) {
+        // Create a notification for the user
+        if (order.user_id) {
+          await supabase.from("notifications").insert({
+            user_id: order.user_id,
+            message: `We sent you an email about your order #${order.order_number || order.id?.slice(-6).toUpperCase()}`,
+            type: "info",
+            read: false,
+          })
+        }
 
-      setEmailSent(true)
-      setTimeout(() => setEmailSent(false), 3000)
+        setEmailSent(true)
+        setTimeout(() => setEmailSent(false), 3000)
+      } else {
+        console.error("Failed to send email:", result.error)
+      }
     } catch (error) {
       console.error("Error sending email:", error)
     } finally {
@@ -170,39 +175,71 @@ export function OrderDetailsModal({ order, isOpen, onOpenChange, onStatusChange 
     }
   }
 
+  // Initialize email template when modal opens
+  useEffect(() => {
+    if (isOpen && order) {
+      const template = generateEmailTemplate(selectedStatus)
+      setEmailBody(template)
+      setAwbNumber(order.awb_number || "")
+    }
+  }, [isOpen, order, selectedStatus])
+
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Order #{order?.id?.slice(-6).toUpperCase()}</DialogTitle>
+          <DialogTitle>Order #{order?.order_number || order?.id?.slice(-6).toUpperCase()}</DialogTitle>
           <DialogDescription>
-            Placed on {new Date(order?.created_at).toLocaleString()} by {order?.user_email || "Guest"}
+            Placed on {new Date(order?.created_at).toLocaleString()} by {order?.user_email || userEmail || "Guest"}
           </DialogDescription>
         </DialogHeader>
 
         <Tabs defaultValue="details">
-          <TabsList className="grid w-full grid-cols-3">
+          <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="details">Order Details</TabsTrigger>
             <TabsTrigger value="shipping">Shipping Info</TabsTrigger>
+            <TabsTrigger value="tracking">AWB & Tracking</TabsTrigger>
             <TabsTrigger value="email">Send Email</TabsTrigger>
           </TabsList>
 
           <TabsContent value="details">
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg">Order Items</CardTitle>
+                <CardTitle className="text-lg flex items-center gap-2">
+                  <Package className="h-5 w-5" />
+                  Order Items
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {order?.items && order.items.length > 0 ? (
+                  {order?.cart && order.cart.length > 0 ? (
                     <div className="border rounded-md divide-y">
-                      {order.items.map((item: any, index: number) => (
-                        <div key={index} className="p-3 flex justify-between items-center">
-                          <div>
-                            <p className="font-medium">{item.name}</p>
-                            <p className="text-sm text-gray-500">Qty: {item.quantity}</p>
+                      {order.cart.map((item: any, index: number) => (
+                        <div key={index} className="p-4 flex justify-between items-center">
+                          <div className="flex items-center space-x-4">
+                            {item.image && (
+                              <img 
+                                src={item.image} 
+                                alt={item.name || item.title} 
+                                className="w-12 h-12 object-cover rounded"
+                              />
+                            )}
+                            <div>
+                              <h4 className="font-medium">{item.name || item.title}</h4>
+                              <p className="text-sm text-gray-500">
+                                Part: {item.partNumber} | Qty: {item.quantity}
+                              </p>
+                              {(item.innerDiameter || item.outerDiameter) && (
+                                <p className="text-sm text-gray-500">
+                                  Inner Ø: {item.innerDiameter} | Outer Ø: {item.outerDiameter}
+                                </p>
+                              )}
+                            </div>
                           </div>
-                          <p className="font-medium">${(item.price * item.quantity).toFixed(2)}</p>
+                          <div className="text-right">
+                            <p className="font-medium">${(item.price * item.quantity).toFixed(2)}</p>
+                            <p className="text-sm text-gray-500">${item.price.toFixed(2)} each</p>
+                          </div>
                         </div>
                       ))}
                     </div>
@@ -210,44 +247,50 @@ export function OrderDetailsModal({ order, isOpen, onOpenChange, onStatusChange 
                     <p className="text-gray-500">No items found</p>
                   )}
 
-                  <div className="pt-4 border-t">
-                    <div className="flex justify-between">
-                      <p className="font-medium">Total</p>
-                      <p className="font-bold">${order?.total?.toFixed(2)}</p>
+                  <div className="border-t pt-4">
+                    <div className="flex justify-between items-center mb-2">
+                      <span>Subtotal:</span>
+                      <span>${((order?.total || 0) - (order?.shipping || 0) - (order?.tax || 0)).toFixed(2)}</span>
+                    </div>
+                    <div className="flex justify-between items-center mb-2">
+                      <span>Shipping:</span>
+                      <span>${(order?.shipping || 0).toFixed(2)}</span>
+                    </div>
+                    <div className="flex justify-between items-center mb-2">
+                      <span>Tax:</span>
+                      <span>${(order?.tax || 0).toFixed(2)}</span>
+                    </div>
+                    <div className="flex justify-between items-center font-bold text-lg border-t pt-2">
+                      <span>Total:</span>
+                      <span>${(order?.total || 0).toFixed(2)}</span>
                     </div>
                   </div>
-                </div>
 
-                <div className="mt-6">
-                  <Label htmlFor="status">Update Order Status</Label>
-                  <div className="flex items-center gap-2 mt-2">
-                    <Select value={selectedStatus} onValueChange={handleStatusChange} disabled={updatingStatus}>
-                      <SelectTrigger className="w-[200px] bg-white">
-                        {updatingStatus ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <SelectValue />}
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="pending">Pending</SelectItem>
-                        <SelectItem value="processing">Processing</SelectItem>
-                        <SelectItem value="shipped">Shipped</SelectItem>
-                        <SelectItem value="delivered">Delivered</SelectItem>
-                        <SelectItem value="cancelled">Cancelled</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <Badge
-                      className={`ml-2 ${
-                        selectedStatus === "pending"
-                          ? "bg-yellow-100 text-yellow-800"
-                          : selectedStatus === "processing"
-                            ? "bg-blue-100 text-blue-800"
-                            : selectedStatus === "shipped"
-                              ? "bg-green-100 text-green-800"
-                              : selectedStatus === "delivered"
-                                ? "bg-green-500 text-white"
-                                : selectedStatus === "cancelled"
-                                  ? "bg-red-100 text-red-800"
-                                  : "bg-gray-100 text-gray-800"
-                      }`}
-                    >
+                  <div className="flex items-center gap-4 pt-4">
+                    <div className="flex items-center gap-2">
+                      <Label htmlFor="status">Status:</Label>
+                      <Select
+                        value={selectedStatus}
+                        onValueChange={handleStatusChange}
+                        disabled={updatingStatus}
+                      >
+                        <SelectTrigger className="w-[150px]">
+                          {updatingStatus ? (
+                            <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                          ) : (
+                            <SelectValue />
+                          )}
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="pending">Pending</SelectItem>
+                          <SelectItem value="processing">Processing</SelectItem>
+                          <SelectItem value="shipped">Shipped</SelectItem>
+                          <SelectItem value="delivered">Delivered</SelectItem>
+                          <SelectItem value="cancelled">Cancelled</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <Badge className={getStatusColor(selectedStatus)}>
                       {selectedStatus.charAt(0).toUpperCase() + selectedStatus.slice(1)}
                     </Badge>
                   </div>
@@ -264,59 +307,74 @@ export function OrderDetailsModal({ order, isOpen, onOpenChange, onStatusChange 
               <CardContent>
                 {shippingAddress ? (
                   <div className="space-y-2">
-                    <p>
-                      <span className="font-medium">Name:</span> {shippingAddress.name}
-                    </p>
-                    <p>
-                      <span className="font-medium">Address:</span> {shippingAddress.address}
-                    </p>
-                    <p>
-                      <span className="font-medium">City:</span> {shippingAddress.city}
-                    </p>
-                    <p>
-                      <span className="font-medium">State/Province:</span> {shippingAddress.state}
-                    </p>
-                    <p>
-                      <span className="font-medium">Postal Code:</span> {shippingAddress.postal_code}
-                    </p>
-                    <p>
-                      <span className="font-medium">Country:</span> {shippingAddress.country}
-                    </p>
+                    <p><strong>Name:</strong> {shippingAddress.name}</p>
+                    <p><strong>Address:</strong> {shippingAddress.address}</p>
+                    <p><strong>City:</strong> {shippingAddress.city}</p>
+                    <p><strong>Province:</strong> {shippingAddress.province}</p>
+                    <p><strong>Postal Code:</strong> {shippingAddress.postalCode || shippingAddress.postal_code}</p>
+                    <p><strong>Country:</strong> {shippingAddress.country}</p>
                     {shippingAddress.phone && (
-                      <p>
-                        <span className="font-medium">Phone:</span> {shippingAddress.phone}
-                      </p>
+                      <p><strong>Phone:</strong> {shippingAddress.phone}</p>
                     )}
                   </div>
                 ) : (
-                  <div className="flex flex-col items-center justify-center py-6 text-center">
-                    <Package className="h-12 w-12 text-gray-400 mb-2" />
-                    <p className="text-gray-500">No shipping information available</p>
-                  </div>
+                  <p className="text-gray-500">No shipping information available</p>
                 )}
+              </CardContent>
+            </Card>
+          </TabsContent>
 
-                {selectedStatus === "shipped" && (
-                  <div className="mt-6 space-y-4">
-                    <div>
-                      <Label htmlFor="tracking">Tracking Number</Label>
-                      <Input
-                        id="tracking"
-                        value={trackingNumber}
-                        onChange={(e) => setTrackingNumber(e.target.value)}
-                        placeholder="Enter tracking number"
-                        className="mt-1"
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="delivery">Estimated Delivery</Label>
-                      <Input
-                        id="delivery"
-                        type="date"
-                        value={estimatedDelivery}
-                        onChange={(e) => setEstimatedDelivery(e.target.value)}
-                        className="mt-1"
-                      />
-                    </div>
+          <TabsContent value="tracking">
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-lg flex items-center gap-2">
+                  <Truck className="h-5 w-5" />
+                  AWB & Tracking Information
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="awb">AWB Number</Label>
+                  <div className="flex gap-2">
+                    <Input
+                      id="awb"
+                      value={awbNumber}
+                      onChange={(e) => setAwbNumber(e.target.value)}
+                      placeholder="Enter AWB/Tracking number"
+                      className="flex-1"
+                    />
+                    <Button 
+                      onClick={handleAwbUpdate}
+                      disabled={isUpdatingAwb || !awbNumber.trim()}
+                      size="sm"
+                    >
+                      {isUpdatingAwb ? (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      ) : (
+                        "Update"
+                      )}
+                    </Button>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="delivery">Estimated Delivery</Label>
+                  <Input
+                    id="delivery"
+                    value={estimatedDelivery}
+                    onChange={(e) => setEstimatedDelivery(e.target.value)}
+                    placeholder="e.g., 3-5 business days"
+                  />
+                </div>
+
+                {awbNumber && (
+                  <div className="p-4 bg-blue-50 rounded-lg">
+                    <p className="text-sm text-blue-800">
+                      <strong>Tracking Number:</strong> {awbNumber}
+                    </p>
+                    <p className="text-xs text-blue-600 mt-1">
+                      This tracking number will be included in customer emails when the order status is updated to "Shipped"
+                    </p>
                   </div>
                 )}
               </CardContent>
@@ -326,82 +384,105 @@ export function OrderDetailsModal({ order, isOpen, onOpenChange, onStatusChange 
           <TabsContent value="email">
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg">Send Email to Customer</CardTitle>
+                <CardTitle className="text-lg flex items-center gap-2">
+                  <Mail className="h-5 w-5" />
+                  Send Email Notification
+                </CardTitle>
+                <p className="text-sm text-gray-600">
+                  Preview and send order status update email to customer
+                </p>
               </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div>
-                    <Label htmlFor="template">Select Email Template</Label>
-                    <Select onValueChange={handleTemplateSelect} defaultValue={order?.status || "pending"}>
-                      <SelectTrigger className="w-full mt-1 bg-white">
-                        <SelectValue placeholder="Select a template" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="pending">Order Received</SelectItem>
-                        <SelectItem value="processing">Order Processing</SelectItem>
-                        <SelectItem value="shipped">Order Shipped</SelectItem>
-                        <SelectItem value="delivered">Order Delivered</SelectItem>
-                        <SelectItem value="cancelled">Order Cancelled</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="email-to">To</Label>
+                  <Input
+                    id="email-to"
+                    value={userEmail || order?.user_email || ""}
+                    disabled
+                    className="bg-gray-50"
+                  />
+                </div>
 
-                  <div>
-                    <Label htmlFor="subject">Email Subject</Label>
-                    <Input
-                      id="subject"
-                      value={emailSubject}
-                      onChange={(e) => setEmailSubject(e.target.value)}
-                      className="mt-1"
+                <div className="space-y-2">
+                  <Label htmlFor="email-subject">Subject</Label>
+                  <Input
+                    id="email-subject"
+                    value={emailSubject}
+                    onChange={(e) => setEmailSubject(e.target.value)}
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="email-body">Email Content</Label>
+                  <div className="border rounded-md">
+                    <div className="p-2 bg-gray-50 border-b text-xs text-gray-600">
+                      HTML Preview - This email uses your template from lib/email/template.ts
+                    </div>
+                    <div 
+                      className="p-4 max-h-96 overflow-y-auto"
+                      dangerouslySetInnerHTML={{ __html: emailBody }}
                     />
                   </div>
+                </div>
 
-                  <div>
-                    <Label htmlFor="body">Email Body</Label>
-                    <Textarea
-                      id="body"
-                      value={emailBody}
-                      onChange={(e) => setEmailBody(e.target.value)}
-                      rows={10}
-                      className="mt-1 font-mono"
-                    />
-                  </div>
-
+                <div className="flex gap-2">
                   <Button
-                    onClick={sendEmail}
-                    disabled={isSending || !emailBody.trim() || (!userEmail && !order?.user_email)}
-                    className="w-full"
+                    onClick={() => {
+                      const template = generateEmailTemplate(selectedStatus)
+                      setEmailBody(template)
+                    }}
+                    variant="outline"
+                    size="sm"
+                  >
+                    Regenerate Template
+                  </Button>
+                  <Button
+                    onClick={sendEmailNotification}
+                    disabled={isSending || !emailBody || (!userEmail && !order?.user_email)}
+                    className="ml-auto"
                   >
                     {isSending ? (
                       <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        <Loader2 className="h-4 w-4 animate-spin mr-2" />
                         Sending...
                       </>
-                    ) : emailSent ? (
-                      <>Email Sent Successfully</>
                     ) : (
                       <>
-                        <Mail className="mr-2 h-4 w-4" />
-                        Send Email to {userEmail || order?.user_email || "Customer"}
+                        <Send className="h-4 w-4 mr-2" />
+                        Send Email
                       </>
                     )}
                   </Button>
-
-                  {!userEmail && !order?.user_email && (
-                    <p className="text-sm text-red-500">Cannot send email: No customer email address available</p>
-                  )}
                 </div>
+
+                {emailSent && (
+                  <div className="p-3 bg-green-50 border border-green-200 rounded-md">
+                    <p className="text-sm text-green-800">✓ Email sent successfully!</p>
+                  </div>
+                )}
               </CardContent>
             </Card>
           </TabsContent>
         </Tabs>
-
-        <DialogFooter>
-          <Button variant="outline" onClick={() => onOpenChange(false)}>
-            Close
-          </Button>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   )
+}
+
+// Helper function for status colors
+function getStatusColor(status: string) {
+  switch (status) {
+    case "pending":
+      return "bg-yellow-100 text-yellow-800"
+    case "processing":
+      return "bg-blue-100 text-blue-800"
+    case "shipped":
+      return "bg-green-100 text-green-800"
+    case "delivered":
+      return "bg-green-500 text-white"
+    case "cancelled":
+      return "bg-red-100 text-red-800"
+    default:
+      return "bg-gray-100 text-gray-800"
+  }
 }

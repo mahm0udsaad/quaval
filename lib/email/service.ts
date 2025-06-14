@@ -109,7 +109,7 @@ const emailTemplates: Record<EmailType, (data: any) => EmailContent> = {
       },
       items: data.items.map(item => ({
         name: item.name,
-        model: item.specs.split('|')[0].trim(),
+        model: item.specs.split('|')[0]?.trim() || '',
         quantity: item.quantity,
         innerDiameter: item.specs.split('|')[1]?.trim() || '',
         outerDiameter: item.specs.split('|')[2]?.trim() || '',

@@ -1,8 +1,9 @@
 'use client';
 
-import { useTranslation } from '@/hooks/useTranslation';
+import { useTranslate } from '@/lib/i18n-client';
 import { useRouter, usePathname } from 'next/navigation';
-import  Cookies from 'js-cookie';
+import { useCallback, useMemo } from 'react';
+import { languageStorage, type Language } from '@/lib/language-storage';
 import { 
   DropdownMenu,
   DropdownMenuContent,
@@ -10,50 +11,81 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { Globe, Languages } from "lucide-react";
+import { Languages, Check } from "lucide-react";
+
+const LANGUAGES = [
+  { code: 'en', name: 'English', flag: '🇬🇧' },
+  { code: 'es', name: 'Español', flag: '🇪🇸' },
+  { code: 'fr', name: 'Français', flag: '🇫🇷' },
+] as const;
 
 export default function LanguageSwitcher() {
-  const { t, locale } = useTranslation();
+  const { t, locale } = useTranslate();
   const router = useRouter();
   const pathname = usePathname();
-  
-  const switchLanguage = (newLocale: string) => {
+
+  // Memoize current language to prevent unnecessary re-renders
+  const currentLanguage = useMemo(() => {
+    return LANGUAGES.find(lang => lang.code === locale) || LANGUAGES[0];
+  }, [locale]);
+
+  // Optimized language change handler
+  const handleLanguageChange = useCallback((newLocale: Language) => {
     if (newLocale === locale) return;
     
-    // Set the cookie
-    Cookies.set('NEXT_LOCALE', newLocale, { 
-      expires: 365,
-      path: '/',
-      sameSite: 'strict' 
-    });
+    console.log(`Changing language from ${locale} to ${newLocale}`);
     
-    // Calculate the new path by replacing the locale part
-    const pathWithoutLocale = pathname.substring(3); // Remove /{locale} prefix
-    const newPath = `/${newLocale}${pathWithoutLocale}`;
+    // Save to localStorage immediately
+    languageStorage.setLanguage(newLocale);
     
-    // Navigate to the new path
+    // Build new URL path
+    const segments = pathname.split('/');
+    let newPath: string;
+    
+    if (segments[1] && LANGUAGES.some(lang => lang.code === segments[1])) {
+      // Replace existing locale in URL
+      segments[1] = newLocale;
+      newPath = segments.join('/');
+    } else {
+      // Add locale to URL if not present
+      newPath = `/${newLocale}${pathname}`;
+    }
+    
+    console.log(`Navigating to: ${newPath}`);
+    
+    // Simple navigation without reload - let Next.js handle the re-rendering
     router.push(newPath);
-    window.location.reload();
-  };
-  
+    
+  }, [locale, pathname, router]);
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon">
+        <Button variant="ghost" size="icon" className="relative">
           <Languages className="h-4 w-4" />
           <span className="sr-only">{t('language.label')}</span>
+          {/* Show current language indicator */}
+          <span className="absolute -top-1 -right-1 text-xs">
+            {currentLanguage.flag}
+          </span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => switchLanguage('en')}>
-          🇬🇧 English
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => switchLanguage('es')}>
-          🇪🇸 Español
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => switchLanguage('fr')}>
-          🇫🇷 Français
-        </DropdownMenuItem>
+      <DropdownMenuContent align="end" className="min-w-[140px]">
+        {LANGUAGES.map((language) => (
+          <DropdownMenuItem 
+            key={language.code}
+            onClick={() => handleLanguageChange(language.code as Language)}
+            className="flex items-center justify-between cursor-pointer"
+          >
+            <span className="flex items-center gap-2">
+              <span>{language.flag}</span>
+              <span>{language.name}</span>
+            </span>
+            {locale === language.code && (
+              <Check className="h-4 w-4 text-primary" />
+            )}
+          </DropdownMenuItem>
+        ))}
       </DropdownMenuContent>
     </DropdownMenu>
   );

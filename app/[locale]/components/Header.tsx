@@ -250,11 +250,10 @@ export default function Header() {
                   </div>
 
                   <div className="border-t border-gray-200 pt-4">
-                    <div className="flex items-center justify-between">
-                      <p className="text-sm text-gray-500 mb-4">{t('navigation.regionLanguage')}</p>
-                    </div>
-                    <div className="flex items-center gap-4 pl-1">
+                    <p className="text-sm text-gray-500 mb-4">{t('navigation.regionLanguage')}</p>
+                    <div className="flex items-center gap-4">
                       <CountrySelectorModal />
+                      <LanguageSwitcher />
                     </div>
                   </div>
                 </div>

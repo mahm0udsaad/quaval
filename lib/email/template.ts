@@ -503,39 +503,25 @@ const orderConfirmationTemplate = `<!DOCTYPE html>
                 </div>
 
                 <div class="order-items">
-                    <!-- Sample items - replace with dynamic content -->
-                    <div class="item">
-                        <div class="item-details">
-                            <div class="item-name">Deep Groove Ball Bearing</div>
-                            <div class="item-specs">Model: 6204-2RS | Quantity: 10 | Inner Ø: 20mm | Outer Ø: 47mm</div>
-                        </div>
-                        <div class="item-price">$125.00</div>
-                    </div>
-                    <div class="item">
-                        <div class="item-details">
-                            <div class="item-name">Tapered Roller Bearing</div>
-                            <div class="item-specs">Model: 30205 | Quantity: 5 | Inner Ø: 25mm | Outer Ø: 52mm</div>
-                        </div>
-                        <div class="item-price">$89.50</div>
-                    </div>
+                    {{items}}
                 </div>
 
                 <div class="total-section">
                     <div class="total-row">
                         <span>Subtotal:</span>
-                        <span>$214.50</span>
+                        <span>{{subtotal}}</span>
                     </div>
                     <div class="total-row">
                         <span>Shipping:</span>
-                        <span>$15.00</span>
+                        <span>{{shipping}}</span>
                     </div>
                     <div class="total-row">
                         <span>Tax (HST):</span>
-                        <span>$29.84</span>
+                        <span>{{tax}}</span>
                     </div>
                     <div class="total-row final">
                         <span>Total:</span>
-                        <span>$259.34</span>
+                        <span>{{total}}</span>
                     </div>
                 </div>
             </div>
@@ -544,10 +530,7 @@ const orderConfirmationTemplate = `<!DOCTYPE html>
             <div class="shipping-info">
                 <div class="shipping-title">Shipping Address</div>
                 <div class="address">
-                    {{customerName}}<br>
-                    {{shippingAddress}}<br>
-                    {{city}}, {{province}} {{postalCode}}<br>
-                    {{country}}
+                    {{shippingAddress}}
                 </div>
             </div>
 
@@ -911,8 +894,8 @@ const paymentConfirmationTemplate = `
 
             <!-- Payment Summary -->
             <div class="payment-summary">
-                <div class="payment-amount">$${'{paymentAmount}'}</div>
-                <div class="payment-method">Paid via ${'{paymentMethod}'}</div>
+                <div class="payment-amount">{{paymentAmount}}</div>
+                <div class="payment-method">Paid via {{paymentMethod}}</div>
                 <p style="color: #155724; margin-top: 10px;">✓ Payment Successfully Processed</p>
             </div>
 
@@ -953,19 +936,19 @@ const paymentConfirmationTemplate = `
                 <h3>Payment Breakdown</h3>
                 <div class="breakdown-item">
                     <span>Subtotal:</span>
-                    <span>$${'{subtotal}'}</span>
+                    <span>{{subtotal}}</span>
                 </div>
                 <div class="breakdown-item">
                     <span>Shipping:</span>
-                    <span>$${'{shipping}'}</span>
+                    <span>{{shipping}}</span>
                 </div>
                 <div class="breakdown-item">
                     <span>HST ({{taxRate}}%):</span>
-                    <span>$${'{tax}'}</span>
+                    <span>{{tax}}</span>
                 </div>
                 <div class="breakdown-item">
                     <span>Total Paid:</span>
-                    <span>$${'{paymentAmount}'}</span>
+                    <span>{{paymentAmount}}</span>
                 </div>
             </div>
 
@@ -1387,20 +1370,7 @@ const orderStatusUpdateTemplate = `<!DOCTYPE html>
                 </div>
 
                 <div class="order-items">
-                    <div class="item">
-                        <div class="item-details">
-                            <div class="item-name">Deep Groove Ball Bearing</div>
-                            <div class="item-specs">Model: 6204-2RS | Inner Ø: 20mm | Outer Ø: 47mm</div>
-                        </div>
-                        <div class="item-quantity">Qty: 10</div>
-                    </div>
-                    <div class="item">
-                        <div class="item-details">
-                            <div class="item-name">Tapered Roller Bearing</div>
-                            <div class="item-specs">Model: 30205 | Inner Ø: 25mm | Outer Ø: 52mm</div>
-                        </div>
-                        <div class="item-quantity">Qty: 5</div>
-                    </div>
+                    {{items}}
                 </div>
             </div>
 

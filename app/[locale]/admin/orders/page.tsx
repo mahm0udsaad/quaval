@@ -21,7 +21,9 @@ type Order = {
   status: string
   total: number
   items: any[]
-  user_email?: string
+  user_email: string
+  order_number: string
+  awb_number?: string
 }
 
 export default function AdminOrdersPage() {
@@ -51,26 +53,9 @@ export default function AdminOrdersPage() {
           return
         }
 
-        // Fetch user emails for each order
-        const ordersWithEmails = await Promise.all(
-          (data || []).map(async (order) => {
-            if (order.user_id) {
-              const { data: userData, error: userError } = await supabase
-                .from("profiles")
-                .select("email")
-                .eq("user_id", order.user_id)
-                .single()
-
-              if (!userError && userData) {
-                return { ...order, user_email: userData.email }
-              }
-            }
-            return order
-          }),
-        )
-
-        setOrders(ordersWithEmails)
-        setFilteredOrders(ordersWithEmails)
+        // Orders now include user_email directly from the table
+        setOrders(data || [])
+        setFilteredOrders(data || [])
       } catch (err) {
         console.error("Error in fetchOrders:", err)
       } finally {
@@ -128,7 +113,7 @@ export default function AdminOrdersPage() {
         if (order && order.user_id) {
           await supabase.from("notifications").insert({
             user_id: order.user_id,
-            message: `Your order #${order.id.slice(-6).toUpperCase()} has been updated to ${newStatus}`,
+            message: `Your order #${order.order_number || order.id.slice(-6).toUpperCase()} has been updated to ${newStatus}`,
             type: "success",
             read: false,
           })
@@ -180,7 +165,7 @@ export default function AdminOrdersPage() {
 
   return (
     <ProtectedRoute>
-      <div className="container mx-auto px-4 py-8">
+      <div>
         <Card>
           <CardHeader>
             <CardTitle className="text-2xl">Manage Orders</CardTitle>
@@ -243,7 +228,7 @@ export default function AdminOrdersPage() {
                   <TableBody>
                     {filteredOrders.map((order) => (
                       <TableRow key={order.id}>
-                        <TableCell className="font-medium">#{order.id.slice(-6).toUpperCase()}</TableCell>
+                        <TableCell className="font-medium">#{order.order_number || order.id.slice(-6).toUpperCase()}</TableCell>
                         <TableCell>{formatDate(order.created_at)}</TableCell>
                         <TableCell>{order.user_email || "Guest"}</TableCell>
                         <TableCell>{order.items?.length || 0} items</TableCell>

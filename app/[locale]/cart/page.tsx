@@ -477,24 +477,7 @@ export default function CartPage() {
                   </span>
                 </div>
               </div>
-              
-              {!qualifiesForFreeShipping && (
-                <div className="mb-6 py-3 px-4 bg-blue-50 rounded-lg border border-blue-100">
-                  <p className="text-sm flex items-start text-blue-700">
-                    <Truck className="h-4 w-4 mr-2 mt-0.5 flex-shrink-0" />
-                    {t('cart.freeShippingMessage', { amount: `${selectedCurrency.symbol}${freeShippingThreshold.toFixed(2)}` })}
-                  </p>
-                  <div className="mt-2 w-full bg-gray-200 rounded-full h-1.5">
-                    <motion.div 
-                      className="bg-blue-500 h-1.5 rounded-full"
-                      initial={{ width: 0 }}
-                      animate={{ width: `${Math.min(100, (convertedTotal / freeShippingThreshold) * 100)}%` }}
-                      transition={{ duration: 0.8, ease: "easeOut" }}
-                    />
-                  </div>
-                </div>
-              )}
-
+       
               <Button 
                 onClick={handleCheckout}
                 className="w-full py-6 text-base rounded-lg" 
