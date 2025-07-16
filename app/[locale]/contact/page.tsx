@@ -130,13 +130,13 @@ export default function ContactPage() {
                   <p className="text-gray-600">+1 (514) 208-6840</p>
                 </div>
               </div>
-              <div className="flex items-start">
+              {/* <div className="flex items-start">
                 <Mail className="w-6 h-6 text-primary mt-1" />
                 <div className="ml-4">
                   <h3 className="font-semibold">Email</h3>
                   <p className="text-gray-600">ceo@quaval.ca</p>
                 </div>
-              </div>
+              </div> */}
             </div>
 
             <div className="h-[400px] w-full rounded-lg overflow-hidden">

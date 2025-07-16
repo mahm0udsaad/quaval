@@ -53,7 +53,7 @@ export default function Footer() {
             <p>{t('footer.address1')}</p>
             <p>{t('footer.address2')}</p>
             <p>{t('footer.phone')}</p>
-            <p>{t('footer.email')}</p>
+            {/* <p>{t('footer.email')}</p> */}
           </div>
           <div>
             <h3 className="text-lg font-semibold mb-4">{t('footer.newsletter')}</h3>
