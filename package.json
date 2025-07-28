@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ai-sdk/google": "^1.2.22",
     "@hookform/resolvers": "^3.9.1",
     "@radix-ui/react-accordion": "latest",
     "@radix-ui/react-alert-dialog": "1.1.4",
@@ -41,6 +42,7 @@
     "@stripe/stripe-js": "latest",
     "@supabase/supabase-js": "latest",
     "@types/nodemailer": "^6.4.17",
+    "ai": "^4.3.19",
     "autoprefixer": "^10.4.20",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -64,6 +66,7 @@
     "react-dom": "^19",
     "react-hook-form": "^7.54.1",
     "react-i18next": "^15.5.1",
+    "react-intersection-observer": "^9.16.0",
     "react-resizable-panels": "^2.1.7",
     "recharts": "2.15.0",
     "sonner": "^1.7.1",

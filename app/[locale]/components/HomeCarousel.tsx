@@ -49,7 +49,7 @@ export default function HomeCarousel() {
 
   if (isLoading) {
     return (
-      <div className="relative h-[600px] bg-gray-200">
+      <div className="relative h-[700px] bg-gray-200">
         <div className="container mx-auto px-16 h-full flex items-center">
           <div className="max-w-2xl">
             <Skeleton className="h-12 w-64 mb-4" />
@@ -75,7 +75,7 @@ export default function HomeCarousel() {
   }
 
   return (
-    <div className="relative h-[600px] overflow-hidden">
+    <div className="relative h-[700px] overflow-hidden">
       {banners.map((item, index) => (
         <div
           key={index}

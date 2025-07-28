@@ -1,9 +1,11 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Database, Loader2 } from "lucide-react"
 import { supabase } from "@/lib/supabase"
+import TranslationManager from "./components/translation-manager"
 
 export default function AdminDashboard() {
   const [showSqlModal, setShowSqlModal] = useState(false)
@@ -128,6 +130,60 @@ export default function AdminDashboard() {
             View SQL Scripts
           </Button>
         </div>
+      </div>
+
+      {/* Quick Actions */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+        <div className="bg-white p-6 rounded-lg shadow">
+          <h3 className="text-lg font-semibold text-gray-700 mb-4">Content Management</h3>
+          <div className="space-y-3">
+            <Link href="/admin/home-content" className="block w-full">
+              <Button variant="outline" className="w-full justify-start">
+                <Database className="mr-2 h-4 w-4" />
+                Home Page Content
+              </Button>
+            </Link>
+            <Link href="/admin/banners" className="block w-full">
+              <Button variant="outline" className="w-full justify-start">
+                <Database className="mr-2 h-4 w-4" />
+                Banners
+              </Button>
+            </Link>
+            <Link href="/admin/products" className="block w-full">
+              <Button variant="outline" className="w-full justify-start">
+                <Database className="mr-2 h-4 w-4" />
+                Products
+              </Button>
+            </Link>
+          </div>
+        </div>
+        
+        <div className="bg-white p-6 rounded-lg shadow">
+          <h3 className="text-lg font-semibold text-gray-700 mb-4">Orders & Sales</h3>
+          <div className="space-y-3">
+            <Link href="/admin/orders" className="block w-full">
+              <Button variant="outline" className="w-full justify-start">
+                <Database className="mr-2 h-4 w-4" />
+                Orders
+              </Button>
+            </Link>
+          </div>
+        </div>
+        
+        <div className="bg-white p-6 rounded-lg shadow">
+          <h3 className="text-lg font-semibold text-gray-700 mb-4">Settings</h3>
+          <div className="space-y-3">
+            <Button variant="outline" className="w-full justify-start" onClick={() => setShowSqlModal(true)}>
+              <Database className="mr-2 h-4 w-4" />
+              Database Setup
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      {/* Translation Manager */}
+      <div className="mt-8">
+        <TranslationManager />
       </div>
 
     </div>

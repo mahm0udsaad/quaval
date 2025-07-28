@@ -482,3 +482,553 @@ export async function updateOrderStatus(id: number, status: OrderStatus): Promis
 
   return data
 }
+
+// Home Page CMS API Functions
+export type HomeSection = {
+  id: number
+  section_key: string
+  section_name: string
+  is_enabled: boolean
+  sort_order: number
+  created_at?: string
+  updated_at?: string
+}
+
+export type HomeContentBlock = {
+  id: number
+  section_id: number
+  block_key: string
+  block_type: string
+  content: Record<string, any>
+  sort_order: number
+  is_enabled: boolean
+  created_at?: string
+  updated_at?: string
+}
+
+export type HomeContentTranslation = {
+  id: number
+  content_block_id: number
+  locale: string
+  translated_content: Record<string, any>
+  created_at?: string
+  updated_at?: string
+}
+
+export type FooterContent = {
+  id: number
+  content_key: string
+  content_type: string
+  content: Record<string, any>
+  sort_order: number
+  is_enabled: boolean
+  created_at?: string
+  updated_at?: string
+}
+
+export type FooterContentTranslation = {
+  id: number
+  footer_content_id: number
+  locale: string
+  translated_content: Record<string, any>
+  created_at?: string
+  updated_at?: string
+}
+
+// Home Sections API
+export async function getHomeSections(): Promise<HomeSection[]> {
+  console.log('🔍 getHomeSections called');
+  
+  const { data, error } = await supabase
+    .from("home_sections")
+    .select("*")
+    .order("sort_order")
+
+  if (error) {
+    console.error("❌ Error fetching home sections:", error)
+    return []
+  }
+
+  console.log('📊 Sections fetched:', data?.length || 0);
+  if (data) {
+    console.log('  - Section keys:', data.map(s => s.section_key));
+  }
+
+  return data || []
+}
+
+export async function updateHomeSection(id: number, section: Partial<HomeSection>): Promise<HomeSection | null> {
+  const { data, error } = await supabase
+    .from("home_sections")
+    .update(section)
+    .eq("id", id)
+    .select()
+    .single()
+
+  if (error) {
+    console.error(`Error updating home section with id ${id}:`, error)
+    return null
+  }
+
+  return data
+}
+
+// Home Content Blocks API
+export async function getHomeContentBlocks(locale = 'en'): Promise<HomeContentBlock[]> {
+  console.log('🔍 getHomeContentBlocks called with locale:', locale);
+  
+  const { data: blocks, error } = await supabase
+    .from("home_content_blocks")
+    .select("*")
+    .order("section_id, sort_order")
+
+  if (error) {
+    console.error("❌ Error fetching home content blocks:", error)
+    return []
+  }
+
+  if (!blocks) {
+    console.log('⚠️ No blocks returned from database');
+    return [];
+  }
+
+  console.log('📊 Raw blocks fetched:', blocks.length);
+  console.log('  - Sample blocks:', blocks.slice(0, 3).map(b => ({ id: b.id, section_id: b.section_id, block_key: b.block_key, block_type: b.block_type })));
+
+  // For English, return original content
+  if (locale === 'en') {
+    console.log('✅ Returning original English content:', blocks.length, 'blocks');
+    return blocks
+  }
+
+  // For other locales, get translations
+  const { data: translations, error: translationError } = await supabase
+    .from("home_content_translations")
+    .select("*")
+    .eq("locale", locale)
+    .in("content_block_id", blocks.map(b => b.id))
+
+  if (translationError) {
+    console.error("❌ Error fetching home content translations:", translationError)
+    console.log('🔄 Falling back to original content');
+    return blocks // Fallback to original content
+  }
+
+  console.log('📊 Translations fetched for locale', locale, ':', translations?.length || 0);
+
+  // Merge translations with original blocks
+  const result = blocks.map(block => {
+    const translation = translations?.find(t => t.content_block_id === block.id)
+    if (translation) {
+      return {
+        ...block,
+        content: translation.translated_content
+      }
+    }
+    return block
+  });
+
+  console.log('✅ Returning translated content:', result.length, 'blocks');
+  return result;
+}
+
+export async function getHomeContentBlocksBySection(sectionKey: string, locale = 'en'): Promise<HomeContentBlock[]> {
+  const { data: blocks, error } = await supabase
+    .from("home_content_blocks")
+    .select(`
+      *,
+      section:home_sections(section_key)
+    `)
+    .eq("home_sections.section_key", sectionKey)
+    .order("sort_order")
+
+  if (error) {
+    console.error(`Error fetching content blocks for section ${sectionKey}:`, error)
+    return []
+  }
+
+  if (!blocks) return []
+
+  // Filter blocks that belong to the correct section
+  const filteredBlocks = blocks.filter(block => 
+    (block as any).section?.section_key === sectionKey
+  )
+
+  // For English, return original content
+  if (locale === 'en') {
+    return filteredBlocks
+  }
+
+  // For other locales, get translations
+  const { data: translations, error: translationError } = await supabase
+    .from("home_content_translations")
+    .select("*")
+    .eq("locale", locale)
+    .in("content_block_id", filteredBlocks.map(b => b.id))
+
+  if (translationError) {
+    console.error("Error fetching translations:", translationError)
+    return filteredBlocks
+  }
+
+  // Merge translations
+  return filteredBlocks.map(block => {
+    const translation = translations?.find(t => t.content_block_id === block.id)
+    if (translation) {
+      return {
+        ...block,
+        content: translation.translated_content
+      }
+    }
+    return block
+  })
+}
+
+export async function updateHomeContentBlock(id: number, block: Partial<HomeContentBlock>): Promise<HomeContentBlock | null> {
+  const { data, error } = await supabase
+    .from("home_content_blocks")
+    .update(block)
+    .eq("id", id)
+    .select()
+    .single()
+
+  if (error) {
+    console.error(`Error updating home content block with id ${id}:`, error)
+    return null
+  }
+
+  return data
+}
+
+export async function createHomeContentBlock(block: Omit<HomeContentBlock, "id" | "created_at" | "updated_at">): Promise<HomeContentBlock | null> {
+  const { data, error } = await supabase
+    .from("home_content_blocks")
+    .insert(block)
+    .select()
+    .single()
+
+  if (error) {
+    console.error("Error creating home content block:", error)
+    return null
+  }
+
+  return data
+}
+
+export async function deleteHomeContentBlock(id: number): Promise<boolean> {
+  const { error } = await supabase
+    .from("home_content_blocks")
+    .delete()
+    .eq("id", id)
+
+  if (error) {
+    console.error(`Error deleting home content block with id ${id}:`, error)
+    return false
+  }
+
+  return true
+}
+
+// Home Content Translations API
+export async function getHomeContentTranslations(contentBlockId: number): Promise<HomeContentTranslation[]> {
+  const { data, error } = await supabase
+    .from("home_content_translations")
+    .select("*")
+    .eq("content_block_id", contentBlockId)
+
+  if (error) {
+    console.error("Error fetching home content translations:", error)
+    return []
+  }
+
+  return data || []
+}
+
+export async function updateHomeContentTranslation(
+  contentBlockId: number, 
+  locale: string, 
+  translatedContent: Record<string, any>
+): Promise<HomeContentTranslation | null> {
+  const { data, error } = await supabase
+    .from("home_content_translations")
+    .upsert({
+      content_block_id: contentBlockId,
+      locale,
+      translated_content: translatedContent
+    })
+    .select()
+    .single()
+
+  if (error) {
+    console.error("Error updating home content translation:", error)
+    return null
+  }
+
+  return data
+}
+
+// Footer Content API
+export async function getFooterContent(locale = 'en'): Promise<FooterContent[]> {
+  const { data: content, error } = await supabase
+    .from("footer_content")
+    .select("*")
+    .order("sort_order")
+
+  if (error) {
+    console.error("Error fetching footer content:", error)
+    return []
+  }
+
+  if (!content) return []
+
+  // For English, return original content
+  if (locale === 'en') {
+    return content
+  }
+
+  // For other locales, get translations
+  const { data: translations, error: translationError } = await supabase
+    .from("footer_content_translations")
+    .select("*")
+    .eq("locale", locale)
+    .in("footer_content_id", content.map(c => c.id))
+
+  if (translationError) {
+    console.error("Error fetching footer content translations:", translationError)
+    return content
+  }
+
+  // Merge translations
+  return content.map(item => {
+    const translation = translations?.find(t => t.footer_content_id === item.id)
+    if (translation) {
+      return {
+        ...item,
+        content: translation.translated_content
+      }
+    }
+    return item
+  })
+}
+
+export async function updateFooterContent(id: number, content: Partial<FooterContent>): Promise<FooterContent | null> {
+  const { data, error } = await supabase
+    .from("footer_content")
+    .update(content)
+    .eq("id", id)
+    .select()
+    .single()
+
+  if (error) {
+    console.error(`Error updating footer content with id ${id}:`, error)
+    return null
+  }
+
+  return data
+}
+
+export async function updateFooterContentTranslation(
+  footerContentId: number, 
+  locale: string, 
+  translatedContent: Record<string, any>
+): Promise<FooterContentTranslation | null> {
+  const { data, error } = await supabase
+    .from("footer_content_translations")
+    .upsert({
+      footer_content_id: footerContentId,
+      locale,
+      translated_content: translatedContent
+    })
+    .select()
+    .single()
+
+  if (error) {
+    console.error("Error updating footer content translation:", error)
+    return null
+  }
+
+  return data
+}
+
+// Utility function to get complete home page data
+export async function getCompleteHomePageData(locale = 'en') {
+  console.log('🔍 Starting getCompleteHomePageData for locale:', locale);
+  
+  try {
+    const [sections, contentBlocks, footerContent] = await Promise.all([
+      getHomeSections(),
+      getHomeContentBlocks(locale),
+      getFooterContent(locale)
+    ]);
+
+    console.log('📊 Raw data fetched:');
+    console.log('  - Sections:', sections.length);
+    console.log('  - Content blocks:', contentBlocks.length);
+    console.log('  - Footer items:', footerContent.length);
+
+    // Debug: Log first few content blocks
+    console.log('  - Sample content blocks:', contentBlocks.slice(0, 3));
+
+    // Group content blocks by section
+    const sectionsWithContent = sections.map(section => {
+      const sectionContentBlocks = contentBlocks.filter(block => block.section_id === section.id);
+      console.log(`  - Section "${section.section_key}" (id: ${section.id}) has ${sectionContentBlocks.length} content blocks`);
+      
+      return {
+        ...section,
+        content_blocks: sectionContentBlocks
+      };
+    });
+
+    const result = {
+      sections: sectionsWithContent,
+      footer: footerContent
+    };
+
+    console.log('✅ Final result summary:');
+    console.log('  - Sections with content:', sectionsWithContent.length);
+    console.log('  - Stats section content blocks:', sectionsWithContent.find(s => s.section_key === 'stats')?.content_blocks.length || 0);
+    console.log('  - About section content blocks:', sectionsWithContent.find(s => s.section_key === 'about')?.content_blocks.length || 0);
+    console.log('  - Features section content blocks:', sectionsWithContent.find(s => s.section_key === 'features')?.content_blocks.length || 0);
+
+    return result;
+  } catch (error) {
+    console.error('❌ Error in getCompleteHomePageData:', error);
+    return {
+      sections: [],
+      footer: []
+    };
+  }
+}
+
+// Section-specific data fetching functions
+export async function getHeroSectionData(locale = 'en') {
+  const sections = await getHomeSections();
+  const section = sections.find(s => s.section_key === 'hero' && s.is_enabled);
+  
+  if (!section) return null;
+  
+  const contentBlocks = await getHomeContentBlocksBySection('hero', locale);
+  
+  return {
+    ...section,
+    content_blocks: contentBlocks
+  };
+}
+
+export async function getStatsSectionData(locale = 'en') {
+  const sections = await getHomeSections();
+  const section = sections.find(s => s.section_key === 'stats' && s.is_enabled);
+  
+  if (!section) return null;
+  
+  const contentBlocks = await getHomeContentBlocksBySection('stats', locale);
+  const stats = contentBlocks.filter(block => block.block_type === 'stat' && block.is_enabled);
+  
+  return {
+    section: { ...section, content_blocks: contentBlocks },
+    stats
+  };
+}
+
+export async function getAboutSectionData(locale = 'en') {
+  const sections = await getHomeSections();
+  const section = sections.find(s => s.section_key === 'about' && s.is_enabled);
+  
+  if (!section) return null;
+  
+  const contentBlocks = await getHomeContentBlocksBySection('about', locale);
+  
+  const getContentBlock = (blockKey: string) => {
+    return contentBlocks.find(block => block.block_key === blockKey && block.is_enabled);
+  };
+  
+  return {
+    section: { ...section, content_blocks: contentBlocks },
+    contentBlocks: {
+      heading: getContentBlock('about_heading'),
+      title: getContentBlock('about_title'),
+      highlight1Icon: getContentBlock('about_highlight_1_icon'),
+      highlight1Title: getContentBlock('about_highlight_1_title'),
+      highlight1Desc: getContentBlock('about_highlight_1_desc'),
+      highlight2Icon: getContentBlock('about_highlight_2_icon'),
+      highlight2Title: getContentBlock('about_highlight_2_title'),
+      highlight2Desc: getContentBlock('about_highlight_2_desc'),
+      button1: getContentBlock('about_button_1'),
+      button2: getContentBlock('about_button_2'),
+      image: getContentBlock('about_image')
+    }
+  };
+}
+
+export async function getFeaturesSectionData(locale = 'en') {
+  const sections = await getHomeSections();
+  const section = sections.find(s => s.section_key === 'features' && s.is_enabled);
+  
+  if (!section) return null;
+  
+  const contentBlocks = await getHomeContentBlocksBySection('features', locale);
+  
+  const getContentBlock = (blockKey: string) => {
+    return contentBlocks.find(block => block.block_key === blockKey && block.is_enabled);
+  };
+  
+  const features = contentBlocks.filter(block => block.block_type === 'feature' && block.is_enabled);
+  
+  return {
+    section: { ...section, content_blocks: contentBlocks },
+    contentBlocks: {
+      heading: getContentBlock('features_heading'),
+      title: getContentBlock('features_title'),
+      description: getContentBlock('features_description')
+    },
+    features
+  };
+}
+
+export async function getTrustedPartnersSectionData(locale = 'en') {
+  const sections = await getHomeSections();
+  const section = sections.find(s => s.section_key === 'trusted_partners' && s.is_enabled);
+  
+  if (!section) return null;
+  
+  const contentBlocks = await getHomeContentBlocksBySection('trusted_partners', locale);
+  
+  const getContentBlock = (blockKey: string) => {
+    return contentBlocks.find(block => block.block_key === blockKey && block.is_enabled);
+  };
+  
+  const partners = contentBlocks.filter(block => block.block_type === 'partner' && block.is_enabled);
+  
+  return {
+    section: { ...section, content_blocks: contentBlocks },
+    contentBlocks: {
+      heading: getContentBlock('partners_heading'),
+      title: getContentBlock('partners_title')
+    },
+    partners
+  };
+}
+
+export async function getCTASectionData(locale = 'en') {
+  const sections = await getHomeSections();
+  const section = sections.find(s => s.section_key === 'cta' && s.is_enabled);
+  
+  if (!section) return null;
+  
+  const contentBlocks = await getHomeContentBlocksBySection('cta', locale);
+  
+  const getContentBlock = (blockKey: string) => {
+    return contentBlocks.find(block => block.block_key === blockKey && block.is_enabled);
+  };
+  
+  return {
+    section: { ...section, content_blocks: contentBlocks },
+    contentBlocks: {
+      heading: getContentBlock('cta_heading'),
+      title: getContentBlock('cta_title'),
+      description: getContentBlock('cta_description'),
+      button: getContentBlock('cta_button')
+    }
+  };
+}
