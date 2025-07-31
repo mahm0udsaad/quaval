@@ -1,4 +1,31 @@
-import { supabase } from "./supabase"
+import { createClient } from "@supabase/supabase-js";
+
+
+// Initialize Supabase client
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+)
+
+export const uploadFile = async (file: File, onProgress: (progress: number) => void): Promise<string> => {
+    const supabase = createClient();
+    const filePath = `public/${Date.now()}_${file.name}`;
+
+    const { data, error } = await supabase.storage
+        .from('home-content')
+        .upload(filePath, file, {
+            cacheControl: '3600',
+            upsert: false,
+        });
+
+    if (error) {
+        throw error;
+    }
+
+    const { data: { publicUrl } } = supabase.storage.from('home-content').getPublicUrl(filePath);
+
+    return publicUrl;
+};
 
 export type ProductFamily = {
   id: number
@@ -956,7 +983,15 @@ export async function getAboutSectionData(locale = 'en') {
       highlight2Desc: getContentBlock('about_highlight_2_desc'),
       button1: getContentBlock('about_button_1'),
       button2: getContentBlock('about_button_2'),
-      image: getContentBlock('about_image')
+      image: getContentBlock('about_image'),
+      policyTitle: getContentBlock('about_policy_title'),
+      policyContent: getContentBlock('about_policy_content'),
+      missionTitle: getContentBlock('about_mission_title'),
+      missionContent: getContentBlock('about_mission_content'),
+      missionBenefits: getContentBlock('about_mission_benefits'),
+      historyTitle: getContentBlock('about_history_title'),
+      historyContent: getContentBlock('about_history_content'),
+      historySource: getContentBlock('about_history_source')
     }
   };
 }

@@ -46,6 +46,14 @@ interface AboutSectionClientProps {
     button1?: HomeContentBlock;
     button2?: HomeContentBlock;
     image?: HomeContentBlock;
+    policyTitle?: HomeContentBlock;
+    policyContent?: HomeContentBlock;
+    missionTitle?: HomeContentBlock;
+    missionContent?: HomeContentBlock;
+    missionBenefits?: HomeContentBlock;
+    historyTitle?: HomeContentBlock;
+    historyContent?: HomeContentBlock;
+    historySource?: HomeContentBlock;
   };
   locale: string;
 }
@@ -120,6 +128,60 @@ export default function AboutSectionClient({
                 </div>
               </div>
             </div>
+
+            {/* Policy Section */}
+            {contentBlocks.policyTitle && (
+              <div className="mt-8 space-y-4">
+                <h3 className="text-2xl font-bold text-secondary">
+                  {contentBlocks.policyTitle.content.text}
+                </h3>
+                {contentBlocks.policyContent && (
+                  <p className="text-lg font-semibold text-primary">
+                    {contentBlocks.policyContent.content.text}
+                  </p>
+                )}
+              </div>
+            )}
+
+            {/* Mission Section */}
+            {contentBlocks.missionTitle && (
+              <div className="mt-8 space-y-4">
+                <h3 className="text-2xl font-bold text-secondary">
+                  {contentBlocks.missionTitle.content.text}
+                </h3>
+                {contentBlocks.missionContent && (
+                  <p className="text-gray-700 leading-relaxed">
+                    {contentBlocks.missionContent.content.text}
+                  </p>
+                )}
+                {contentBlocks.missionBenefits && (
+                  <p className="text-gray-700 leading-relaxed">
+                    {contentBlocks.missionBenefits.content.text}
+                  </p>
+                )}
+              </div>
+            )}
+
+            {/* History Section */}
+            {contentBlocks.historyTitle && (
+              <div className="mt-8 space-y-4">
+                <h3 className="text-2xl font-bold text-secondary">
+                  {contentBlocks.historyTitle.content.text}
+                </h3>
+                {contentBlocks.historyContent && (
+                  <div className="text-gray-700 leading-relaxed space-y-4">
+                    {contentBlocks.historyContent.content.text.split('\n\n').map((paragraph: string, index: number) => (
+                      <p key={index}>{paragraph}</p>
+                    ))}
+                  </div>
+                )}
+                {contentBlocks.historySource && (
+                  <p className="text-sm text-gray-500 italic mt-4">
+                    {contentBlocks.historySource.content.text}
+                  </p>
+                )}
+              </div>
+            )}
             
             <div className="mt-8 flex gap-4">
               {contentBlocks.button1 && (
