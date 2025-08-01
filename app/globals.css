@@ -12,6 +12,9 @@
   --color-text: #333333;
   --color-text-light: #6c757d;
 }
+.lowercase {
+  text-transform: lowercase;
+}
 
 body {
   font-family: "Poppins", sans-serif;

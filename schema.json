@@ -1,1529 +1,702 @@
 [
-    {
-      "table_name": "home_sections",
-      "row_data": {
-        "id": 1,
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "sort_order": 1,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "section_key": "hero",
-        "section_name": "Hero/Banner Section"
-      }
-    },
-    {
-      "table_name": "home_sections",
-      "row_data": {
-        "id": 2,
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "sort_order": 2,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "section_key": "stats",
-        "section_name": "Statistics Section"
-      }
-    },
-    {
-      "table_name": "home_sections",
-      "row_data": {
-        "id": 3,
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "sort_order": 3,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "section_key": "about",
-        "section_name": "About Section"
-      }
-    },
-    {
-      "table_name": "home_sections",
-      "row_data": {
-        "id": 4,
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "sort_order": 4,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "section_key": "features",
-        "section_name": "Features Section"
-      }
-    },
-    {
-      "table_name": "home_sections",
-      "row_data": {
-        "id": 5,
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "sort_order": 5,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "section_key": "featured_products",
-        "section_name": "Featured Products Section"
-      }
-    },
-    {
-      "table_name": "home_sections",
-      "row_data": {
-        "id": 6,
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "sort_order": 6,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "section_key": "trusted_partners",
-        "section_name": "Trusted Partners Section"
-      }
-    },
-    {
-      "table_name": "home_sections",
-      "row_data": {
-        "id": 7,
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "sort_order": 7,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "section_key": "cta",
-        "section_name": "Call to Action Section"
-      }
-    },
-    {
-      "table_name": "home_content_blocks",
-      "row_data": {
-        "id": 3,
-        "content": {
-          "color": "from-amber-500 to-amber-600",
-          "label": "Clients Count",
-          "value": "500+"
-        },
-        "block_key": "stat_3",
-        "block_type": "stat",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "section_id": 2,
-        "sort_order": 3,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00"
-      }
-    },
-    {
-      "table_name": "home_content_blocks",
-      "row_data": {
-        "id": 4,
-        "content": {
-          "color": "from-purple-500 to-purple-600",
-          "label": "Satisfaction Rate",
-          "value": "99%"
-        },
-        "block_key": "stat_4",
-        "block_type": "stat",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "section_id": 2,
-        "sort_order": 4,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00"
-      }
-    },
-    {
-      "table_name": "home_content_blocks",
-      "row_data": {
-        "id": 5,
-        "content": {
-          "tag": "badge",
-          "text": "About Quaval"
-        },
-        "block_key": "about_heading",
-        "block_type": "text",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "section_id": 3,
-        "sort_order": 1,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00"
-      }
-    },
-    {
-      "table_name": "home_content_blocks",
-      "row_data": {
-        "id": 7,
-        "content": {
-          "icon": "Globe"
-        },
-        "block_key": "about_highlight_1_icon",
-        "block_type": "icon",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "section_id": 3,
-        "sort_order": 3,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00"
-      }
-    },
-    {
-      "table_name": "home_content_blocks",
-      "row_data": {
-        "id": 8,
-        "content": {
-          "text": "Global Reach"
-        },
-        "block_key": "about_highlight_1_title",
-        "block_type": "text",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "section_id": 3,
-        "sort_order": 4,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00"
-      }
-    },
-    {
-      "table_name": "home_content_blocks",
-      "row_data": {
-        "id": 9,
-        "content": {
-          "text": "Serving customers worldwide with premium bearing solutions"
-        },
-        "block_key": "about_highlight_1_desc",
-        "block_type": "text",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "section_id": 3,
-        "sort_order": 5,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00"
-      }
-    },
-    {
-      "table_name": "home_content_blocks",
-      "row_data": {
-        "id": 10,
-        "content": {
-          "icon": "PenTool"
-        },
-        "block_key": "about_highlight_2_icon",
-        "block_type": "icon",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "section_id": 3,
-        "sort_order": 6,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00"
-      }
-    },
-    {
-      "table_name": "home_content_blocks",
-      "row_data": {
-        "id": 11,
-        "content": {
-          "text": "Custom Solutions"
-        },
-        "block_key": "about_highlight_2_title",
-        "block_type": "text",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "section_id": 3,
-        "sort_order": 7,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00"
-      }
-    },
-    {
-      "table_name": "home_content_blocks",
-      "row_data": {
-        "id": 12,
-        "content": {
-          "text": "Tailored bearing solutions for your specific requirements"
-        },
-        "block_key": "about_highlight_2_desc",
-        "block_type": "text",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "section_id": 3,
-        "sort_order": 8,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00"
-      }
-    },
-    {
-      "table_name": "home_content_blocks",
-      "row_data": {
-        "id": 13,
-        "content": {
-          "alt": "Quaval Bearings Facility",
-          "url": "https://www.quaval.ca/images/home/mission03.jpg"
-        },
-        "block_key": "about_image",
-        "block_type": "image",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "section_id": 3,
-        "sort_order": 9,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00"
-      }
-    },
-    {
-      "table_name": "home_content_blocks",
-      "row_data": {
-        "id": 14,
-        "content": {
-          "link": "/about",
-          "text": "Learn More",
-          "variant": "primary"
-        },
-        "block_key": "about_button_1",
-        "block_type": "button",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "section_id": 3,
-        "sort_order": 10,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00"
-      }
-    },
-    {
-      "table_name": "home_content_blocks",
-      "row_data": {
-        "id": 15,
-        "content": {
-          "link": "/contact",
-          "text": "Contact Us",
-          "variant": "outline"
-        },
-        "block_key": "about_button_2",
-        "block_type": "button",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "section_id": 3,
-        "sort_order": 11,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00"
-      }
-    },
-    {
-      "table_name": "home_content_blocks",
-      "row_data": {
-        "id": 16,
-        "content": {
-          "tag": "badge",
-          "text": "Welcome"
-        },
-        "block_key": "features_heading",
-        "block_type": "text",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "section_id": 4,
-        "sort_order": 1,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00"
-      }
-    },
-    {
-      "table_name": "home_content_blocks",
-      "row_data": {
-        "id": 17,
-        "content": {
-          "text": "Why Choose Quaval Bearings"
-        },
-        "block_key": "features_title",
-        "block_type": "text",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "section_id": 4,
-        "sort_order": 2,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00"
-      }
-    },
-    {
-      "table_name": "home_content_blocks",
-      "row_data": {
-        "id": 18,
-        "content": {
-          "text": "Discover the advantages of working with industry-leading bearing specialists"
-        },
-        "block_key": "features_subtitle",
-        "block_type": "text",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "section_id": 4,
-        "sort_order": 3,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00"
-      }
-    },
-    {
-      "table_name": "home_content_blocks",
-      "row_data": {
-        "id": 19,
-        "content": {
-          "icon": "Award",
-          "color": "bg-blue-100",
-          "title": "Premium Quality",
-          "textColor": "text-blue-700",
-          "hoverColor": "hover:bg-blue-50",
-          "borderColor": "border-blue-200",
-          "description": "Industry-leading bearings from trusted manufacturers"
-        },
-        "block_key": "feature_1",
-        "block_type": "feature",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "section_id": 4,
-        "sort_order": 4,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00"
-      }
-    },
-    {
-      "table_name": "home_content_blocks",
-      "row_data": {
-        "id": 20,
-        "content": {
-          "icon": "Clock",
-          "color": "bg-emerald-100",
-          "title": "Fast Delivery",
-          "textColor": "text-emerald-700",
-          "hoverColor": "hover:bg-emerald-50",
-          "borderColor": "border-emerald-200",
-          "description": "Quick turnaround times for all your bearing needs"
-        },
-        "block_key": "feature_2",
-        "block_type": "feature",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "section_id": 4,
-        "sort_order": 5,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00"
-      }
-    },
-    {
-      "table_name": "home_content_blocks",
-      "row_data": {
-        "id": 21,
-        "content": {
-          "icon": "Shield",
-          "color": "bg-purple-100",
-          "title": "Expert Support",
-          "textColor": "text-purple-700",
-          "hoverColor": "hover:bg-purple-50",
-          "borderColor": "border-purple-200",
-          "description": "Technical expertise to help you choose the right solution"
-        },
-        "block_key": "feature_3",
-        "block_type": "feature",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "section_id": 4,
-        "sort_order": 6,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00"
-      }
-    },
-    {
-      "table_name": "home_content_blocks",
-      "row_data": {
-        "id": 22,
-        "content": {
-          "tag": "badge",
-          "text": "Trusted By"
-        },
-        "block_key": "partners_heading",
-        "block_type": "text",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "section_id": 6,
-        "sort_order": 1,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00"
-      }
-    },
-    {
-      "table_name": "home_content_blocks",
-      "row_data": {
-        "id": 23,
-        "content": {
-          "text": "Industry Leaders Choose Quaval"
-        },
-        "block_key": "partners_title",
-        "block_type": "text",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "section_id": 6,
-        "sort_order": 2,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00"
-      }
-    },
-    {
-      "table_name": "home_content_blocks",
-      "row_data": {
-        "id": 24,
-        "content": {
-          "alt": "Partner 1",
-          "url": "/placeholder-logo.svg"
-        },
-        "block_key": "partner_logo_1",
-        "block_type": "image",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "section_id": 6,
-        "sort_order": 3,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00"
-      }
-    },
-    {
-      "table_name": "home_content_blocks",
-      "row_data": {
-        "id": 25,
-        "content": {
-          "alt": "Partner 2",
-          "url": "/placeholder-logo.svg"
-        },
-        "block_key": "partner_logo_2",
-        "block_type": "image",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "section_id": 6,
-        "sort_order": 4,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00"
-      }
-    },
-    {
-      "table_name": "home_content_blocks",
-      "row_data": {
-        "id": 26,
-        "content": {
-          "alt": "Partner 3",
-          "url": "/placeholder-logo.svg"
-        },
-        "block_key": "partner_logo_3",
-        "block_type": "image",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "section_id": 6,
-        "sort_order": 5,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00"
-      }
-    },
-    {
-      "table_name": "home_content_blocks",
-      "row_data": {
-        "id": 27,
-        "content": {
-          "alt": "Partner 4",
-          "url": "/placeholder-logo.svg"
-        },
-        "block_key": "partner_logo_4",
-        "block_type": "image",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "section_id": 6,
-        "sort_order": 6,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00"
-      }
-    },
-    {
-      "table_name": "home_content_blocks",
-      "row_data": {
-        "id": 28,
-        "content": {
-          "alt": "Partner 5",
-          "url": "/placeholder-logo.svg"
-        },
-        "block_key": "partner_logo_5",
-        "block_type": "image",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "section_id": 6,
-        "sort_order": 7,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00"
-      }
-    },
-    {
-      "table_name": "home_content_blocks",
-      "row_data": {
-        "id": 29,
-        "content": {
-          "alt": "Partner 6",
-          "url": "/placeholder-logo.svg"
-        },
-        "block_key": "partner_logo_6",
-        "block_type": "image",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "section_id": 6,
-        "sort_order": 8,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00"
-      }
-    },
-    {
-      "table_name": "home_content_blocks",
-      "row_data": {
-        "id": 30,
-        "content": {
-          "tag": "badge",
-          "text": "Get Started Today"
-        },
-        "block_key": "cta_heading",
-        "block_type": "text",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "section_id": 7,
-        "sort_order": 1,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00"
-      }
-    },
-    {
-      "table_name": "home_content_blocks",
-      "row_data": {
-        "id": 31,
-        "content": {
-          "text": "Ready to Find Your Perfect Bearing Solution?"
-        },
-        "block_key": "cta_title",
-        "block_type": "text",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "section_id": 7,
-        "sort_order": 2,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00"
-      }
-    },
-    {
-      "table_name": "home_content_blocks",
-      "row_data": {
-        "id": 32,
-        "content": {
-          "text": "Get expert advice and premium quality bearings delivered to your doorstep"
-        },
-        "block_key": "cta_subtitle",
-        "block_type": "text",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "section_id": 7,
-        "sort_order": 3,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00"
-      }
-    },
-    {
-      "table_name": "home_content_blocks",
-      "row_data": {
-        "id": 33,
-        "content": {
-          "icon": "Truck",
-          "title": "Fast Shipping",
-          "description": "Quick delivery across North America"
-        },
-        "block_key": "cta_feature_1",
-        "block_type": "feature",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "section_id": 7,
-        "sort_order": 4,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00"
-      }
-    },
-    {
-      "table_name": "home_content_blocks",
-      "row_data": {
-        "id": 34,
-        "content": {
-          "icon": "CheckCircle",
-          "title": "Quality Guaranteed",
-          "description": "All products backed by warranty"
-        },
-        "block_key": "cta_feature_2",
-        "block_type": "feature",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "section_id": 7,
-        "sort_order": 5,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00"
-      }
-    },
-    {
-      "table_name": "home_content_blocks",
-      "row_data": {
-        "id": 35,
-        "content": {
-          "icon": "PenTool",
-          "title": "Custom Solutions",
-          "description": "Tailored to your specifications"
-        },
-        "block_key": "cta_feature_3",
-        "block_type": "feature",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "section_id": 7,
-        "sort_order": 6,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00"
-      }
-    },
-    {
-      "table_name": "home_content_blocks",
-      "row_data": {
-        "id": 36,
-        "content": {
-          "link": "/products",
-          "text": "View Products",
-          "variant": "primary"
-        },
-        "block_key": "cta_button_1",
-        "block_type": "button",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "section_id": 7,
-        "sort_order": 7,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00"
-      }
-    },
-    {
-      "table_name": "home_content_blocks",
-      "row_data": {
-        "id": 37,
-        "content": {
-          "link": "/contact",
-          "text": "Contact Us",
-          "variant": "outline"
-        },
-        "block_key": "cta_button_2",
-        "block_type": "button",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "section_id": 7,
-        "sort_order": 8,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00"
-      }
-    },
-    {
-      "table_name": "home_content_blocks",
-      "row_data": {
-        "id": 2,
-        "content": {
-          "color": "from-emerald-500 to-emerald-600",
-          "label": "Products Count",
-          "value": "100+"
-        },
-        "block_key": "stat_2",
-        "block_type": "stat",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "section_id": 2,
-        "sort_order": 2,
-        "updated_at": "2025-07-28T18:11:56.850289+00:00"
-      }
-    },
-    {
-      "table_name": "home_content_blocks",
-      "row_data": {
-        "id": 6,
-        "content": {
-          "text": "Leading Bearing Solutions Provider"
-        },
-        "block_key": "about_title",
-        "block_type": "text",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "section_id": 3,
-        "sort_order": 2,
-        "updated_at": "2025-07-28T18:14:19.327773+00:00"
-      }
-    },
-    {
-      "table_name": "home_content_blocks",
-      "row_data": {
-        "id": 1,
-        "content": {
-          "color": "from-blue-500 to-blue-600",
-          "label": "Years Experience",
-          "value": "15+"
-        },
-        "block_key": "stat_1",
-        "block_type": "stat",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "section_id": 2,
-        "sort_order": 1,
-        "updated_at": "2025-07-28T18:11:43.759316+00:00"
-      }
-    },
-    {
-      "table_name": "home_content_translations",
-      "row_data": {
-        "id": 1,
-        "locale": "es",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "content_block_id": 1,
-        "translated_content": {
-          "color": "from-blue-500 to-blue-600",
-          "label": "Años de Experiencia",
-          "value": "15+"
-        }
-      }
-    },
-    {
-      "table_name": "home_content_translations",
-      "row_data": {
-        "id": 2,
-        "locale": "es",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "content_block_id": 5,
-        "translated_content": {
-          "tag": "badge",
-          "text": "Acerca de Quaval"
-        }
-      }
-    },
-    {
-      "table_name": "home_content_translations",
-      "row_data": {
-        "id": 3,
-        "locale": "es",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "content_block_id": 6,
-        "translated_content": {
-          "text": "Proveedor Líder de Soluciones de Rodamientos"
-        }
-      }
-    },
-    {
-      "table_name": "home_content_translations",
-      "row_data": {
-        "id": 4,
-        "locale": "es",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "content_block_id": 8,
-        "translated_content": {
-          "text": "Alcance Global"
-        }
-      }
-    },
-    {
-      "table_name": "home_content_translations",
-      "row_data": {
-        "id": 5,
-        "locale": "es",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "content_block_id": 11,
-        "translated_content": {
-          "text": "Soluciones Personalizadas"
-        }
-      }
-    },
-    {
-      "table_name": "home_content_translations",
-      "row_data": {
-        "id": 6,
-        "locale": "fr",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "content_block_id": 1,
-        "translated_content": {
-          "color": "from-blue-500 to-blue-600",
-          "label": "Années d'Expérience",
-          "value": "15+"
-        }
-      }
-    },
-    {
-      "table_name": "home_content_translations",
-      "row_data": {
-        "id": 7,
-        "locale": "fr",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "content_block_id": 5,
-        "translated_content": {
-          "tag": "badge",
-          "text": "À Propos de Quaval"
-        }
-      }
-    },
-    {
-      "table_name": "home_content_translations",
-      "row_data": {
-        "id": 8,
-        "locale": "fr",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "content_block_id": 6,
-        "translated_content": {
-          "text": "Fournisseur Leader de Solutions de Roulements"
-        }
-      }
-    },
-    {
-      "table_name": "home_content_translations",
-      "row_data": {
-        "id": 9,
-        "locale": "fr",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "content_block_id": 8,
-        "translated_content": {
-          "text": "Portée Mondiale"
-        }
-      }
-    },
-    {
-      "table_name": "home_content_translations",
-      "row_data": {
-        "id": 10,
-        "locale": "fr",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "content_block_id": 11,
-        "translated_content": {
-          "text": "Solutions Personnalisées"
-        }
-      }
-    },
-    {
-      "table_name": "footer_content",
-      "row_data": {
-        "id": 1,
-        "content": {
-          "alt": "Quaval Bearings Logo",
-          "url": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-W3AYNZkfFMTjKw4qXp4fHkySoTb6oo.png"
-        },
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "sort_order": 1,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "content_key": "company_logo",
-        "content_type": "image"
-      }
-    },
-    {
-      "table_name": "footer_content",
-      "row_data": {
-        "id": 2,
-        "content": {
-          "text": "Premium bearing solutions for industrial applications"
-        },
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "sort_order": 2,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "content_key": "company_tagline",
-        "content_type": "text"
-      }
-    },
-    {
-      "table_name": "footer_content",
-      "row_data": {
-        "id": 3,
-        "content": {
-          "text": "Quick Links"
-        },
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "sort_order": 3,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "content_key": "quick_links_title",
-        "content_type": "text"
-      }
-    },
-    {
-      "table_name": "footer_content",
-      "row_data": {
-        "id": 4,
-        "content": {
-          "url": "/products",
-          "text": "Products"
-        },
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "sort_order": 4,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "content_key": "quick_link_products",
-        "content_type": "link"
-      }
-    },
-    {
-      "table_name": "footer_content",
-      "row_data": {
-        "id": 5,
-        "content": {
-          "url": "/about-us",
-          "text": "About"
-        },
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "sort_order": 5,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "content_key": "quick_link_about",
-        "content_type": "link"
-      }
-    },
-    {
-      "table_name": "footer_content",
-      "row_data": {
-        "id": 6,
-        "content": {
-          "url": "/services",
-          "text": "Services"
-        },
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "sort_order": 6,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "content_key": "quick_link_services",
-        "content_type": "link"
-      }
-    },
-    {
-      "table_name": "footer_content",
-      "row_data": {
-        "id": 7,
-        "content": {
-          "url": "/contact",
-          "text": "Contact"
-        },
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "sort_order": 7,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "content_key": "quick_link_contact",
-        "content_type": "link"
-      }
-    },
-    {
-      "table_name": "footer_content",
-      "row_data": {
-        "id": 8,
-        "content": {
-          "url": "/resources",
-          "text": "Resources"
-        },
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "sort_order": 8,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "content_key": "quick_link_resources",
-        "content_type": "link"
-      }
-    },
-    {
-      "table_name": "footer_content",
-      "row_data": {
-        "id": 9,
-        "content": {
-          "text": "Contact Us"
-        },
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "sort_order": 9,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "content_key": "contact_title",
-        "content_type": "text"
-      }
-    },
-    {
-      "table_name": "footer_content",
-      "row_data": {
-        "id": 10,
-        "content": {
-          "text": "123 Industrial Way"
-        },
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "sort_order": 10,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "content_key": "contact_address_1",
-        "content_type": "text"
-      }
-    },
-    {
-      "table_name": "footer_content",
-      "row_data": {
-        "id": 11,
-        "content": {
-          "text": "Toronto, ON M1A 1A1"
-        },
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "sort_order": 11,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "content_key": "contact_address_2",
-        "content_type": "text"
-      }
-    },
-    {
-      "table_name": "footer_content",
-      "row_data": {
-        "id": 12,
-        "content": {
-          "text": "(416) 555-0123"
-        },
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "sort_order": 12,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "content_key": "contact_phone",
-        "content_type": "text"
-      }
-    },
-    {
-      "table_name": "footer_content",
-      "row_data": {
-        "id": 13,
-        "content": {
-          "text": "Newsletter"
-        },
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "sort_order": 13,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "content_key": "newsletter_title",
-        "content_type": "text"
-      }
-    },
-    {
-      "table_name": "footer_content",
-      "row_data": {
-        "id": 14,
-        "content": {
-          "text": "Stay updated with our latest products and offers"
-        },
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "sort_order": 14,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "content_key": "newsletter_text",
-        "content_type": "text"
-      }
-    },
-    {
-      "table_name": "footer_content",
-      "row_data": {
-        "id": 15,
-        "content": {
-          "text": "Enter your email"
-        },
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "sort_order": 15,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "content_key": "newsletter_placeholder",
-        "content_type": "text"
-      }
-    },
-    {
-      "table_name": "footer_content",
-      "row_data": {
-        "id": 16,
-        "content": {
-          "text": "Subscribe"
-        },
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "sort_order": 16,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "content_key": "newsletter_button",
-        "content_type": "text"
-      }
-    },
-    {
-      "table_name": "footer_content",
-      "row_data": {
-        "id": 17,
-        "content": {
-          "url": "#",
-          "icon": "Facebook",
-          "platform": "facebook"
-        },
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "sort_order": 17,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "content_key": "social_facebook",
-        "content_type": "social_media"
-      }
-    },
-    {
-      "table_name": "footer_content",
-      "row_data": {
-        "id": 18,
-        "content": {
-          "url": "#",
-          "icon": "Twitter",
-          "platform": "twitter"
-        },
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "sort_order": 18,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "content_key": "social_twitter",
-        "content_type": "social_media"
-      }
-    },
-    {
-      "table_name": "footer_content",
-      "row_data": {
-        "id": 19,
-        "content": {
-          "url": "#",
-          "icon": "LinkedIn",
-          "platform": "linkedin"
-        },
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "sort_order": 19,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "content_key": "social_linkedin",
-        "content_type": "social_media"
-      }
-    },
-    {
-      "table_name": "footer_content",
-      "row_data": {
-        "id": 20,
-        "content": {
-          "url": "#",
-          "icon": "Instagram",
-          "platform": "instagram"
-        },
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "sort_order": 20,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "content_key": "social_instagram",
-        "content_type": "social_media"
-      }
-    },
-    {
-      "table_name": "footer_content",
-      "row_data": {
-        "id": 21,
-        "content": {
-          "text": "© 2024 Quaval Bearings. All rights reserved."
-        },
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "is_enabled": true,
-        "sort_order": 21,
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "content_key": "copyright",
-        "content_type": "text"
-      }
-    },
-    {
-      "table_name": "footer_content_translations",
-      "row_data": {
-        "id": 1,
-        "locale": "es",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "footer_content_id": 2,
-        "translated_content": {
-          "text": "Soluciones premium de rodamientos para aplicaciones industriales"
-        }
-      }
-    },
-    {
-      "table_name": "footer_content_translations",
-      "row_data": {
-        "id": 2,
-        "locale": "es",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "footer_content_id": 3,
-        "translated_content": {
-          "text": "Enlaces Rápidos"
-        }
-      }
-    },
-    {
-      "table_name": "footer_content_translations",
-      "row_data": {
-        "id": 3,
-        "locale": "es",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "footer_content_id": 4,
-        "translated_content": {
-          "url": "/products",
-          "text": "Productos"
-        }
-      }
-    },
-    {
-      "table_name": "footer_content_translations",
-      "row_data": {
-        "id": 4,
-        "locale": "es",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "footer_content_id": 5,
-        "translated_content": {
-          "url": "/about-us",
-          "text": "Acerca de"
-        }
-      }
-    },
-    {
-      "table_name": "footer_content_translations",
-      "row_data": {
-        "id": 5,
-        "locale": "es",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "footer_content_id": 6,
-        "translated_content": {
-          "url": "/services",
-          "text": "Servicios"
-        }
-      }
-    },
-    {
-      "table_name": "footer_content_translations",
-      "row_data": {
-        "id": 6,
-        "locale": "es",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "footer_content_id": 7,
-        "translated_content": {
-          "url": "/contact",
-          "text": "Contacto"
-        }
-      }
-    },
-    {
-      "table_name": "footer_content_translations",
-      "row_data": {
-        "id": 7,
-        "locale": "es",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "footer_content_id": 8,
-        "translated_content": {
-          "url": "/resources",
-          "text": "Recursos"
-        }
-      }
-    },
-    {
-      "table_name": "footer_content_translations",
-      "row_data": {
-        "id": 8,
-        "locale": "es",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "footer_content_id": 9,
-        "translated_content": {
-          "text": "Contáctanos"
-        }
-      }
-    },
-    {
-      "table_name": "footer_content_translations",
-      "row_data": {
-        "id": 9,
-        "locale": "es",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "footer_content_id": 10,
-        "translated_content": {
-          "text": "123 Industrial Way"
-        }
-      }
-    },
-    {
-      "table_name": "footer_content_translations",
-      "row_data": {
-        "id": 10,
-        "locale": "es",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "footer_content_id": 11,
-        "translated_content": {
-          "text": "Toronto, ON M1A 1A1"
-        }
-      }
-    },
-    {
-      "table_name": "footer_content_translations",
-      "row_data": {
-        "id": 11,
-        "locale": "es",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "footer_content_id": 12,
-        "translated_content": {
-          "text": "(416) 555-0123"
-        }
-      }
-    },
-    {
-      "table_name": "footer_content_translations",
-      "row_data": {
-        "id": 12,
-        "locale": "es",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "footer_content_id": 13,
-        "translated_content": {
-          "text": "Boletín"
-        }
-      }
-    },
-    {
-      "table_name": "footer_content_translations",
-      "row_data": {
-        "id": 13,
-        "locale": "es",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "footer_content_id": 14,
-        "translated_content": {
-          "text": "Mantente actualizado con nuestros últimos productos y ofertas"
-        }
-      }
-    },
-    {
-      "table_name": "footer_content_translations",
-      "row_data": {
-        "id": 14,
-        "locale": "es",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "footer_content_id": 15,
-        "translated_content": {
-          "text": "Ingresa tu email"
-        }
-      }
-    },
-    {
-      "table_name": "footer_content_translations",
-      "row_data": {
-        "id": 15,
-        "locale": "es",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "footer_content_id": 16,
-        "translated_content": {
-          "text": "Suscribirse"
-        }
-      }
-    },
-    {
-      "table_name": "footer_content_translations",
-      "row_data": {
-        "id": 16,
-        "locale": "es",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "footer_content_id": 21,
-        "translated_content": {
-          "text": "© 2024 Quaval Bearings. Todos los derechos reservados."
-        }
-      }
-    },
-    {
-      "table_name": "footer_content_translations",
-      "row_data": {
-        "id": 17,
-        "locale": "fr",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "footer_content_id": 2,
-        "translated_content": {
-          "text": "Solutions de roulements premium pour applications industrielles"
-        }
-      }
-    },
-    {
-      "table_name": "footer_content_translations",
-      "row_data": {
-        "id": 18,
-        "locale": "fr",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "footer_content_id": 3,
-        "translated_content": {
-          "text": "Liens Rapides"
-        }
-      }
-    },
-    {
-      "table_name": "footer_content_translations",
-      "row_data": {
-        "id": 19,
-        "locale": "fr",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "footer_content_id": 4,
-        "translated_content": {
-          "url": "/products",
-          "text": "Produits"
-        }
-      }
-    },
-    {
-      "table_name": "footer_content_translations",
-      "row_data": {
-        "id": 20,
-        "locale": "fr",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "footer_content_id": 5,
-        "translated_content": {
-          "url": "/about-us",
-          "text": "À Propos"
-        }
-      }
-    },
-    {
-      "table_name": "footer_content_translations",
-      "row_data": {
-        "id": 21,
-        "locale": "fr",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "footer_content_id": 6,
-        "translated_content": {
-          "url": "/services",
-          "text": "Services"
-        }
-      }
-    },
-    {
-      "table_name": "footer_content_translations",
-      "row_data": {
-        "id": 22,
-        "locale": "fr",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "footer_content_id": 7,
-        "translated_content": {
-          "url": "/contact",
-          "text": "Contact"
-        }
-      }
-    },
-    {
-      "table_name": "footer_content_translations",
-      "row_data": {
-        "id": 23,
-        "locale": "fr",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "footer_content_id": 8,
-        "translated_content": {
-          "url": "/resources",
-          "text": "Ressources"
-        }
-      }
-    },
-    {
-      "table_name": "footer_content_translations",
-      "row_data": {
-        "id": 24,
-        "locale": "fr",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "footer_content_id": 9,
-        "translated_content": {
-          "text": "Contactez-Nous"
-        }
-      }
-    },
-    {
-      "table_name": "footer_content_translations",
-      "row_data": {
-        "id": 25,
-        "locale": "fr",
-        "created_at": "2025-07-26T21:57:12.213478+00:00",
-        "updated_at": "2025-07-26T21:57:12.213478+00:00",
-        "footer_content_id": 10,
-        "translated_content": {
-          "text": "123 Industrial Way"
-        }
-      }
-    }
-  ]
+  {
+    "table_name": "banner_translations",
+    "column_name": "id",
+    "data_type": "integer",
+    "is_nullable": "NO",
+    "column_default": "nextval('banner_translations_id_seq'::regclass)"
+  },
+  {
+    "table_name": "banner_translations",
+    "column_name": "banner_id",
+    "data_type": "integer",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "banner_translations",
+    "column_name": "locale",
+    "data_type": "character varying",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "banner_translations",
+    "column_name": "title",
+    "data_type": "text",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "banner_translations",
+    "column_name": "description",
+    "data_type": "text",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "banner_translations",
+    "column_name": "button_text",
+    "data_type": "text",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "banner_translations",
+    "column_name": "created_at",
+    "data_type": "timestamp with time zone",
+    "is_nullable": "YES",
+    "column_default": "CURRENT_TIMESTAMP"
+  },
+  {
+    "table_name": "banner_translations",
+    "column_name": "updated_at",
+    "data_type": "timestamp with time zone",
+    "is_nullable": "YES",
+    "column_default": "CURRENT_TIMESTAMP"
+  },
+  {
+    "table_name": "banners",
+    "column_name": "id",
+    "data_type": "integer",
+    "is_nullable": "NO",
+    "column_default": "nextval('banners_id_seq'::regclass)"
+  },
+  {
+    "table_name": "banners",
+    "column_name": "title",
+    "data_type": "text",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "banners",
+    "column_name": "description",
+    "data_type": "text",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "banners",
+    "column_name": "button_text",
+    "data_type": "text",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "banners",
+    "column_name": "button_link",
+    "data_type": "text",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "banners",
+    "column_name": "image",
+    "data_type": "text",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "footer_content",
+    "column_name": "id",
+    "data_type": "integer",
+    "is_nullable": "NO",
+    "column_default": "nextval('footer_content_id_seq'::regclass)"
+  },
+  {
+    "table_name": "footer_content",
+    "column_name": "content_key",
+    "data_type": "character varying",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "footer_content",
+    "column_name": "content_type",
+    "data_type": "character varying",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "footer_content",
+    "column_name": "content",
+    "data_type": "jsonb",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "footer_content",
+    "column_name": "sort_order",
+    "data_type": "integer",
+    "is_nullable": "YES",
+    "column_default": "0"
+  },
+  {
+    "table_name": "footer_content",
+    "column_name": "is_enabled",
+    "data_type": "boolean",
+    "is_nullable": "YES",
+    "column_default": "true"
+  },
+  {
+    "table_name": "footer_content",
+    "column_name": "created_at",
+    "data_type": "timestamp with time zone",
+    "is_nullable": "YES",
+    "column_default": "CURRENT_TIMESTAMP"
+  },
+  {
+    "table_name": "footer_content",
+    "column_name": "updated_at",
+    "data_type": "timestamp with time zone",
+    "is_nullable": "YES",
+    "column_default": "CURRENT_TIMESTAMP"
+  },
+  {
+    "table_name": "footer_content_translations",
+    "column_name": "id",
+    "data_type": "integer",
+    "is_nullable": "NO",
+    "column_default": "nextval('footer_content_translations_id_seq'::regclass)"
+  },
+  {
+    "table_name": "footer_content_translations",
+    "column_name": "footer_content_id",
+    "data_type": "integer",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "footer_content_translations",
+    "column_name": "locale",
+    "data_type": "character varying",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "footer_content_translations",
+    "column_name": "translated_content",
+    "data_type": "jsonb",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "footer_content_translations",
+    "column_name": "created_at",
+    "data_type": "timestamp with time zone",
+    "is_nullable": "YES",
+    "column_default": "CURRENT_TIMESTAMP"
+  },
+  {
+    "table_name": "footer_content_translations",
+    "column_name": "updated_at",
+    "data_type": "timestamp with time zone",
+    "is_nullable": "YES",
+    "column_default": "CURRENT_TIMESTAMP"
+  },
+  {
+    "table_name": "home_content_blocks",
+    "column_name": "id",
+    "data_type": "integer",
+    "is_nullable": "NO",
+    "column_default": "nextval('home_content_blocks_id_seq'::regclass)"
+  },
+  {
+    "table_name": "home_content_blocks",
+    "column_name": "section_id",
+    "data_type": "integer",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "home_content_blocks",
+    "column_name": "block_key",
+    "data_type": "character varying",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "home_content_blocks",
+    "column_name": "block_type",
+    "data_type": "character varying",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "home_content_blocks",
+    "column_name": "content",
+    "data_type": "jsonb",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "home_content_blocks",
+    "column_name": "sort_order",
+    "data_type": "integer",
+    "is_nullable": "YES",
+    "column_default": "0"
+  },
+  {
+    "table_name": "home_content_blocks",
+    "column_name": "is_enabled",
+    "data_type": "boolean",
+    "is_nullable": "YES",
+    "column_default": "true"
+  },
+  {
+    "table_name": "home_content_blocks",
+    "column_name": "created_at",
+    "data_type": "timestamp with time zone",
+    "is_nullable": "YES",
+    "column_default": "CURRENT_TIMESTAMP"
+  },
+  {
+    "table_name": "home_content_blocks",
+    "column_name": "updated_at",
+    "data_type": "timestamp with time zone",
+    "is_nullable": "YES",
+    "column_default": "CURRENT_TIMESTAMP"
+  },
+  {
+    "table_name": "home_content_translations",
+    "column_name": "id",
+    "data_type": "integer",
+    "is_nullable": "NO",
+    "column_default": "nextval('home_content_translations_id_seq'::regclass)"
+  },
+  {
+    "table_name": "home_content_translations",
+    "column_name": "content_block_id",
+    "data_type": "integer",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "home_content_translations",
+    "column_name": "locale",
+    "data_type": "character varying",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "home_content_translations",
+    "column_name": "translated_content",
+    "data_type": "jsonb",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "home_content_translations",
+    "column_name": "created_at",
+    "data_type": "timestamp with time zone",
+    "is_nullable": "YES",
+    "column_default": "CURRENT_TIMESTAMP"
+  },
+  {
+    "table_name": "home_content_translations",
+    "column_name": "updated_at",
+    "data_type": "timestamp with time zone",
+    "is_nullable": "YES",
+    "column_default": "CURRENT_TIMESTAMP"
+  },
+  {
+    "table_name": "home_sections",
+    "column_name": "id",
+    "data_type": "integer",
+    "is_nullable": "NO",
+    "column_default": "nextval('home_sections_id_seq'::regclass)"
+  },
+  {
+    "table_name": "home_sections",
+    "column_name": "section_key",
+    "data_type": "character varying",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "home_sections",
+    "column_name": "section_name",
+    "data_type": "character varying",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "home_sections",
+    "column_name": "is_enabled",
+    "data_type": "boolean",
+    "is_nullable": "YES",
+    "column_default": "true"
+  },
+  {
+    "table_name": "home_sections",
+    "column_name": "sort_order",
+    "data_type": "integer",
+    "is_nullable": "YES",
+    "column_default": "0"
+  },
+  {
+    "table_name": "home_sections",
+    "column_name": "created_at",
+    "data_type": "timestamp with time zone",
+    "is_nullable": "YES",
+    "column_default": "CURRENT_TIMESTAMP"
+  },
+  {
+    "table_name": "home_sections",
+    "column_name": "updated_at",
+    "data_type": "timestamp with time zone",
+    "is_nullable": "YES",
+    "column_default": "CURRENT_TIMESTAMP"
+  },
+  {
+    "table_name": "order_items",
+    "column_name": "id",
+    "data_type": "integer",
+    "is_nullable": "NO",
+    "column_default": "nextval('order_items_id_seq'::regclass)"
+  },
+  {
+    "table_name": "order_items",
+    "column_name": "order_id",
+    "data_type": "uuid",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "order_items",
+    "column_name": "product_id",
+    "data_type": "integer",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "order_items",
+    "column_name": "quantity",
+    "data_type": "integer",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "order_items",
+    "column_name": "price",
+    "data_type": "numeric",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "order_items",
+    "column_name": "created_at",
+    "data_type": "timestamp with time zone",
+    "is_nullable": "YES",
+    "column_default": "now()"
+  },
+  {
+    "table_name": "orders",
+    "column_name": "id",
+    "data_type": "uuid",
+    "is_nullable": "NO",
+    "column_default": "gen_random_uuid()"
+  },
+  {
+    "table_name": "orders",
+    "column_name": "user_id",
+    "data_type": "uuid",
+    "is_nullable": "YES",
+    "column_default": null
+  },
+  {
+    "table_name": "orders",
+    "column_name": "items",
+    "data_type": "jsonb",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "orders",
+    "column_name": "status",
+    "data_type": "text",
+    "is_nullable": "NO",
+    "column_default": "'pending'::text"
+  },
+  {
+    "table_name": "orders",
+    "column_name": "total",
+    "data_type": "numeric",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "orders",
+    "column_name": "created_at",
+    "data_type": "timestamp with time zone",
+    "is_nullable": "NO",
+    "column_default": "now()"
+  },
+  {
+    "table_name": "orders",
+    "column_name": "shipping_info",
+    "data_type": "jsonb",
+    "is_nullable": "YES",
+    "column_default": null
+  },
+  {
+    "table_name": "orders",
+    "column_name": "stripe_session_id",
+    "data_type": "text",
+    "is_nullable": "YES",
+    "column_default": null
+  },
+  {
+    "table_name": "orders",
+    "column_name": "updated_at",
+    "data_type": "timestamp with time zone",
+    "is_nullable": "YES",
+    "column_default": "now()"
+  },
+  {
+    "table_name": "orders",
+    "column_name": "order_number",
+    "data_type": "text",
+    "is_nullable": "YES",
+    "column_default": null
+  },
+  {
+    "table_name": "orders",
+    "column_name": "shipping_address",
+    "data_type": "jsonb",
+    "is_nullable": "YES",
+    "column_default": null
+  },
+  {
+    "table_name": "orders",
+    "column_name": "awb_number",
+    "data_type": "text",
+    "is_nullable": "YES",
+    "column_default": null
+  },
+  {
+    "table_name": "orders",
+    "column_name": "user_email",
+    "data_type": "text",
+    "is_nullable": "YES",
+    "column_default": null
+  },
+  {
+    "table_name": "product_families",
+    "column_name": "id",
+    "data_type": "integer",
+    "is_nullable": "NO",
+    "column_default": "nextval('product_families_id_seq'::regclass)"
+  },
+  {
+    "table_name": "product_families",
+    "column_name": "name",
+    "data_type": "text",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "product_families",
+    "column_name": "brand",
+    "data_type": "text",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "product_families",
+    "column_name": "origin",
+    "data_type": "text",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "product_families",
+    "column_name": "created_at",
+    "data_type": "timestamp with time zone",
+    "is_nullable": "YES",
+    "column_default": "CURRENT_TIMESTAMP"
+  },
+  {
+    "table_name": "products",
+    "column_name": "id",
+    "data_type": "integer",
+    "is_nullable": "NO",
+    "column_default": "nextval('products_id_seq'::regclass)"
+  },
+  {
+    "table_name": "products",
+    "column_name": "family_id",
+    "data_type": "integer",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "products",
+    "column_name": "part_number",
+    "data_type": "text",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "products",
+    "column_name": "price",
+    "data_type": "numeric",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "products",
+    "column_name": "shipping_cost",
+    "data_type": "text",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "products",
+    "column_name": "stock_status",
+    "data_type": "text",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "products",
+    "column_name": "stock_quantity",
+    "data_type": "integer",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "products",
+    "column_name": "images",
+    "data_type": "ARRAY",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "products",
+    "column_name": "applications",
+    "data_type": "ARRAY",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "products",
+    "column_name": "shipping_time",
+    "data_type": "text",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "products",
+    "column_name": "payment_methods",
+    "data_type": "ARRAY",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "products",
+    "column_name": "rating",
+    "data_type": "numeric",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "products",
+    "column_name": "review_count",
+    "data_type": "integer",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "products",
+    "column_name": "datasheet",
+    "data_type": "text",
+    "is_nullable": "YES",
+    "column_default": null
+  },
+  {
+    "table_name": "products",
+    "column_name": "related_products",
+    "data_type": "ARRAY",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "products",
+    "column_name": "countries",
+    "data_type": "ARRAY",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "products",
+    "column_name": "manufacturing_id",
+    "data_type": "text",
+    "is_nullable": "YES",
+    "column_default": null
+  },
+  {
+    "table_name": "products",
+    "column_name": "upc",
+    "data_type": "text",
+    "is_nullable": "YES",
+    "column_default": null
+  },
+  {
+    "table_name": "products",
+    "column_name": "dimensions",
+    "data_type": "jsonb",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "products",
+    "column_name": "load_ratings",
+    "data_type": "jsonb",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "products",
+    "column_name": "technical_features",
+    "data_type": "jsonb",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "products",
+    "column_name": "suffix_descriptions",
+    "data_type": "jsonb",
+    "is_nullable": "YES",
+    "column_default": null
+  },
+  {
+    "table_name": "products",
+    "column_name": "parallel_products",
+    "data_type": "jsonb",
+    "is_nullable": "YES",
+    "column_default": null
+  },
+  {
+    "table_name": "products",
+    "column_name": "created_at",
+    "data_type": "timestamp with time zone",
+    "is_nullable": "YES",
+    "column_default": "CURRENT_TIMESTAMP"
+  },
+  {
+    "table_name": "profiles",
+    "column_name": "id",
+    "data_type": "uuid",
+    "is_nullable": "NO",
+    "column_default": null
+  },
+  {
+    "table_name": "profiles",
+    "column_name": "first_name",
+    "data_type": "text",
+    "is_nullable": "YES",
+    "column_default": null
+  }
+]

@@ -25,42 +25,167 @@ export function FooterEditor({ content, onUpdate }: FooterEditorProps) {
   const copyright = findContent(content, 'copyright');
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-      <div className="space-y-4">
-        <h3 className="font-semibold">Company Info</h3>
-        {logo && <EditableImage initialValue={logo.content.url} onSave={url => onUpdate({ ...logo, content: { ...logo.content, url } })} />}
-        {tagline && <EditableText initialValue={tagline.content.text} onSave={text => onUpdate({ ...tagline, content: { text } })} />}
-      </div>
-
-      <div className="space-y-4">
-        {quickLinksTitle && <EditableText initialValue={quickLinksTitle.content.text} onSave={text => onUpdate({ ...quickLinksTitle, content: { text } })} />}
-        {quickLinks.map(link => (
-          <div key={link.id} className="p-2 border-b">
-            <EditableText initialValue={link.content.text} onSave={text => onUpdate({ ...link, content: { ...link.content, text } })} />
-            <EditableText initialValue={link.content.url} onSave={url => onUpdate({ ...link, content: { ...link.content, url } })} />
+    <div className="space-y-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* Company Info Section */}
+        <div className="space-y-4 p-4 border rounded-lg bg-gray-50">
+          <h3 className="font-semibold text-lg text-gray-800 border-b pb-2">Company Info</h3>
+          <div className="space-y-3">
+            {logo && (
+              <EditableImage 
+                initialValue={logo.content.url} 
+                onSave={url => onUpdate({ ...logo, content: { ...logo.content, url } })} 
+                label="Company Logo"
+              />
+            )}
+            {tagline && (
+              <EditableText 
+                initialValue={tagline.content.text} 
+                onSave={text => onUpdate({ ...tagline, content: { text } })} 
+                label="Company Tagline"
+                placeholder="Enter company tagline..."
+              />
+            )}
           </div>
-        ))}
-      </div>
-
-      <div className="space-y-4">
-        {contactTitle && <EditableText initialValue={contactTitle.content.text} onSave={text => onUpdate({ ...contactTitle, content: { text } })} />}
-        {address1 && <EditableText initialValue={address1.content.text} onSave={text => onUpdate({ ...address1, content: { text } })} />}
-        {address2 && <EditableText initialValue={address2.content.text} onSave={text => onUpdate({ ...address2, content: { text } })} />}
-        {phone && <EditableText initialValue={phone.content.text} onSave={text => onUpdate({ ...phone, content: { text } })} />}
-      </div>
-
-      <div className="space-y-4">
-        {newsletterTitle && <EditableText initialValue={newsletterTitle.content.text} onSave={text => onUpdate({ ...newsletterTitle, content: { text } })} />}
-        {newsletterText && <EditableText initialValue={newsletterText.content.text} onSave={text => onUpdate({ ...newsletterText, content: { text } })} />}
-        <div className="flex gap-2">
-            {socialLinks.map(link => (
-                <div key={link.id} className="p-2 border rounded-md">
-                    <EditableText initialValue={link.content.platform} onSave={platform => onUpdate({...link, content: {...link.content, platform}})} />
-                    <EditableText initialValue={link.content.url} onSave={url => onUpdate({...link, content: {...link.content, url}})} />
-                </div>
-            ))}
         </div>
-        {copyright && <EditableText initialValue={copyright.content.text} onSave={text => onUpdate({ ...copyright, content: { text } })} />}
+
+        {/* Quick Links Section */}
+        <div className="space-y-4 p-4 border rounded-lg bg-gray-50">
+          <h3 className="font-semibold text-lg text-gray-800 border-b pb-2">Quick Links</h3>
+          <div className="space-y-3">
+            {quickLinksTitle && (
+              <EditableText 
+                initialValue={quickLinksTitle.content.text} 
+                onSave={text => onUpdate({ ...quickLinksTitle, content: { text } })} 
+                label="Section Title"
+                placeholder="e.g., Quick Links"
+              />
+            )}
+            <div className="space-y-3">
+              <h4 className="text-sm font-medium text-gray-600">Navigation Links</h4>
+              {quickLinks.map((link, index) => (
+                <div key={link.id} className="p-3 border rounded-md bg-white space-y-2">
+                  <div className="text-xs text-gray-500 font-medium">Link {index + 1}</div>
+                  <EditableText 
+                    initialValue={link.content.text} 
+                    onSave={text => onUpdate({ ...link, content: { ...link.content, text } })} 
+                    label="Link Text"
+                    placeholder="e.g., About Us"
+                  />
+                  <EditableText 
+                    initialValue={link.content.url} 
+                    onSave={url => onUpdate({ ...link, content: { ...link.content, url } })} 
+                    label="Link URL"
+                    placeholder="e.g., /about"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Contact Info Section */}
+        <div className="space-y-4 p-4 border rounded-lg bg-gray-50">
+          <h3 className="font-semibold text-lg text-gray-800 border-b pb-2">Contact Info</h3>
+          <div className="space-y-3">
+            {contactTitle && (
+              <EditableText 
+                initialValue={contactTitle.content.text} 
+                onSave={text => onUpdate({ ...contactTitle, content: { text } })} 
+                label="Section Title"
+                placeholder="e.g., Contact Us"
+              />
+            )}
+            {address1 && (
+              <EditableText 
+                initialValue={address1.content.text} 
+                onSave={text => onUpdate({ ...address1, content: { text } })} 
+                label="Address Line 1"
+                placeholder="e.g., 123 Main Street"
+              />
+            )}
+            {address2 && (
+              <EditableText 
+                initialValue={address2.content.text} 
+                onSave={text => onUpdate({ ...address2, content: { text } })} 
+                label="Address Line 2"
+                placeholder="e.g., Suite 100, City, State 12345"
+              />
+            )}
+            {phone && (
+              <EditableText 
+                initialValue={phone.content.text} 
+                onSave={text => onUpdate({ ...phone, content: { text } })} 
+                label="Phone Number"
+                placeholder="e.g., +1 (555) 123-4567"
+              />
+            )}
+          </div>
+        </div>
+
+        {/* Newsletter & Social Section */}
+        <div className="space-y-4 p-4 border rounded-lg bg-gray-50">
+          <h3 className="font-semibold text-lg text-gray-800 border-b pb-2">Newsletter & Social</h3>
+          <div className="space-y-4">
+            {/* Newsletter */}
+            <div className="space-y-3">
+              <h4 className="text-sm font-medium text-gray-600">Newsletter</h4>
+              {newsletterTitle && (
+                <EditableText 
+                  initialValue={newsletterTitle.content.text} 
+                  onSave={text => onUpdate({ ...newsletterTitle, content: { text } })} 
+                  label="Newsletter Title"
+                  placeholder="e.g., Subscribe to our newsletter"
+                />
+              )}
+              {newsletterText && (
+                <EditableText 
+                  initialValue={newsletterText.content.text} 
+                  onSave={text => onUpdate({ ...newsletterText, content: { text } })} 
+                  label="Newsletter Description"
+                  placeholder="e.g., Get the latest updates..."
+                />
+              )}
+            </div>
+
+            {/* Social Links */}
+            <div className="space-y-3">
+              <h4 className="text-sm font-medium text-gray-600">Social Media Links</h4>
+              <div className="space-y-2">
+                {socialLinks.map((link, index) => (
+                  <div key={link.id} className="p-3 border rounded-md bg-white space-y-2">
+                    <div className="text-xs text-gray-500 font-medium">Social Link {index + 1}</div>
+                    <EditableText 
+                      initialValue={link.content.platform} 
+                      onSave={platform => onUpdate({...link, content: {...link.content, platform}})} 
+                      label="Platform Name"
+                      placeholder="e.g., Facebook, Twitter, LinkedIn"
+                    />
+                    <EditableText 
+                      initialValue={link.content.url} 
+                      onSave={url => onUpdate({...link, content: {...link.content, url}})} 
+                      label="Social URL"
+                      placeholder="e.g., https://facebook.com/yourpage"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Copyright Section */}
+      <div className="p-4 border rounded-lg bg-gray-50">
+        <h3 className="font-semibold text-lg text-gray-800 border-b pb-2 mb-3">Copyright</h3>
+        {copyright && (
+          <EditableText 
+            initialValue={copyright.content.text} 
+            onSave={text => onUpdate({ ...copyright, content: { text } })} 
+            label="Copyright Notice"
+            placeholder="e.g., © 2024 Your Company Name. All rights reserved."
+          />
+        )}
       </div>
     </div>
   );

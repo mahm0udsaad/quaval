@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { type HomeSection, type HomeContentBlock } from "@/lib/api";
@@ -9,6 +9,119 @@ interface StatsSectionClientProps {
   section: HomeSection & { content_blocks: HomeContentBlock[] };
   stats: HomeContentBlock[];
 }
+
+// Custom hook for counter animation
+const useCounter = (end: number, duration: number = 2000, start: boolean = false) => {
+  const [count, setCount] = useState(0);
+  
+  useEffect(() => {
+    if (!start) return;
+    
+    let startTime: number;
+    let animationFrame: number;
+    
+    const animate = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const progress = Math.min((timestamp - startTime) / duration, 1);
+      
+      // Easing function for smooth animation
+      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+      const currentCount = Math.floor(easeOutQuart * end);
+      
+      setCount(currentCount);
+      
+      if (progress < 1) {
+        animationFrame = requestAnimationFrame(animate);
+      } else {
+        setCount(end); // Ensure we end at the exact number
+      }
+    };
+    
+    animationFrame = requestAnimationFrame(animate);
+    
+    return () => {
+      if (animationFrame) {
+        cancelAnimationFrame(animationFrame);
+      }
+    };
+  }, [end, duration, start]);
+  
+  return count;
+};
+
+// Component for individual animated stat
+const AnimatedStat = ({ 
+  statBlock, 
+  index, 
+  gradientClass, 
+  isVisible 
+}: {
+  statBlock: HomeContentBlock;
+  index: number;
+  gradientClass: any;
+  isVisible: boolean;
+}) => {
+  // Extract number from the value string
+  const extractNumber = (value: string): number => {
+    // Remove any non-numeric characters except decimal points
+    const numericValue = value.replace(/[^\d.]/g, '');
+    return parseFloat(numericValue) || 0;
+  };
+  
+  // Extract suffix (like +, K, M, %, etc.)
+  const extractSuffix = (value: string): string => {
+    const match = value.match(/[^\d.]+$/);
+    return match ? match[0] : '';
+  };
+  
+  const targetNumber = extractNumber(statBlock.content.value);
+  const suffix = extractSuffix(statBlock.content.value);
+  
+  // Use counter hook with staggered start
+  const [shouldStart, setShouldStart] = useState(false);
+  
+  useEffect(() => {
+    if (isVisible) {
+      const timer = setTimeout(() => {
+        setShouldStart(true);
+      }, index * 100); // Stagger each counter by 100ms
+      
+      return () => clearTimeout(timer);
+    }
+  }, [isVisible, index]);
+  
+  const animatedValue = useCounter(targetNumber, 2000, shouldStart);
+  
+  // Format the number (add commas for thousands)
+  const formatNumber = (num: number): string => {
+    return num.toLocaleString();
+  };
+  
+  return (
+    <motion.div
+      key={statBlock.id}
+      initial={{ opacity: 0, y: 30 }}
+      animate={isVisible ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6, delay: index * 0.1 }}
+      className="relative"
+    >
+      <div className="p-8 rounded-xl bg-white shadow-xl border border-gray-100 h-full flex flex-col items-center justify-center relative overflow-hidden group hover:shadow-2xl transition-all duration-500">
+        {/* Background gradient circle */}
+        <div className={`absolute -bottom-2 -right-2 w-24 h-24 rounded-full bg-gradient-to-br ${gradientClass.bg} opacity-10 group-hover:opacity-20 transition-opacity duration-300`} />
+        
+        {/* Animated stat value with gradient text */}
+        <div className={`text-5xl font-bold mb-3 bg-gradient-to-r ${gradientClass.text} bg-clip-text text-transparent`}>
+          {formatNumber(animatedValue)}{suffix}
+        </div>
+        
+        {/* Stat label */}
+        <div className="text-gray-700 text-center font-medium">
+          {statBlock.content.label}
+        </div>
+      </div>
+    </motion.div>
+  );
+};
 
 export default function StatsSectionClient({ 
   section, 
@@ -22,21 +135,31 @@ export default function StatsSectionClient({
     triggerOnce: true
   });
   
-  // Hardcoded gradient colors for each stat position
-  const hardcodedGradients = [
-    'from-blue-500 to-blue-600',      // First stat
-    'from-emerald-500 to-emerald-600', // Second stat
-    'from-amber-500 to-amber-600',     // Third stat
-    'from-purple-500 to-purple-600'    // Fourth stat
+  // Predefined gradient classes that Tailwind recognizes
+  const gradientClasses = [
+    {
+      bg: 'from-blue-500 to-blue-600',
+      bgOpacity: 'from-blue-500/10 to-blue-600/20',
+      text: 'from-blue-500 to-blue-600'
+    },
+    {
+      bg: 'from-emerald-500 to-emerald-600',
+      bgOpacity: 'from-emerald-500/10 to-emerald-600/20',
+      text: 'from-emerald-500 to-emerald-600'
+    },
+    {
+      bg: 'from-amber-500 to-amber-600',
+      bgOpacity: 'from-amber-500/10 to-amber-600/20',
+      text: 'from-amber-500 to-amber-600'
+    },
+    {
+      bg: 'from-purple-500 to-purple-600',
+      bgOpacity: 'from-purple-500/10 to-purple-600/20',
+      text: 'from-purple-500 to-purple-600'
+    }
   ];
   
-  // Debug logging
-  console.log('Section:', section);
-  console.log('Stats data:', stats);
-  console.log('Stats length:', stats.length);
-  
   if (stats.length === 0) {
-    console.log('⚠️ No stats to display!');
     return (
       <section ref={statsRef} className="py-16 bg-white relative z-10">
         <div className="container mx-auto px-4">
@@ -55,33 +178,17 @@ export default function StatsSectionClient({
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8">
           {stats.map((statBlock, index) => {
-            // Use hardcoded gradient based on index, fallback to blue if more than 4 stats
-            const gradientColor = hardcodedGradients[index] || 'from-blue-500 to-blue-600';
-            
-            console.log(`Rendering stat ${index}:`, {
-              id: statBlock.id,
-              content: statBlock.content,
-              value: statBlock.content?.value,
-              label: statBlock.content?.label,
-              hardcodedColor: gradientColor
-            });
-            
+            // Get gradient classes based on index, fallback to blue if more than 4 stats
+            const gradientClass = gradientClasses[index] || gradientClasses[0];
+ 
             return (
-            <motion.div
-              key={statBlock.id}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isVisible ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="relative"
-            >
-              <div className="p-8 rounded-xl bg-white shadow-xl border border-gray-100 h-full flex flex-col items-center justify-center relative overflow-hidden group hover:shadow-2xl transition-all duration-500">
-                <div className={`absolute -bottom-2 -right-2 w-24 h-24 rounded-full bg-gradient-to-br ${gradientColor} opacity-10 group-hover:opacity-20 transition-opacity duration-300`} />
-                <div className={`text-5xl font-bold mb-3 bg-gradient-to-r ${gradientColor} bg-clip-text text-transparent`}>
-                  {statBlock.content.value}
-                </div>
-                <div className="text-gray-700 text-center font-medium">{statBlock.content.label}</div>
-              </div>
-            </motion.div>
+              <AnimatedStat
+                key={statBlock.id}
+                statBlock={statBlock}
+                index={index}
+                gradientClass={gradientClass}
+                isVisible={isVisible}
+              />
             );
           })}
         </div>

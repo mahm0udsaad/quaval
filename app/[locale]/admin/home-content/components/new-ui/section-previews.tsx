@@ -12,15 +12,13 @@ interface SectionPreviewProps {
 const findBlock = (blocks: HomeContentBlock[], key: string) => blocks.find(b => b.block_key === key);
 
 export function HeroSectionPreview({ blocks }: SectionPreviewProps) {
-  const title = findBlock(blocks, 'hero_title');
-  const subtitle = findBlock(blocks, 'hero_subtitle');
-  const bgImage = findBlock(blocks, 'hero_background_image');
-
+  // Hero section is now managed via banners, show a placeholder preview
   return (
-    <div className="relative h-64 rounded-lg bg-cover bg-center" style={{ backgroundImage: `url(${bgImage?.content.url})` }}>
-      <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center text-white p-4">
-        {title && <h1 className="text-4xl font-bold">{title.content.text}</h1>}
-        {subtitle && <p className="text-xl mt-2">{subtitle.content.text}</p>}
+    <div className="relative h-64 rounded-lg bg-gradient-to-r from-blue-600 to-blue-800">
+      <div className="absolute inset-0 flex flex-col justify-center items-center text-white p-4">
+        <h1 className="text-4xl font-bold mb-2">Hero Section Preview</h1>
+        <p className="text-xl text-blue-100">Managed via Banner Carousel</p>
+        <p className="text-sm text-blue-200 mt-4">Use the "Manage Banners" button to edit hero content</p>
       </div>
     </div>
   );
@@ -134,7 +132,10 @@ export function AboutSectionPreview({ blocks }: SectionPreviewProps) {
 }
 
 export function TrustedPartnersSectionPreview({ blocks }: SectionPreviewProps) {
-    const logos = blocks.filter(b => b.block_type === 'image');
+    const logos = blocks.filter(b => 
+      b.block_key.startsWith('partner_logo_') && 
+      b.block_type === 'image'
+    );
     return (
         <div className="flex justify-center items-center gap-8">
             {logos.map((logo, i) => (
