@@ -12,9 +12,7 @@ import {
 
 // Available languages for translation
 export const SUPPORTED_LANGUAGES = [
-  { code: 'es', name: 'Spanish' },
-  { code: 'fr', name: 'French' },
-  // Add more languages as needed
+  { code: 'ar', name: 'Arabic' },
 ] as const
 
 // Initialize Gemini model
@@ -57,7 +55,7 @@ const FooterContentTranslationSchema = z.object({
  */
 export async function translateHomeContentBlock(
   contentBlock: HomeContentBlock,
-  targetLanguages: string[] = ['es', 'fr']
+  targetLanguages: string[] = ['ar']
 ): Promise<Record<string, any>> {
   try {
     // Prepare content for translation
@@ -105,7 +103,7 @@ For non-translatable fields (URLs, technical values, etc.), return them unchange
  */
 export async function translateFooterContent(
   footerItem: FooterContent,
-  targetLanguages: string[] = ['es', 'fr']
+  targetLanguages: string[] = ['ar']
 ): Promise<Record<string, any>> {
   try {
     const translatableFields = extractFooterTranslatableFields(footerItem.content, footerItem.content_type)
@@ -245,7 +243,7 @@ export async function saveFooterContentTranslations(
  */
 export async function translateAndSaveHomeContent(
   contentBlock: HomeContentBlock,
-  targetLanguages: string[] = ['es', 'fr']
+  targetLanguages: string[] = ['ar']
 ): Promise<boolean> {
   try {
     const translations = await translateHomeContentBlock(contentBlock, targetLanguages)
@@ -263,7 +261,7 @@ export async function translateAndSaveHomeContent(
  */
 export async function translateAndSaveFooterContent(
   footerItem: FooterContent,
-  targetLanguages: string[] = ['es', 'fr']
+  targetLanguages: string[] = ['ar']
 ): Promise<boolean> {
   try {
     const translations = await translateFooterContent(footerItem, targetLanguages)
@@ -280,7 +278,7 @@ export async function translateAndSaveFooterContent(
  * Translate all existing home page content
  */
 export async function translateAllHomePageContent(
-  targetLanguages: string[] = ['es', 'fr']
+  targetLanguages: string[] = ['ar']
 ): Promise<{ success: number; failed: number; details: any[] }> {
   const results = { success: 0, failed: 0, details: [] as any[] }
   
@@ -358,7 +356,7 @@ export async function translateAllHomePageContent(
 export async function autoTranslateContent(
   content: HomeContentBlock | FooterContent,
   type: 'home' | 'footer',
-  targetLanguages: string[] = ['es', 'fr']
+  targetLanguages: string[] = ['ar']
 ): Promise<void> {
   try {
     if (type === 'home') {

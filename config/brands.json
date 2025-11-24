@@ -1,0 +1,145 @@
+{
+  "brands": [
+    {
+      "name": "NTN",
+      "slug": "ntn",
+      "families": [
+        {
+          "name": "Deep Groove Ball Bearings",
+          "image": "/email-attachments/reegypt (2)/NTN Deep Groove.jpg"
+        },
+        {
+          "name": "Angular Contact Ball Bearings",
+          "image": "/email-attachments/reegypt (2)/NTN Single-Row Angular Contact Ball Bearings .jpg"
+        },
+        {
+          "name": "Cylindrical Roller Bearings",
+          "image": "/email-attachments/reegypt (2)/NTN Single-Row Cylindrical Roller Bearings.png"
+        },
+        {
+          "name": "Self-Aligning Ball Bearings",
+          "image": "/email-attachments/reegypt (2)/NTN Self-Aligning Ball Bearings.jpg"
+        },
+        {
+          "name": "Spherical Roller Bearings",
+          "image": "/email-attachments/reegypt (2)/NTN Spherical Roller Bearings.jpg"
+        },
+        {
+          "name": "Tapered Roller Bearings",
+          "image": "/email-attachments/reegypt (2)/NTN Tapered Roller Bearings.jpg"
+        }
+      ]
+    },
+    {
+      "name": "SNR",
+      "slug": "snr",
+      "families": [
+        {
+          "name": "Deep Groove Ball Bearings",
+          "image": "/email-attachments/reegypt (1)/SNR Single-row radial ball bearings, .jpg"
+        },
+        {
+          "name": "Angular Contact Ball Bearings",
+          "image": "/email-attachments/reegypt (1)/SNR Single-row angular-contact ball bearings.jpg"
+        },
+        {
+          "name": "Self-Aligning Ball Bearings",
+          "image": "/email-attachments/reegypt (1)/SNR Double-row self-aligning ball bearings.jpg"
+        },
+        {
+          "name": "Spherical Roller Bearings",
+          "image": "/email-attachments/reegypt (1)/SNR Double-row spherical roller bearings.jpg"
+        }
+      ]
+    },
+    {
+      "name": "KSM",
+      "slug": "ksm",
+      "families": [
+        {
+          "name": "Deep Groove Ball Bearings",
+          "image": "/email-attachments/reegypt/KSM Deep Groove Ball Bearings 6806-2RS     MARKING.JPG"
+        },
+        {
+          "name": "Spherical Roller Bearings",
+          "image": "/email-attachments/reegypt/KSM Spherical Roller Bearings.avif"
+        },
+        {
+          "name": "Tapered Roller Bearings",
+          "image": "/email-attachments/reegypt/KSM Taper Roller Bearings.avif"
+        }
+      ]
+    },
+    {
+      "name": "QUAVAL",
+      "slug": "quaval",
+      "families": [
+        {
+          "name": "Deep Groove Ball Bearings"
+        },
+        {
+          "name": "Angular Contact Ball Bearings"
+        },
+        {
+          "name": "Pillow Block Units"
+        }
+      ]
+    },
+    {
+      "name": "DKF",
+      "slug": "dkf",
+      "families": [
+        {
+          "name": "Deep Groove Ball Bearings"
+        },
+        {
+          "name": "Cylindrical Roller Bearings"
+        }
+      ]
+    },
+    {
+      "name": "KINEX",
+      "slug": "kinex",
+      "families": [
+        {
+          "name": "Linear Bearings"
+        },
+        {
+          "name": "Deep Groove Ball Bearings"
+        }
+      ]
+    },
+    {
+      "name": "STC-STEYR",
+      "slug": "stc-steyr",
+      "families": [
+        {
+          "name": "Spherical Roller Bearings"
+        },
+        {
+          "name": "Tapered Roller Bearings"
+        }
+      ]
+    },
+    {
+      "name": "TIMKEN",
+      "slug": "timken",
+      "families": [
+        {
+          "name": "Tapered Roller Bearings"
+        }
+      ]
+    },
+    {
+      "name": "JIB",
+      "slug": "jib",
+      "families": [
+        {
+          "name": "Deep Groove Ball Bearings"
+        }
+      ]
+    }
+  ]
+}
+
+

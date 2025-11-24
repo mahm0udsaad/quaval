@@ -15,8 +15,7 @@ import { Languages, Check } from "lucide-react";
 
 const LANGUAGES = [
   { code: 'en', name: 'English', flag: '🇬🇧' },
-  { code: 'es', name: 'Español', flag: '🇪🇸' },
-  { code: 'fr', name: 'Français', flag: '🇫🇷' },
+  { code: 'ar', name: 'العربية', flag: '🇸🇦' },
 ] as const;
 
 export default function LanguageSwitcher() {
@@ -62,7 +61,7 @@ export default function LanguageSwitcher() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon" className="relative">
-          <Languages className="h-4 w-4" />
+          <Languages className="h-4 w-4 text-secondary hover:text-primary" />
           <span className="sr-only">{t('language.label')}</span>
           {/* Show current language indicator */}
           <span className="absolute -top-1 -right-1 text-xs">
@@ -77,7 +76,7 @@ export default function LanguageSwitcher() {
             onClick={() => handleLanguageChange(language.code as Language)}
             className="flex items-center justify-between cursor-pointer"
           >
-            <span className="flex items-center gap-2">
+            <span className="flex items-center gap-2 text-secondary hover:text-primary">
               <span>{language.flag}</span>
               <span>{language.name}</span>
             </span>

@@ -26,7 +26,7 @@ export type TranslationResult = {
  * Server action to translate all home page content
  */
 export async function translateAllContentAction(
-  targetLanguages: string[] = ['es', 'fr']
+  targetLanguages: string[] = ['ar']
 ): Promise<TranslationResult> {
   try {
     const results = await translateAllHomePageContent(targetLanguages)
@@ -55,7 +55,7 @@ export async function translateAllContentAction(
  */
 export async function translateHomeContentAction(
   contentId: number,
-  targetLanguages: string[] = ['es', 'fr']
+  targetLanguages: string[] = ['ar']
 ): Promise<TranslationResult> {
   try {
     // Get the content block
@@ -103,7 +103,7 @@ export async function translateHomeContentAction(
  */
 export async function translateFooterContentAction(
   contentId: number,
-  targetLanguages: string[] = ['es', 'fr']
+  targetLanguages: string[] = ['ar']
 ): Promise<TranslationResult> {
   try {
     // Get the footer content item
@@ -168,7 +168,7 @@ export async function getTranslationStatusAction(): Promise<{
     
     return {
       isAvailable: true,
-      supportedLanguages: ['es', 'fr'],
+      supportedLanguages: ['ar'],
       message: 'Translation service is ready'
     }
   } catch (error) {
@@ -187,7 +187,7 @@ export async function getTranslationStatusAction(): Promise<{
 export async function autoTranslateContentAction(
   contentId: number,
   contentType: 'home' | 'footer',
-  targetLanguages: string[] = ['es', 'fr']
+  targetLanguages: string[] = ['ar']
 ): Promise<void> {
   try {
     if (contentType === 'home') {

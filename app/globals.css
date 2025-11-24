@@ -3,14 +3,14 @@
 @tailwind utilities;
 
 :root {
-  --color-primary: #0056b3;
-  --color-primary-dark: #003d82;
-  --color-secondary: #2c3e50;
-  --color-secondary-light: #34495e;
-  --color-accent: #e74c3c;
-  --color-background: #f8f9fa;
-  --color-text: #333333;
-  --color-text-light: #6c757d;
+  --color-primary: #B78847;
+  --color-primary-dark: #BB8F4C;
+  --color-secondary: #000000;
+  --color-secondary-light: #333333;
+  --color-accent: #CCAA63;
+  --color-background: #000000;
+  --color-text: #FFFFFF;
+  --color-text-light: #f2f2f2;
 }
 .lowercase {
   text-transform: lowercase;
@@ -33,5 +33,20 @@ body {
 
   .card {
     @apply bg-white shadow-lg rounded-lg overflow-hidden transition duration-300 hover:shadow-xl;
+  }
+
+  .no-print {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+  }
+
+  @media print {
+    .no-print {
+      display: none;
+    }
   }
 }

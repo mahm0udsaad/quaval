@@ -1,4 +1,4 @@
-{  "general": {    "siteName": "Quaval Bearings",    "bookNow": "Réserver Maintenant",    "viewDetails": "Voir les Détails",    "addToCart": "Ajouter au Panier",    "checkout": "Passer à la Caisse",    "search": "Rechercher",    "welcome": "Bienvenue chez Quaval Bearings"  },  "navigation": {    "home": "Accueil",    "about": "À Propos",    "products": "Produits",    "services": "Services",    "contact": "Contactez-Nous",    "cart": "Panier",    "profile": "Profil",    "orders": "Commandes",    "menu": "Menu",    "account": "Compte",    "regionLanguage": "Région et Langue",    "backToProducts": "Retour aux Produits",    "backToSearch": "Retour aux Résultats de Recherche"  },
+{  "general": {    "siteName": "Quaval Bearings",    "bookNow": "Réserver Maintenant",    "viewDetails": "Voir les Détails",    "addToCart": "Ajouter au Panier",    "checkout": "Passer à la Caisse",    "search": "Rechercher",    "welcome": "Bienvenue chez Quaval Bearings"  },  "navigation": {    "home": "Accueil",    "about": "À Propos",    "products": "Produits",    "services": "Services",    "eShop": "Boutique",    "industries": "Industries",    "training": "Formation",    "blog": "Blog",    "contact": "Contactez-Nous",    "cart": "Panier",    "profile": "Profil",    "orders": "Commandes",    "menu": "Menu",    "account": "Compte",    "regionLanguage": "Région et Langue",    "backToProducts": "Retour aux Produits",    "backToSearch": "Retour aux Résultats de Recherche"  },
   "footer": {
     "company": "Entreprise",
     "products": "Produits",
@@ -124,7 +124,7 @@
   "language": {
     "switchTo": {
       "en": "English",
-      "es": "Español"
+      "ar": "العربية"
     },
     "label": "Langue"
   },

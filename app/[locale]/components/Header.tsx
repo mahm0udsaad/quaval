@@ -5,18 +5,22 @@ import Image from "next/image"
 import { Search, ShoppingCart, Menu, User, LogOut } from "lucide-react"
 import { useCart } from "../contexts/CartContext"
 import { useAuth } from "../contexts/AuthContext"
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef, useEffect, useMemo } from "react"
 import { Button } from "@/components/ui/button"
 import { MobileSearch } from "./mobile-search"
 import { SearchAutocomplete } from "./search-autocomplete"
 import { CountrySelectorModal } from "./country-selector-modal"
 import LanguageSwitcher from "@/components/LanguageSwitcher"
 import { useTranslate } from "@/lib/i18n-client"
+import MegaMenu from "@/components/products/MegaMenu"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
@@ -59,9 +63,21 @@ export default function Header() {
   // Check if user has a profile image (typically from Google Auth)
   const hasUserImage = user?.user_metadata?.avatar_url || user?.identities?.[0]?.identity_data?.avatar_url
 
+  const bearingTypeItems = useMemo(
+    () =>
+      (t('landing.bearingFinder.types', { returnObjects: true }) as { value: string; label: string; menuLabel?: string }[]) || [],
+    [t, locale]
+  )
+
   // Navigation items with translation keys
   const navItems = [
     { key: 'products', label: t('navigation.products'), path: `/${locale}/products` },
+    { key: 'eshop', label: t('navigation.eShop'), path: `/${locale}/e-shop` },
+    { key: 'catalogs', label: t('navigation.catalogs'), path: `/${locale}/catalogs` },
+    { key: 'industries', label: t('navigation.industries'), path: `/${locale}/industries` },
+    { key: 'services', label: t('navigation.services'), path: `/${locale}/services` },
+    { key: 'training', label: t('navigation.training'), path: `/${locale}/training` },
+    { key: 'blog', label: t('navigation.blog'), path: `/${locale}/blog` },
     { key: 'about', label: t('navigation.about'), path: `/${locale}/about-us` },
     { key: 'contact', label: t('navigation.contact'), path: `/${locale}/contact` },
   ]
@@ -72,7 +88,7 @@ export default function Header() {
         <div className="flex items-center justify-between">
           <Link href={`/${locale}`} className="flex items-center gap-2">
             <Image
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-W3AYNZkfFMTjKw4qXp4fHkySoTb6oo.png"
+              src="/Logo-transparent.png"
               alt={t('general.siteName')}
               width={180}
               height={40}
@@ -80,15 +96,28 @@ export default function Header() {
             />
           </Link>
           <nav className="hidden lg:flex gap-8">
-            {navItems.map((item) => (
-              <Link
-                key={item.key}
-                href={item.path}
-                className="text-secondary hover:text-primary transition duration-300 font-medium"
-              >
-                {item.label}
-              </Link>
-            ))}
+            {navItems.map((item) =>
+              item.key === "products" ? (
+                <DropdownMenu key={item.key}>
+                  <DropdownMenuTrigger asChild>
+                    <button className="text-secondary hover:text-primary transition duration-300 font-medium flex items-center">
+                      {item.label}
+                    </button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="border-none bg-transparent shadow-none p-0">
+                    <MegaMenu locale={locale} />
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                <Link
+                  key={item.key}
+                  href={item.path}
+                  className="text-secondary hover:text-primary transition duration-300 font-medium"
+                >
+                  {item.label}
+                </Link>
+              ),
+            )}
           </nav>
           <div className="flex items-center gap-4">
             <div className="hidden md:block w-64">
@@ -106,11 +135,6 @@ export default function Header() {
 
             {/* Mobile Search Dialog */}
             <MobileSearch isOpen={isMobileSearchOpen} onClose={() => setIsMobileSearchOpen(false)} />
-
-            {/* Country Selector - always visible */}
-            <div className="hidden md:block">
-              <CountrySelectorModal />
-            </div>
 
             {/* Language Selector - always visible */}
             <div className="hidden md:block">
@@ -252,7 +276,6 @@ export default function Header() {
                   <div className="border-t border-gray-200 pt-4">
                     <p className="text-sm text-gray-500 mb-4">{t('navigation.regionLanguage')}</p>
                     <div className="flex items-center gap-4">
-                      <CountrySelectorModal />
                       <LanguageSwitcher />
                     </div>
                   </div>

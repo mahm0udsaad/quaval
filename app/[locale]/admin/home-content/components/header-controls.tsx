@@ -13,8 +13,7 @@ import { RefreshCcw, Globe, Languages, Sparkles, Monitor } from 'lucide-react';
 
 const AVAILABLE_LOCALES = [
   { code: 'en', name: 'English' },
-  { code: 'es', name: 'Spanish' },
-  { code: 'fr', name: 'French' }
+  { code: 'ar', name: 'Arabic' }
 ];
 
 interface HeaderControlsProps {

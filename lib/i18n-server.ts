@@ -31,7 +31,7 @@ const loadTranslationSync = (locale: string, ns: string = 'common') => {
 }
 
 // Load translations for all supported languages at module initialization
-const supportedLanguages: Language[] = ['en', 'es', 'fr']
+const supportedLanguages: Language[] = ['en', 'ar']
 const namespaces = ['common']
 
 for (const lang of supportedLanguages) {

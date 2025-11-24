@@ -12,6 +12,12 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        black: '#000000',
+        gold: {
+          light: '#D3B46C',
+          DEFAULT: '#B78847',
+          dark: '#BB8F4C',
+        },
         primary: {
           DEFAULT: "var(--color-primary)",
           dark: "var(--color-primary-dark)",

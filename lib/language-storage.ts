@@ -1,4 +1,4 @@
-export type Language = 'en' | 'es' | 'fr';
+export type Language = 'en' | 'ar';
 
 const LANGUAGE_STORAGE_KEY = 'preferredLanguage';
 const DEFAULT_LANGUAGE: Language = 'en';
@@ -16,7 +16,7 @@ export const languageStorage = {
       const savedLanguage = localStorage.getItem(LANGUAGE_STORAGE_KEY) as Language;
       
       // Validate that the saved language is one of the supported languages
-      if (savedLanguage && ['en', 'es', 'fr'].includes(savedLanguage)) {
+      if (savedLanguage && ['en', 'ar'].includes(savedLanguage)) {
         return savedLanguage;
       }
       
@@ -37,7 +37,7 @@ export const languageStorage = {
     
     try {
       // Validate the language before saving
-      if (!['en', 'es', 'fr'].includes(language)) {
+      if (!['en', 'ar'].includes(language)) {
         console.error(`Invalid language: ${language}`);
         return;
       }
