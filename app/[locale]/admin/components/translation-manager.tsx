@@ -55,7 +55,7 @@ export default function TranslationManager() {
       return
     }
 
-    if (confirm("This will translate all home page content to Arabic. This may take several minutes. Continue?")) {
+    if (confirm("This will translate all home page content to Spanish and French. This may take several minutes. Continue?")) {
       setIsTranslating(true)
       setProgress(0)
       setLastResults(null)

@@ -21,10 +21,16 @@ export default function ExampleTranslated() {
           English
         </button>
         <button 
-          onClick={() => changeLanguage('ar')} 
-          className={`px-3 py-1 border rounded ${locale === 'ar' ? 'bg-primary text-white' : ''}`}
+          onClick={() => changeLanguage('es')} 
+          className={`px-3 py-1 border rounded ${locale === 'es' ? 'bg-primary text-white' : ''}`}
         >
-          {t('language.switchTo.ar')}
+          {t('language.switchTo.es')}
+        </button>
+        <button 
+          onClick={() => changeLanguage('fr')} 
+          className={`px-3 py-1 border rounded ${locale === 'fr' ? 'bg-primary text-white' : ''}`}
+        >
+          {t('language.switchTo.fr')}
         </button>
       </div>
     </div>

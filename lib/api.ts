@@ -8,34 +8,23 @@ const supabase = createClient(
 )
 
 export const uploadFile = async (file: File, onProgress: (progress: number) => void): Promise<string> => {
-    // Simulate progress for better UX
-    const progressInterval = setInterval(() => {
-        onProgress(Math.min(90, Math.random() * 80 + 10));
-    }, 200);
+    const supabase = createClient();
+    const filePath = `public/${Date.now()}_${file.name}`;
 
-    try {
-        const filePath = `public/${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
+    const { data, error } = await supabase.storage
+        .from('home-content')
+        .upload(filePath, file, {
+            cacheControl: '3600',
+            upsert: false,
+        });
 
-        const { data, error } = await supabase.storage
-            .from('images')
-            .upload(filePath, file, {
-                cacheControl: '3600',
-                upsert: false,
-            });
-
-        if (error) {
-            throw error;
-        }
-
-        const { data: { publicUrl } } = supabase.storage.from('images').getPublicUrl(filePath);
-        
-        // Complete progress
-        onProgress(100);
-        
-        return publicUrl;
-    } finally {
-        clearInterval(progressInterval);
+    if (error) {
+        throw error;
     }
+
+    const { data: { publicUrl } } = supabase.storage.from('home-content').getPublicUrl(filePath);
+
+    return publicUrl;
 };
 
 export type ProductFamily = {
@@ -575,6 +564,7 @@ export type FooterContentTranslation = {
 
 // Home Sections API
 export async function getHomeSections(): Promise<HomeSection[]> {
+  console.log('🔍 getHomeSections called');
   
   const { data, error } = await supabase
     .from("home_sections")
@@ -585,6 +575,12 @@ export async function getHomeSections(): Promise<HomeSection[]> {
     console.error("❌ Error fetching home sections:", error)
     return []
   }
+
+  console.log('📊 Sections fetched:', data?.length || 0);
+  if (data) {
+    console.log('  - Section keys:', data.map(s => s.section_key));
+  }
+
   return data || []
 }
 
@@ -606,6 +602,7 @@ export async function updateHomeSection(id: number, section: Partial<HomeSection
 
 // Home Content Blocks API
 export async function getHomeContentBlocks(locale = 'en'): Promise<HomeContentBlock[]> {
+  console.log('🔍 getHomeContentBlocks called with locale:', locale);
   
   const { data: blocks, error } = await supabase
     .from("home_content_blocks")
@@ -1036,11 +1033,7 @@ export async function getTrustedPartnersSectionData(locale = 'en') {
     return contentBlocks.find(block => block.block_key === blockKey && block.is_enabled);
   };
   
-  const partners = contentBlocks.filter(block => 
-    block.block_key.startsWith('partner_logo_') && 
-    block.block_type === 'image' && 
-    block.is_enabled
-  );
+  const partners = contentBlocks.filter(block => block.block_type === 'partner' && block.is_enabled);
   
   return {
     section: { ...section, content_blocks: contentBlocks },
