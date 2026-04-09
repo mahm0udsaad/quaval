@@ -14,7 +14,29 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    unoptimized: true,
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'rvhmhbtacshzcicwrdjn.supabase.co',
+        pathname: '/storage/v1/object/public/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'quaval.ca',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.quaval.ca',
+      },
+      {
+        protocol: 'https',
+        hostname: 'hebbkx1anhila5yf.public.blob.vercel-storage.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'flagcdn.com',
+      },
+    ],
   }
 }
 

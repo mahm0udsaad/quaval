@@ -107,10 +107,10 @@ export default function Home() {
   ];
   
   const stats = [
-    { 
-      value: "15+", 
+    {
+      value: "33+",
       label: t('home.yearsExperience'),
-      color: "from-blue-500 to-blue-600" 
+      color: "from-blue-500 to-blue-600"
     },
     { 
       value: "1000+", 
@@ -129,13 +129,14 @@ export default function Home() {
     },
   ];
 
+  const STORAGE = "https://rvhmhbtacshzcicwrdjn.supabase.co/storage/v1/object/public/product-images";
   const clients = [
-    "/placeholder-logo.svg", 
-    "/placeholder-logo.svg", 
-    "/placeholder-logo.svg", 
-    "/placeholder-logo.svg", 
-    "/placeholder-logo.svg", 
-    "/placeholder-logo.svg", 
+    { name: "NTN", src: `${STORAGE}/media/ntn-snr.jpg` },
+    { name: "STC-STEYR", src: `${STORAGE}/stc-steyr/deep-groove-ball-bearings.webp` },
+    { name: "KINEX", src: `${STORAGE}/media/history-kinex.jpg` },
+    { name: "JIB", src: `${STORAGE}/jib/unit-ball-bearing.jpg` },
+    { name: "TIMKEN", src: `${STORAGE}/timken/tapered-roller-bearings.jpg` },
+    { name: "KSM", src: `${STORAGE}/media/ksm-logo.gif` },
   ];
   
   return (
@@ -338,16 +339,40 @@ export default function Home() {
           
           <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16">
             {clients.map((client, index) => (
-              <div key={index} className="grayscale hover:grayscale-0 opacity-70 hover:opacity-100 transition-all duration-300">
+              <div key={index} className="grayscale hover:grayscale-0 opacity-70 hover:opacity-100 transition-all duration-300 flex flex-col items-center gap-2">
                 <Image
-                  src={client}
-                  alt={t('home.clientLogoAlt', { number: index + 1 })}
+                  src={client.src}
+                  alt={client.name}
                   width={120}
                   height={60}
                   className="object-contain h-12"
                 />
+                <span className="text-xs font-medium text-gray-500">{client.name}</span>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Mission & Code of Ethics Section */}
+      <section className="py-20 bg-secondary text-white">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-5xl mx-auto">
+            <div className="text-center md:text-left">
+              <h3 className="text-sm font-semibold uppercase tracking-wider text-primary mb-4">Our Policy</h3>
+              <p className="text-2xl md:text-3xl font-bold mb-6">A Satisfied Client Is A Repeat Client</p>
+              <h3 className="text-sm font-semibold uppercase tracking-wider text-primary mb-4 mt-10">Code of Ethics</h3>
+              <p className="text-lg text-white/90">Integrity. Quality. Responsibility. We Stand Behind Every Bearing We Deliver.</p>
+            </div>
+            <div className="text-center md:text-left">
+              <h3 className="text-sm font-semibold uppercase tracking-wider text-primary mb-4">Mission Statement</h3>
+              <p className="text-lg text-white/90 leading-relaxed">
+                We Are Not Only a Manufacturer and Distributor of Bearings — We Also Contribute to the Development of Various Industries by Providing The Original Bearings.
+              </p>
+              <p className="text-lg text-white/80 leading-relaxed mt-4">
+                The Original Bearings Mean Saving Money, Time, and Effort. They Also Mean Increased Production and Improved Quality.
+              </p>
+            </div>
           </div>
         </div>
       </section>
