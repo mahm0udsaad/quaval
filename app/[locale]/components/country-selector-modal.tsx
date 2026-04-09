@@ -40,11 +40,10 @@ export function CountrySelectorModal() {
 
   return (
       <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger>
-      <Button
-        variant="ghost"
-        size="icon"
-        className="flex items-center justify-center"
+      <DialogTrigger asChild>
+      <button
+        type="button"
+        className="inline-flex items-center justify-center rounded-md p-2 hover:bg-accent hover:text-accent-foreground"
       >
         {selectedCountry ? (
           <div className="relative w-5 h-4">
@@ -58,7 +57,7 @@ export function CountrySelectorModal() {
         ) : (
           <Globe className="h-5 w-5 text-secondary hover:text-primary" />
         )}
-      </Button>
+      </button>
       </DialogTrigger>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
