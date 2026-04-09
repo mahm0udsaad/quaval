@@ -7,7 +7,7 @@ import LanguageDetector from 'i18next-browser-languagedetector'
 import { useEffect, useCallback } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 
-export type Language = 'en' | 'es' | 'fr'
+export type Language = 'en' | 'ar'
 
 // Load resources from the locales directory
 const getResources = (locale: string, namespace: string) => {
@@ -40,7 +40,7 @@ i18next
   .use(LanguageDetector)
   .use(resourcesToBackend(getResources))
   .init({
-    supportedLngs: ['en', 'es', 'fr'],
+    supportedLngs: ['en', 'ar'],
     fallbackLng: 'en',
     ns: ['common'],
     defaultNS: 'common',
@@ -67,7 +67,7 @@ export function useTranslate() {
   // Set document direction based on language
   useEffect(() => {
     document.documentElement.lang = locale
-    document.documentElement.dir = 'ltr'
+    document.documentElement.dir = locale === 'ar' ? 'rtl' : 'ltr'
     
     // Sync i18next language with current locale
     if (i18n.language !== locale) {
@@ -109,6 +109,6 @@ export function useTranslate() {
     t,
     locale,
     changeLanguage,
-    direction: 'ltr' as const,
+    direction: locale === 'ar' ? 'rtl' : 'ltr',
   }
 } 

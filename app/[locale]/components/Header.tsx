@@ -64,10 +64,8 @@ export default function Header() {
   const hasUserImage = user?.user_metadata?.avatar_url || user?.identities?.[0]?.identity_data?.avatar_url
 
   const bearingTypeItems = useMemo(
-    () => {
-      const raw = t('landing.bearingFinder.types', { returnObjects: true })
-      return Array.isArray(raw) ? raw as { value: string; label: string; menuLabel?: string }[] : []
-    },
+    () =>
+      (t('landing.bearingFinder.types', { returnObjects: true }) as { value: string; label: string; menuLabel?: string }[]) || [],
     [t, locale]
   )
 

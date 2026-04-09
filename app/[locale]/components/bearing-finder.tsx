@@ -23,14 +23,6 @@ type SampleRule = {
   key: string
 }
 
-function safeArray<T>(value: unknown): T[] {
-  return Array.isArray(value) ? value : []
-}
-
-function safeRecord<T>(value: unknown): Record<string, T> {
-  return (value && typeof value === 'object' && !Array.isArray(value)) ? value as Record<string, T> : {}
-}
-
 export default function BearingFinder() {
   const { t, locale } = useTranslate()
   const [id, setId] = useState('')
@@ -43,7 +35,7 @@ export default function BearingFinder() {
   const isFormValid = useMemo(() => id && od && width && bearingType, [id, od, width, bearingType])
 
   const bearingTypes = useMemo(
-    () => safeArray<{ value: string; label: string }>(t('landing.bearingFinder.types', { returnObjects: true })),
+    () => t('landing.bearingFinder.types', { returnObjects: true }) as { value: string; label: string }[],
     [locale, t]
   )
 
@@ -56,7 +48,7 @@ export default function BearingFinder() {
   )
 
   const sampleOutputs = useMemo(
-    () => safeRecord<FinderResult>(t('landing.bearingFinder.sampleOutputs', { returnObjects: true })),
+    () => t('landing.bearingFinder.sampleOutputs', { returnObjects: true }) as Record<string, FinderResult>,
     [locale, t]
   )
 
@@ -164,7 +156,7 @@ export default function BearingFinder() {
             <div className="mt-4 text-sm text-slate-600">
               <span className="font-semibold text-slate-900">{t('landing.bearingFinder.equivalentLabel')}</span>
               <ul className="mt-2 list-disc space-y-1 pl-5">
-                {safeArray<string>(result.equivalents).map((reference) => (
+                {result.equivalents.map((reference) => (
                   <li key={reference}>{reference}</li>
                 ))}
               </ul>
