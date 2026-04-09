@@ -16,6 +16,11 @@ import {
 import { cn } from '@/lib/utils'
 import { useTranslate } from '@/lib/i18n-client'
 
+// Helper: safely extract array from i18next returnObjects (returns [] if key not found / string returned)
+function safeArray<T>(value: unknown): T[] {
+  return Array.isArray(value) ? value : []
+}
+
 type CatalogAsset = {
   name: string
   filePath: string | null
@@ -179,7 +184,7 @@ export default function LandingPage() {
   const [carouselApi, setCarouselApi] = useState<CarouselApi | null>(null)
 
   const heroSlides = useMemo(
-    () => t('landing.hero.slides', { returnObjects: true }) as HeroSlide[],
+    () => safeArray<HeroSlide>(t('landing.hero.slides', { returnObjects: true })),
     [locale, t]
   )
   const heroBadge = t('landing.hero.badge')
@@ -238,37 +243,37 @@ export default function LandingPage() {
   )
 
   const implementationNotes = useMemo(
-    () => t('landing.catalogs.implementationNotes', { returnObjects: true }) as ImplementationNote[],
+    () => safeArray<ImplementationNote>(t('landing.catalogs.implementationNotes', { returnObjects: true })),
     [locale, t]
   )
 
   const bearingAdminNotes = useMemo(
-    () => t('landing.bearingFinder.dataAdminNotes', { returnObjects: true }) as ImplementationNote[],
+    () => safeArray<ImplementationNote>(t('landing.bearingFinder.dataAdminNotes', { returnObjects: true })),
     [locale, t]
   )
 
   const timeline = useMemo(
-    () => t('landing.story.timeline', { returnObjects: true }) as TimelineItem[],
+    () => safeArray<TimelineItem>(t('landing.story.timeline', { returnObjects: true })),
     [locale, t]
   )
 
   const industries = useMemo(
-    () => t('landing.industries.list', { returnObjects: true }) as string[],
+    () => safeArray<string>(t('landing.industries.list', { returnObjects: true })),
     [locale, t]
   )
 
   const chatBullets = useMemo(
-    () => t('landing.chat.bullets', { returnObjects: true }) as string[],
+    () => safeArray<string>(t('landing.chat.bullets', { returnObjects: true })),
     [locale, t]
   )
 
   const assetNeeds = useMemo(
-    () => t('landing.openItems.assets', { returnObjects: true }) as string[],
+    () => safeArray<string>(t('landing.openItems.assets', { returnObjects: true })),
     [locale, t]
   )
 
   const configurationNeeds = useMemo(
-    () => t('landing.openItems.configuration', { returnObjects: true }) as string[],
+    () => safeArray<string>(t('landing.openItems.configuration', { returnObjects: true })),
     [locale, t]
   )
 
