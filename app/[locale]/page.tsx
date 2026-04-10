@@ -141,19 +141,9 @@ export default function Home() {
   
   return (
     <div className="bg-background overflow-hidden">
-      {/* Hero Section with Parallax */}
-      <section ref={heroRef} className="relative min-h-screen flex items-center overflow-hidden">
-        {/* Background Parallax */}
-        <motion.div 
-          className="absolute inset-0 z-0"
-          style={{ 
-            scale: heroScale,
-            opacity: heroOpacity
-          }}
-        >
-          <HomeCarousel />
-        </motion.div>
-        
+      {/* Hero Section */}
+      <section ref={heroRef} className="relative h-[85vh] min-h-[600px] max-h-[800px] overflow-hidden">
+        <HomeCarousel />
       </section>
 
       {/* Stats Section */}

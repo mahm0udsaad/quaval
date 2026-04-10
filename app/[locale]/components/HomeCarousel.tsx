@@ -49,7 +49,7 @@ export default function HomeCarousel() {
 
   if (isLoading) {
     return (
-      <div className="relative h-[600px] bg-gray-200">
+      <div className="relative h-full min-h-[600px] bg-gray-200">
         <div className="container mx-auto px-16 h-full flex items-center">
           <div className="max-w-2xl">
             <Skeleton className="h-12 w-64 mb-4" />
@@ -63,7 +63,7 @@ export default function HomeCarousel() {
 
   if (banners.length === 0) {
     return (
-      <div className="relative h-[600px] bg-secondary">
+      <div className="relative h-full min-h-[600px] bg-secondary">
         <div className="container mx-auto px-16 h-full flex items-center">
           <div className="max-w-2xl text-white">
             <h1 className="text-5xl font-bold mb-4">Welcome to Quaval Bearings</h1>
@@ -75,7 +75,7 @@ export default function HomeCarousel() {
   }
 
   return (
-    <div className="relative h-[600px] overflow-hidden">
+    <div className="relative h-full w-full min-h-[600px] overflow-hidden">
       {banners.map((item, index) => (
         <div
           key={index}
