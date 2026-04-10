@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ai-sdk/google": "^1.2.22",
     "@hookform/resolvers": "^3.9.1",
     "@radix-ui/react-accordion": "latest",
     "@radix-ui/react-alert-dialog": "1.1.4",
@@ -41,6 +42,7 @@
     "@stripe/stripe-js": "latest",
     "@supabase/supabase-js": "latest",
     "@types/nodemailer": "^6.4.17",
+    "ai": "^4.3.19",
     "autoprefixer": "^10.4.20",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -60,10 +62,14 @@
     "next-themes": "^0.4.4",
     "nodemailer": "^7.0.3",
     "react": "^19",
+    "react-countup": "^6.5.3",
     "react-day-picker": "8.10.1",
+    "react-dnd": "^16.0.1",
+    "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^19",
     "react-hook-form": "^7.54.1",
     "react-i18next": "^15.5.1",
+    "react-intersection-observer": "^10.0.3",
     "react-resizable-panels": "^2.1.7",
     "recharts": "2.15.0",
     "sonner": "^1.7.1",
@@ -80,5 +86,10 @@
     "postcss": "^8",
     "tailwindcss": "^3.4.17",
     "typescript": "^5"
+  },
+  "pnpm": {
+    "overrides": {
+      "zod-to-json-schema": "3.23.5"
+    }
   }
 }
