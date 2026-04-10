@@ -12,7 +12,7 @@ import Image from "next/image"
 const COUNTRY_FLAGS = {
   canada: "https://flagcdn.com/w80/ca.png",
   north_america_us_mexico: "https://flagcdn.com/w80/us.png",
-  north_america: "https://flagcdn.com/w80/us.png",
+  north_america: "https://flagcdn.com/w80/mx.png",
   europe: "https://flagcdn.com/w80/eu.png",
   middle_east: "https://flagcdn.com/w80/sa.png",
   asia: "https://flagcdn.com/w80/cn.png",

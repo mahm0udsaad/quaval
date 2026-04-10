@@ -122,8 +122,8 @@ export type Order = {
 
 export const AVAILABLE_COUNTRIES = [
   { id: "canada", name: "Canada" },
-  { id: "north_america_us_mexico", name: "North America (US and Mexico)" },
-  { id: "north_america", name: "North America" },
+  { id: "north_america_us_mexico", name: "United States" },
+  { id: "north_america", name: "Mexico" },
   { id: "europe", name: "Europe" },
   { id: "middle_east", name: "Middle East" },
   { id: "asia", name: "Asia" },
