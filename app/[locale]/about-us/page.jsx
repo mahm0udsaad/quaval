@@ -443,7 +443,7 @@ export default function AboutPage() {
                 icon: Truck,
                 title: "Multiple Shipping Options",
                 description:
-                  "Large orders are shipped by sea or air, depending on client preferences and operational requirements. We also offer express shipping via courier upon request to save time.",
+                  "We offer several shipping options within and outside Canada based on the customer's preference, including express shipping, air freight, ground, and ocean freight.",
                 color: "bg-emerald-100",
                 textColor: "text-emerald-700",
                 borderColor: "border-emerald-200",
@@ -484,6 +484,35 @@ export default function AboutPage() {
               </motion.div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Bearing History Section */}
+      <section className="py-20 bg-secondary text-white overflow-hidden">
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.25 }}
+            variants={fadeInUp}
+            transition={{ duration: 0.6 }}
+            className="max-w-5xl mx-auto"
+          >
+            <Badge className="bg-white/15 text-white hover:bg-white/20 px-3 py-1 text-sm font-medium mb-5 backdrop-blur-sm">
+              Bearing Heritage
+            </Badge>
+            <h2 className="text-3xl md:text-4xl font-bold mb-8">
+              Bearing Innovation Through History
+            </h2>
+            <div className="grid gap-6 md:grid-cols-2 text-white/85 leading-relaxed">
+              <p className="rounded-2xl border border-white/10 bg-white/5 p-6">
+                Leonardo da Vinci incorporated drawings of ball bearings in his design for a helicopter around the year 1500. This is the first recorded use of bearings in an aerospace design. However, Agostino Ramelli is the first to have published sketches of roller and thrust bearings.
+              </p>
+              <p className="rounded-2xl border border-white/10 bg-white/5 p-6">
+                An issue with ball and roller bearings is that the balls or rollers rub against each other, causing additional friction. This can be reduced by enclosing the balls or rollers within a cage. The captured, or caged, ball bearing was originally described by Galileo in the 17th century.
+              </p>
+            </div>
+          </motion.div>
         </div>
       </section>
 
