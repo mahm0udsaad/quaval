@@ -2,13 +2,14 @@
 
 import { useState, useEffect } from "react"
 import Image from "next/image"
-import { getProducts } from "@/lib/api"
+import { getProducts, type Product } from "@/lib/api"
 import { useCountry } from "@/app/[locale]/contexts/CountryContext"
 import { Skeleton } from "@/components/ui/skeleton"
 import { ProductCard } from "@/app/[locale]/components/ProductCard"
+import ProductBearingFinder from "@/app/[locale]/components/product-bearing-finder"
 
 export default function ProductsPage() {
-  const [products, setProducts] = useState([])
+  const [products, setProducts] = useState<Product[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const { selectedCountry } = useCountry()
 
@@ -49,6 +50,8 @@ export default function ProductsPage() {
       </div>
 
       <div className="container mx-auto px-4 py-12">
+        {!isLoading && products.length > 0 ? <ProductBearingFinder products={products} /> : null}
+
         {isLoading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[...Array(6)].map((_, i) => (

@@ -25,7 +25,7 @@ interface TechnicalFeature {
 }
 
 interface Product {
-  id: string
+  id: number
   part_number?: string
   part_numbers?: string[]
   name?: string
