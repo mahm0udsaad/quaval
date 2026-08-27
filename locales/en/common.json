@@ -13,6 +13,7 @@
     "home": "Home",
     "about": "About",
     "products": "Products",
+    "catalogs": "Catalogs",
     "services": "Services",
     "contact": "Contact Us",
     "cart": "Cart",
@@ -250,4 +251,4 @@
     "register": "Register",
     "forgotPassword": "Forgot Password"
   }
-} 
+}

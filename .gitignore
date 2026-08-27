@@ -22,6 +22,11 @@ yarn-error.log*
 # vercel
 .vercel
 
+# Local email attachments and rendered review files
+/tmp/
+/output/
+/.playwright-cli/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

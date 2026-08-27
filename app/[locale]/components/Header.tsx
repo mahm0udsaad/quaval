@@ -62,6 +62,7 @@ export default function Header() {
   // Navigation items with translation keys
   const navItems = [
     { key: 'products', label: t('navigation.products'), path: `/${locale}/products` },
+    { key: 'catalogs', label: t('navigation.catalogs'), path: `/${locale}/catalogs` },
     { key: 'about', label: t('navigation.about'), path: `/${locale}/about-us` },
     { key: 'contact', label: t('navigation.contact'), path: `/${locale}/contact` },
   ]

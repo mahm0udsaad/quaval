@@ -25,6 +25,13 @@ Status definitions:
 |---|---|---|---|---|---|
 | P01 | 2026-04-13 `19d87159ae1f4c60` | Let visitors identify a bearing by dimensions and type and return its bearing number and associated brand | Complete | `app/[locale]/components/product-bearing-finder.tsx`, rendered by `app/[locale]/products/page.tsx`; searches the live Supabase product result set | Replaced the disconnected two-example prototype with an exact dimension/type finder covering every dimensioned product currently returned by Supabase |
 
+## Catalogs and certificates
+
+| ID | Email evidence | Atomic requirement | Status | Implementation/evidence | Action taken |
+|---|---|---|---|---|---|
+| C01 | 2026-04-13 `19d87159ae1f4c60`; 2026-08-17 `1a0114caa3bed9ef` | Make the supplied Quaval catalogs available for online browsing without offering the source documents for download | Complete | `app/[locale]/catalogs/quaval/page.tsx`, `components/catalogs/CatalogViewer.tsx`; 42-page Roller Bearings and 22-page Deep Groove Ball Bearings catalogs rendered as page images with no public PDF; Catalogs link is available in the desktop and mobile header | Added a paginated, zoomable viewer; removed the source-PDF download path; disabled ordinary save/print shortcuts, dragging, and the context menu; added a view-only watermark. Browser screenshots cannot be technically prevented, so these controls are deterrents rather than an absolute guarantee. |
+| C02 | 2026-04-13 `19d87159ae1f4c60` | Make distribution certificates viewable online without download or screenshots | Partial | `app/[locale]/catalogs/page.tsx` now provides a non-broken pending state instead of links to missing pages | Viewer framework is ready, but the certificate source files have not yet been processed in the chronological audit. |
+
 ## Pending chronological audit
 
 The remaining messages will be added here one at a time as each requirement is verified and implemented.
