@@ -13,7 +13,9 @@ type CatalogViewerProps = {
 const zoomLevels = [100, 125, 150, 175] as const
 
 const pagePath = (catalog: Catalog, page: number) =>
-  `${catalog.pageDirectory}/page-${String(page).padStart(2, "0")}.jpg`
+  `${catalog.pageDirectory}/page-${String(page).padStart(catalog.pageNumberPadding ?? 2, "0")}.${
+    catalog.fileExtension ?? "jpg"
+  }`
 
 export default function CatalogViewer({ catalogs }: CatalogViewerProps) {
   const [catalogId, setCatalogId] = useState(catalogs[0]?.id ?? "")
@@ -24,11 +26,6 @@ export default function CatalogViewer({ catalogs }: CatalogViewerProps) {
     () => catalogs.find((item) => item.id === catalogId) ?? catalogs[0],
     [catalogId, catalogs],
   )
-
-  useEffect(() => {
-    setPage(1)
-    setZoomIndex(0)
-  }, [catalogId])
 
   useEffect(() => {
     if (!catalog) return
@@ -62,6 +59,12 @@ export default function CatalogViewer({ catalogs }: CatalogViewerProps) {
     setPage(Math.min(Math.max(nextPage, 1), catalog.pageCount))
   }
 
+  const selectCatalog = (nextCatalogId: string) => {
+    setPage(1)
+    setZoomIndex(0)
+    setCatalogId(nextCatalogId)
+  }
+
   return (
     <div className="space-y-6">
       <div className="grid gap-3 sm:grid-cols-2">
@@ -72,7 +75,7 @@ export default function CatalogViewer({ catalogs }: CatalogViewerProps) {
             <button
               key={item.id}
               type="button"
-              onClick={() => setCatalogId(item.id)}
+              onClick={() => selectCatalog(item.id)}
               aria-pressed={selected}
               className={`cursor-pointer rounded-2xl border p-5 text-left transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background ${
                 selected
@@ -132,9 +135,10 @@ export default function CatalogViewer({ catalogs }: CatalogViewerProps) {
               key={`${catalog.id}-${page}`}
               src={pagePath(catalog, page)}
               alt={`${catalog.title}, page ${page} of ${catalog.pageCount}`}
-              width={1754}
-              height={1241}
+              width={catalog.pageWidth ?? 1754}
+              height={catalog.pageHeight ?? 1241}
               priority
+              unoptimized
               draggable={false}
               className="h-auto w-full pointer-events-none"
               sizes="(max-width: 1024px) 100vw, 1280px"

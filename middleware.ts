@@ -17,6 +17,7 @@ function getLocale(request: NextRequest) {
     pathname.includes('/favicon.') ||
     pathname.includes('.png') ||
     pathname.includes('.jpg') ||
+    pathname.includes('.webp') ||
     pathname.includes('.svg')
   ) {
     return null
@@ -104,4 +105,4 @@ export const config = {
     // Skip internal paths
     '/((?!api|_next/static|_next/image|images|favicon.ico).*)',
   ],
-} 
+}

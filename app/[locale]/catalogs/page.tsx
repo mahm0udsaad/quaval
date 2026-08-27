@@ -5,7 +5,7 @@ type CatalogsPageProps = {
   params: Promise<{ locale: string }>
 }
 
-const upcomingCatalogs = ["NTN", "SNR", "KSM", "DKF", "KINEX", "TIMKEN", "STC-STEYR", "JIB"]
+const upcomingCatalogs = ["NTN", "SNR", "KSM", "DKF", "KINEX", "STC-STEYR", "JIB"]
 const upcomingCertificates = ["KSM", "NTN", "QUAVAL", "DKF", "STC-STEYR"]
 
 export default async function CatalogsPage({ params }: CatalogsPageProps) {
@@ -41,7 +41,7 @@ export default async function CatalogsPage({ params }: CatalogsPageProps) {
           <div className="mt-7 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             <Link
               href={`/${locale}/catalogs/quaval`}
-              className="group flex min-h-64 flex-col justify-between rounded-3xl border-2 border-primary bg-white p-8 shadow-sm transition-colors hover:bg-background md:col-span-2"
+              className="group flex min-h-64 flex-col justify-between rounded-3xl border-2 border-primary bg-white p-8 shadow-sm transition-colors hover:bg-background"
             >
               <div>
                 <div className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
@@ -50,6 +50,26 @@ export default async function CatalogsPage({ params }: CatalogsPageProps) {
                 <h3 className="mt-4 text-3xl font-bold text-secondary">QUAVAL</h3>
                 <p className="mt-3 max-w-xl text-sm leading-6 text-text-light">
                   Roller bearings and deep groove ball bearings — 64 technical pages.
+                </p>
+              </div>
+              <span className="mt-6 inline-flex items-center gap-2 font-semibold text-primary">
+                Browse catalogs
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </span>
+            </Link>
+
+            <Link
+              href={`/${locale}/catalogs/timken`}
+              className="group flex min-h-64 flex-col justify-between rounded-3xl border-2 border-primary bg-white p-8 shadow-sm transition-colors hover:bg-background"
+            >
+              <div>
+                <div className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+                  Available now
+                </div>
+                <h3 className="mt-4 text-3xl font-bold text-secondary">TIMKEN</h3>
+                <p className="mt-3 max-w-xl text-sm leading-6 text-text-light">
+                  Four technical publications covering tapered, spherical, AP/AP-2, and mounted
+                  bearing applications — 950 pages.
                 </p>
               </div>
               <span className="mt-6 inline-flex items-center gap-2 font-semibold text-primary">
