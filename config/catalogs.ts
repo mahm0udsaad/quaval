@@ -131,3 +131,15 @@ export const jibCatalogs: PdfCatalog[] = [
     sourceUrl: "/api/catalogs/jib",
   },
 ]
+
+export const ksmCatalogs: PdfCatalog[] = [
+  {
+    id: "bearing-catalog-2014",
+    title: "KSM Bearing Catalog 2014",
+    shortTitle: "Complete Bearing Range",
+    description:
+      "KSM ball, needle, track, linear, tapered and spherical roller bearings, housings, sleeves, and bearing units.",
+    pageCount: 451,
+    sourceUrl: "/api/catalogs/ksm",
+  },
+]

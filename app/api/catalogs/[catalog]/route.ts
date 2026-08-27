@@ -4,6 +4,7 @@ const catalogSources: Record<string, string> = {
   skf: "https://www.quaval.ca/downloads/SKF_EN.pdf",
   "stc-steyr": "/catalog-documents/stc-steyr/source.bin",
   jib: "/catalog-documents/jib/source.bin",
+  ksm: "/catalog-documents/ksm/source.bin",
 }
 
 type CatalogRouteContext = {
