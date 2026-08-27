@@ -155,3 +155,15 @@ export const ntnCatalogs: PdfCatalog[] = [
     sourceUrl: "/api/catalogs/ntn",
   },
 ]
+
+export const kinexCatalogs: PdfCatalog[] = [
+  {
+    id: "rolling-bearings",
+    title: "KINEX Rolling Bearings Catalog",
+    shortTitle: "Rolling Bearings",
+    description:
+      "KINEX engineering guidance, rolling-bearing ranges, accessories, dimensions, and load data.",
+    pageCount: 311,
+    sourceUrl: "/api/catalogs/kinex",
+  },
+]

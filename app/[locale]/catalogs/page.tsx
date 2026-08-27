@@ -5,7 +5,7 @@ type CatalogsPageProps = {
   params: Promise<{ locale: string }>
 }
 
-const upcomingCatalogs = ["SNR", "DKF", "KINEX"]
+const upcomingCatalogs = ["SNR", "DKF"]
 const upcomingCertificates = ["KSM", "NTN", "QUAVAL", "DKF", "STC-STEYR"]
 
 export default async function CatalogsPage({ params }: CatalogsPageProps) {
@@ -170,6 +170,26 @@ export default async function CatalogsPage({ params }: CatalogsPageProps) {
                 <p className="mt-3 max-w-xl text-sm leading-6 text-text-light">
                   Ball and roller bearing ranges, selection guidance, dimensions, and load data
                   — 411 pages.
+                </p>
+              </div>
+              <span className="mt-6 inline-flex items-center gap-2 font-semibold text-primary">
+                Browse catalog
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </span>
+            </Link>
+
+            <Link
+              href={`/${locale}/catalogs/kinex`}
+              className="group flex min-h-64 flex-col justify-between rounded-3xl border-2 border-primary bg-white p-8 shadow-sm transition-colors hover:bg-background"
+            >
+              <div>
+                <div className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+                  Available now
+                </div>
+                <h3 className="mt-4 text-3xl font-bold text-secondary">KINEX</h3>
+                <p className="mt-3 max-w-xl text-sm leading-6 text-text-light">
+                  Rolling-bearing ranges, accessories, engineering guidance, dimensions, and
+                  load data — 311 pages.
                 </p>
               </div>
               <span className="mt-6 inline-flex items-center gap-2 font-semibold text-primary">

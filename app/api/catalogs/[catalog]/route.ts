@@ -6,6 +6,7 @@ const catalogSources: Record<string, string> = {
   jib: "/catalog-documents/jib/source.bin",
   ksm: "/catalog-documents/ksm/source.bin",
   ntn: "/catalog-documents/ntn/source.bin",
+  kinex: "https://www.quaval.ca/downloads/Kinex_general_EN.pdf",
 }
 
 type CatalogRouteContext = {
