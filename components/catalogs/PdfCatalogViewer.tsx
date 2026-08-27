@@ -94,6 +94,10 @@ export default function PdfCatalogViewer({ catalogs }: PdfCatalogViewerProps) {
         loadingTask = pdfjs.getDocument({
           url: catalog.sourceUrl,
           rangeChunkSize: 262144,
+          cMapUrl: "/pdfjs/cmaps/",
+          cMapPacked: true,
+          standardFontDataUrl: "/pdfjs/standard_fonts/",
+          wasmUrl: "/pdfjs/wasm/",
         }) as unknown as PdfLoadingTask
 
         const document = await loadingTask.promise

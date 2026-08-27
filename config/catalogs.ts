@@ -143,3 +143,15 @@ export const ksmCatalogs: PdfCatalog[] = [
     sourceUrl: "/api/catalogs/ksm",
   },
 ]
+
+export const ntnCatalogs: PdfCatalog[] = [
+  {
+    id: "ball-and-roller-bearings",
+    title: "NTN Ball and Roller Bearings Catalog",
+    shortTitle: "Ball and Roller Bearings",
+    description:
+      "NTN bearing selection guidance, ball and roller bearing ranges, dimensions, ratings, and engineering data.",
+    pageCount: 411,
+    sourceUrl: "/api/catalogs/ntn",
+  },
+]

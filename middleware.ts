@@ -14,6 +14,7 @@ function getLocale(request: NextRequest) {
     pathname.startsWith('/_next/') ||
     pathname.startsWith('/api/') ||
     pathname.startsWith('/images/') ||
+    pathname.startsWith('/pdfjs/') ||
     pathname.includes('/favicon.') ||
     pathname.includes('.png') ||
     pathname.includes('.jpg') ||

@@ -5,6 +5,7 @@ const catalogSources: Record<string, string> = {
   "stc-steyr": "/catalog-documents/stc-steyr/source.bin",
   jib: "/catalog-documents/jib/source.bin",
   ksm: "/catalog-documents/ksm/source.bin",
+  ntn: "/catalog-documents/ntn/source.bin",
 }
 
 type CatalogRouteContext = {
