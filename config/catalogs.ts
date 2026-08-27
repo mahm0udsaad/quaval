@@ -11,6 +11,15 @@ export type Catalog = {
   pageHeight?: number
 }
 
+export type PdfCatalog = {
+  id: string
+  title: string
+  shortTitle: string
+  description: string
+  pageCount: number
+  sourceUrl: string
+}
+
 export const quavalCatalogs: Catalog[] = [
   {
     id: "roller-bearings",
@@ -84,5 +93,17 @@ export const timkenCatalogs: Catalog[] = [
     pageNumberPadding: 3,
     pageWidth: 935,
     pageHeight: 1210,
+  },
+]
+
+export const skfCatalogs: PdfCatalog[] = [
+  {
+    id: "rolling-bearings",
+    title: "SKF Rolling Bearings Catalog",
+    shortTitle: "Rolling Bearings",
+    description:
+      "Bearing selection guidance, product data, dimensions, load ratings, and engineering recommendations from SKF.",
+    pageCount: 1152,
+    sourceUrl: "/api/catalogs/skf",
   },
 ]
