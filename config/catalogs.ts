@@ -107,3 +107,15 @@ export const skfCatalogs: PdfCatalog[] = [
     sourceUrl: "/api/catalogs/skf",
   },
 ]
+
+export const stcSteyrCatalogs: PdfCatalog[] = [
+  {
+    id: "delivery-programme",
+    title: "STC-STEYR Delivery Programme",
+    shortTitle: "Rolling Bearings",
+    description:
+      "STC-STEYR product ranges, bearing designations, dimensions, and technical reference tables.",
+    pageCount: 250,
+    sourceUrl: "/api/catalogs/stc-steyr",
+  },
+]

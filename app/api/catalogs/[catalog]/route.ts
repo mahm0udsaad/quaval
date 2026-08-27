@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 
 const catalogSources: Record<string, string> = {
   skf: "https://www.quaval.ca/downloads/SKF_EN.pdf",
+  "stc-steyr": "/catalog-documents/stc-steyr/source.bin",
 }
 
 type CatalogRouteContext = {
@@ -10,11 +11,15 @@ type CatalogRouteContext = {
 
 async function proxyCatalog(request: NextRequest, { params }: CatalogRouteContext) {
   const { catalog } = await params
-  const sourceUrl = catalogSources[catalog]
+  const configuredSource = catalogSources[catalog]
 
-  if (!sourceUrl) {
+  if (!configuredSource) {
     return NextResponse.json({ error: "Catalog not found" }, { status: 404 })
   }
+
+  const sourceUrl = configuredSource.startsWith("/")
+    ? new URL(configuredSource, request.nextUrl.origin).toString()
+    : configuredSource
 
   const range = request.headers.get("range")
   const upstreamHeaders = new Headers()

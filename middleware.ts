@@ -18,6 +18,7 @@ function getLocale(request: NextRequest) {
     pathname.includes('.png') ||
     pathname.includes('.jpg') ||
     pathname.includes('.webp') ||
+    pathname.includes('.bin') ||
     pathname.includes('.svg')
   ) {
     return null

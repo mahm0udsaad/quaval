@@ -5,7 +5,7 @@ type CatalogsPageProps = {
   params: Promise<{ locale: string }>
 }
 
-const upcomingCatalogs = ["NTN", "SNR", "KSM", "DKF", "KINEX", "STC-STEYR", "JIB"]
+const upcomingCatalogs = ["NTN", "SNR", "KSM", "DKF", "KINEX", "JIB"]
 const upcomingCertificates = ["KSM", "NTN", "QUAVAL", "DKF", "STC-STEYR"]
 
 export default async function CatalogsPage({ params }: CatalogsPageProps) {
@@ -90,6 +90,26 @@ export default async function CatalogsPage({ params }: CatalogsPageProps) {
                 <p className="mt-3 max-w-xl text-sm leading-6 text-text-light">
                   Rolling-bearing selection, engineering guidance, dimensions, and load ratings
                   — 1,152 pages.
+                </p>
+              </div>
+              <span className="mt-6 inline-flex items-center gap-2 font-semibold text-primary">
+                Browse catalog
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </span>
+            </Link>
+
+            <Link
+              href={`/${locale}/catalogs/stc-steyr`}
+              className="group flex min-h-64 flex-col justify-between rounded-3xl border-2 border-primary bg-white p-8 shadow-sm transition-colors hover:bg-background"
+            >
+              <div>
+                <div className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+                  Available now
+                </div>
+                <h3 className="mt-4 text-3xl font-bold text-secondary">STC-STEYR</h3>
+                <p className="mt-3 max-w-xl text-sm leading-6 text-text-light">
+                  Rolling-bearing delivery programme, dimensions, designations, and technical
+                  tables — 250 pages.
                 </p>
               </div>
               <span className="mt-6 inline-flex items-center gap-2 font-semibold text-primary">
