@@ -167,3 +167,51 @@ export const kinexCatalogs: PdfCatalog[] = [
     sourceUrl: "/api/catalogs/kinex",
   },
 ]
+
+export const schneebergerCatalogs: PdfCatalog[] = [
+  {
+    id: "minislide-msqscale",
+    title: "SCHNEEBERGER MINISLIDE MSQscale Catalog",
+    shortTitle: "MINISLIDE MSQscale",
+    description:
+      "Integrated distance measurement, technical data, options, accessories, dimensions, and load capacities for MINISLIDE MSQscale.",
+    pageCount: 27,
+    sourceUrl: "/api/catalogs/schneeberger-msqscale",
+  },
+  {
+    id: "mini-x",
+    title: "SCHNEEBERGER MINI-X Product Catalog",
+    shortTitle: "MINI-X",
+    description:
+      "MINIRAIL, MINISCALE PLUS, and MINISLIDE miniature linear-motion products, dimensions, and engineering data.",
+    pageCount: 93,
+    sourceUrl: "/api/catalogs/schneeberger-mini-x",
+  },
+  {
+    id: "gear-racks",
+    title: "SCHNEEBERGER Gear Racks Product Catalog",
+    shortTitle: "Gear Racks",
+    description:
+      "Standard and customized gear-rack solutions, technical guidance, materials, accuracy classes, and dimensions.",
+    pageCount: 33,
+    sourceUrl: "/api/catalogs/schneeberger-gear-racks",
+  },
+  {
+    id: "slides",
+    title: "SCHNEEBERGER Slides Product Catalog",
+    shortTitle: "Slides",
+    description:
+      "Dynamic and precise slide products with selection guidance, technical characteristics, and dimensional data.",
+    pageCount: 34,
+    sourceUrl: "/api/catalogs/schneeberger-slides",
+  },
+  {
+    id: "mineral-casting",
+    title: "SCHNEEBERGER Mineral Casting Catalog",
+    shortTitle: "Mineral Casting",
+    description:
+      "Mineral-casting capabilities, customer benefits, integrated systems, manufacturing, and application examples.",
+    pageCount: 8,
+    sourceUrl: "/api/catalogs/schneeberger-mineral-casting",
+  },
+]

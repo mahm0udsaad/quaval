@@ -7,6 +7,11 @@ const catalogSources: Record<string, string> = {
   ksm: "/catalog-documents/ksm/source.bin",
   ntn: "/catalog-documents/ntn/source.bin",
   kinex: "https://www.quaval.ca/downloads/Kinex_general_EN.pdf",
+  "schneeberger-msqscale": "/catalog-documents/schneeberger/msqscale.bin",
+  "schneeberger-mini-x": "/catalog-documents/schneeberger/mini-x.bin",
+  "schneeberger-gear-racks": "/catalog-documents/schneeberger/gear-racks.bin",
+  "schneeberger-slides": "/catalog-documents/schneeberger/slides.bin",
+  "schneeberger-mineral-casting": "/catalog-documents/schneeberger/mineral-casting.bin",
 }
 
 type CatalogRouteContext = {

@@ -47,6 +47,7 @@ export default function PdfCatalogViewer({ catalogs }: PdfCatalogViewerProps) {
   const [renderVersion, setRenderVersion] = useState(0)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const pageRef = useRef<HTMLDivElement>(null)
+  const documentTasksRef = useRef<Map<string, PdfLoadingTask>>(new Map())
 
   const catalog = useMemo(
     () => catalogs.find((item) => item.id === catalogId) ?? catalogs[0],
@@ -82,7 +83,6 @@ export default function PdfCatalogViewer({ catalogs }: PdfCatalogViewerProps) {
     if (!catalog) return
 
     let active = true
-    let loadingTask: PdfLoadingTask | null = null
 
     setPdfDocument(null)
     setIsLoadingDocument(true)
@@ -91,23 +91,26 @@ export default function PdfCatalogViewer({ catalogs }: PdfCatalogViewerProps) {
     const loadDocument = async () => {
       try {
         const pdfjs = await import("pdfjs-dist/webpack.mjs")
-        loadingTask = pdfjs.getDocument({
-          url: catalog.sourceUrl,
-          rangeChunkSize: 262144,
-          cMapUrl: "/pdfjs/cmaps/",
-          cMapPacked: true,
-          standardFontDataUrl: "/pdfjs/standard_fonts/",
-          wasmUrl: "/pdfjs/wasm/",
-        }) as unknown as PdfLoadingTask
+        let loadingTask = documentTasksRef.current.get(catalog.sourceUrl)
+
+        if (!loadingTask) {
+          loadingTask = pdfjs.getDocument({
+            url: catalog.sourceUrl,
+            rangeChunkSize: 262144,
+            cMapUrl: "/pdfjs/cmaps/",
+            cMapPacked: true,
+            standardFontDataUrl: "/pdfjs/standard_fonts/",
+            wasmUrl: "/pdfjs/wasm/",
+          }) as unknown as PdfLoadingTask
+          documentTasksRef.current.set(catalog.sourceUrl, loadingTask)
+        }
 
         const document = await loadingTask.promise
-        if (!active) {
-          await document.destroy()
-          return
-        }
+        if (!active) return
 
         setPdfDocument(document)
       } catch (loadError) {
+        documentTasksRef.current.delete(catalog.sourceUrl)
         if (!active) return
         console.error("Unable to load catalog PDF", loadError)
         setError("This catalog could not be loaded. Please try again.")
@@ -120,9 +123,20 @@ export default function PdfCatalogViewer({ catalogs }: PdfCatalogViewerProps) {
 
     return () => {
       active = false
-      if (loadingTask) void loadingTask.destroy()
     }
   }, [catalog])
+
+  useEffect(
+    () => () => {
+      const loadingTasks = Array.from(documentTasksRef.current.values())
+      documentTasksRef.current.clear()
+
+      for (const loadingTask of loadingTasks) {
+        void loadingTask.destroy().catch(() => undefined)
+      }
+    },
+    [],
+  )
 
   useEffect(() => {
     if (!catalog || !pdfDocument || !canvasRef.current || !pageRef.current) return
