@@ -119,3 +119,15 @@ export const stcSteyrCatalogs: PdfCatalog[] = [
     sourceUrl: "/api/catalogs/stc-steyr",
   },
 ]
+
+export const jibCatalogs: PdfCatalog[] = [
+  {
+    id: "ball-bearing-units",
+    title: "JIB Ball Bearing Units Catalog",
+    shortTitle: "Ball Bearing Units",
+    description:
+      "JIB bearing-unit selection, technical guidance, housings, materials, dimensions, and load data.",
+    pageCount: 141,
+    sourceUrl: "/api/catalogs/jib",
+  },
+]

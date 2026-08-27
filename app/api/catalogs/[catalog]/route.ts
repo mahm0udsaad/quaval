@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server"
 const catalogSources: Record<string, string> = {
   skf: "https://www.quaval.ca/downloads/SKF_EN.pdf",
   "stc-steyr": "/catalog-documents/stc-steyr/source.bin",
+  jib: "/catalog-documents/jib/source.bin",
 }
 
 type CatalogRouteContext = {
