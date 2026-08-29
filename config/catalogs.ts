@@ -359,3 +359,24 @@ export const hiwinCatalogs: PdfCatalog[] = [
     sourceUrl: "/api/catalogs/hiwin-ballscrew",
   },
 ]
+
+export const nadellaCatalogs: PdfCatalog[] = [
+  {
+    id: "needle-bearings",
+    title: "Nadella Needle Bearings Catalog",
+    shortTitle: "Needle Bearings",
+    description:
+      "Needle cages, drawn-cup and machined-ring needle bearings, combined and thrust bearings, support and track rollers, selection guidance, and dimensions.",
+    pageCount: 190,
+    sourceUrl: "/api/catalogs/nadella-needle-bearings",
+  },
+  {
+    id: "cam-followers-track-rollers",
+    title: "Nadella Cam Followers and Track Rollers Catalog",
+    shortTitle: "Cam Followers (Italian)",
+    description:
+      "Italian-language publication covering cam followers and track rollers, product variants, technical characteristics, load data, and dimensions.",
+    pageCount: 61,
+    sourceUrl: "/api/catalogs/nadella-cam-followers",
+  },
+]
