@@ -17,6 +17,7 @@ const catalogSources: Record<string, string> = {
   "link-belt": "/catalog-documents/link-belt/source.bin",
   "fsq-bearing-housings": "/catalog-documents/fsq/bearing-housings.bin",
   "fsq-pillow-blocks": "/catalog-documents/fsq/pillow-blocks.bin",
+  iko: "/catalog-documents/iko/source.bin",
 }
 
 type CatalogRouteContext = {

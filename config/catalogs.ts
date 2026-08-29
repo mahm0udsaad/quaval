@@ -272,3 +272,15 @@ export const fsqCatalogs: PdfCatalog[] = [
     sourceUrl: "/api/catalogs/fsq-pillow-blocks",
   },
 ]
+
+export const ikoCatalogs: PdfCatalog[] = [
+  {
+    id: "dimension-interchange-table",
+    title: "IKO Dimension and Interchange Table",
+    shortTitle: "Dimension & Interchange",
+    description:
+      "Dimensional and interchange references for IKO needle roller bearings, cam followers, roller followers, linear-motion products, and related bearing series.",
+    pageCount: 172,
+    sourceUrl: "/api/catalogs/iko",
+  },
+]
