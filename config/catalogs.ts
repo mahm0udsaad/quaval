@@ -215,3 +215,15 @@ export const schneebergerCatalogs: PdfCatalog[] = [
     sourceUrl: "/api/catalogs/schneeberger-mineral-casting",
   },
 ]
+
+export const dodgeCatalogs: PdfCatalog[] = [
+  {
+    id: "bearing-engineering",
+    title: "Dodge Bearing Engineering Catalog",
+    shortTitle: "Bearing Engineering",
+    description:
+      "Mounted roller bearings, Sleevoil hydrodynamic bearings, plain and journal bearings, take-up frames, selection guidance, and engineering data.",
+    pageCount: 756,
+    sourceUrl: "/api/catalogs/dodge",
+  },
+]

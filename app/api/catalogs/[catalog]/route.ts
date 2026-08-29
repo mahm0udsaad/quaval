@@ -12,6 +12,7 @@ const catalogSources: Record<string, string> = {
   "schneeberger-gear-racks": "/catalog-documents/schneeberger/gear-racks.bin",
   "schneeberger-slides": "/catalog-documents/schneeberger/slides.bin",
   "schneeberger-mineral-casting": "/catalog-documents/schneeberger/mineral-casting.bin",
+  dodge: "/catalog-documents/dodge/source.bin",
 }
 
 type CatalogRouteContext = {

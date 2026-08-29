@@ -99,6 +99,7 @@ export default function PdfCatalogViewer({ catalogs }: PdfCatalogViewerProps) {
             rangeChunkSize: 262144,
             cMapUrl: "/pdfjs/cmaps/",
             cMapPacked: true,
+            iccUrl: "/pdfjs/iccs/",
             standardFontDataUrl: "/pdfjs/standard_fonts/",
             wasmUrl: "/pdfjs/wasm/",
           }) as unknown as PdfLoadingTask
@@ -203,6 +204,9 @@ export default function PdfCatalogViewer({ catalogs }: PdfCatalogViewerProps) {
   }
 
   const selectCatalog = (nextCatalogId: string) => {
+    setPdfDocument(null)
+    setIsLoadingDocument(true)
+    setError("")
     setPage(1)
     setZoomIndex(0)
     setCatalogId(nextCatalogId)
