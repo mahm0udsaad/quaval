@@ -22,6 +22,7 @@ const catalogSources: Record<string, string> = {
   "kashima-pillow-blocks": "/catalog-documents/kashima/pillow-blocks.bin",
   "kashima-ball-bearings": "/catalog-documents/kashima/ball-bearings.bin",
   ozak: "/catalog-documents/ozak/source.bin",
+  fyh: "/catalog-documents/fyh/source.bin",
 }
 
 type CatalogRouteContext = {

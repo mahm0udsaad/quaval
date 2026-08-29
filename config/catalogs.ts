@@ -326,3 +326,15 @@ export const ozakCatalogs: PdfCatalog[] = [
     sourceUrl: "/api/catalogs/ozak",
   },
 ]
+
+export const fyhCatalogs: PdfCatalog[] = [
+  {
+    id: "mounted-bearing-units",
+    title: "FYH Mounted Bearing Units Catalog",
+    shortTitle: "Mounted Bearing Units",
+    description:
+      "FYH ball-bearing inserts, pillow and flange units, take-up and cartridge units, stainless and thermoplastic series, selection guidance, and dimensions.",
+    pageCount: 224,
+    sourceUrl: "/api/catalogs/fyh",
+  },
+]
