@@ -338,3 +338,24 @@ export const fyhCatalogs: PdfCatalog[] = [
     sourceUrl: "/api/catalogs/fyh",
   },
 ]
+
+export const hiwinCatalogs: PdfCatalog[] = [
+  {
+    id: "linear-guideway",
+    title: "HIWIN Linear Guideway Technical Information",
+    shortTitle: "Linear Guideway",
+    description:
+      "Linear guideway principles, selection, lubrication, accuracy, preload, load ratings, product series, accessories, and dimensions.",
+    pageCount: 245,
+    sourceUrl: "/api/catalogs/hiwin-linear-guideway",
+  },
+  {
+    id: "ballscrew",
+    title: "HIWIN Ballscrew Technical Information",
+    shortTitle: "Ballscrew",
+    description:
+      "Ballscrew design, selection, accuracy, preload, lubrication, mounting, product series, support units, and dimensional data.",
+    pageCount: 220,
+    sourceUrl: "/api/catalogs/hiwin-ballscrew",
+  },
+]
