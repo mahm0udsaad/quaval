@@ -30,6 +30,8 @@ const catalogSources: Record<string, string> = {
   stieber: "/catalog-documents/stieber/clutch-bearings-2011.bin",
   morse: "/catalog-documents/morse/kk-clutch-bearings.bin",
   gmn: "/catalog-documents/gmn/ball-bearing-catalog.bin",
+  "ringspann-freewheels": "/catalog-documents/ringspann/catalog-1.bin",
+  "ringspann-shaft-hub": "/catalog-documents/ringspann/catalog-2.bin",
 }
 
 type CatalogRouteContext = {

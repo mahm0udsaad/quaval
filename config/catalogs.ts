@@ -416,3 +416,24 @@ export const gmnCatalogs: PdfCatalog[] = [
     sourceUrl: "/api/catalogs/gmn",
   },
 ]
+
+export const ringspannCatalogs: PdfCatalog[] = [
+  {
+    id: "freewheels",
+    title: "RINGSPANN Freewheels Catalog",
+    shortTitle: "Freewheels",
+    description:
+      "Backstops, overrunning clutches, indexing freewheels, operating principles, application guidance, selection data, and dimensions.",
+    pageCount: 124,
+    sourceUrl: "/api/catalogs/ringspann-freewheels",
+  },
+  {
+    id: "shaft-hub-connections",
+    title: "RINGSPANN Shaft-Hub-Connections Catalog",
+    shortTitle: "Shaft-Hub Connections",
+    description:
+      "Shrink discs, cone clamping elements, star discs, torque-motor clamping systems, spring washers, selection data, and dimensions.",
+    pageCount: 100,
+    sourceUrl: "/api/catalogs/ringspann-shaft-hub",
+  },
+]
