@@ -239,3 +239,24 @@ export const mcgillCatalogs: PdfCatalog[] = [
     sourceUrl: "/api/catalogs/mcgill",
   },
 ]
+
+export const fsqCatalogs: PdfCatalog[] = [
+  {
+    id: "bearing-housings",
+    title: "FSQ Bearing Housings and Accessories Catalog",
+    shortTitle: "Bearing Housings",
+    description:
+      "Split pillow and plummer blocks, seals, adapter and withdrawal sleeves, hydraulic sleeves, dimensions, materials, and designation guidance.",
+    pageCount: 92,
+    sourceUrl: "/api/catalogs/fsq-bearing-housings",
+  },
+  {
+    id: "pillow-block-bearing-units",
+    title: "FSQ Pillow Block Bearing Units Catalog",
+    shortTitle: "Pillow Block Bearing Units",
+    description:
+      "Pillow block and bearing-unit series with dimensional drawings, shaft sizes, load ratings, housing references, and weights.",
+    pageCount: 49,
+    sourceUrl: "/api/catalogs/fsq-pillow-blocks",
+  },
+]
