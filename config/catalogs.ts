@@ -240,6 +240,18 @@ export const mcgillCatalogs: PdfCatalog[] = [
   },
 ]
 
+export const linkBeltCatalogs: PdfCatalog[] = [
+  {
+    id: "bearing-catalog",
+    title: "Link-Belt & Rex Bearing Catalog",
+    shortTitle: "Bearing Catalog",
+    description:
+      "Rex and Link-Belt mounted spherical roller bearings, ball bearings, sleeve bearings, cylindrical roller bearings, selection guidance, dimensions, and engineering data.",
+    pageCount: 544,
+    sourceUrl: "/api/catalogs/link-belt",
+  },
+]
+
 export const fsqCatalogs: PdfCatalog[] = [
   {
     id: "bearing-housings",
