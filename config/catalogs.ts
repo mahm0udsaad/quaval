@@ -314,3 +314,15 @@ export const kashimaCatalogs: PdfCatalog[] = [
     sourceUrl: "/api/catalogs/kashima-ball-bearings",
   },
 ]
+
+export const ozakCatalogs: PdfCatalog[] = [
+  {
+    id: "linear-bearings",
+    title: "OZAK Linear Bearings Catalog",
+    shortTitle: "Linear Bearings",
+    description:
+      "OZAK linear bearings, guides, ball screws, support units, actuators, selection guidance, performance data, and product dimensions.",
+    pageCount: 456,
+    sourceUrl: "/api/catalogs/ozak",
+  },
+]
