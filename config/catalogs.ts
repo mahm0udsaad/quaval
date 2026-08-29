@@ -284,3 +284,33 @@ export const ikoCatalogs: PdfCatalog[] = [
     sourceUrl: "/api/catalogs/iko",
   },
 ]
+
+export const kashimaCatalogs: PdfCatalog[] = [
+  {
+    id: "plain-bushings",
+    title: "Kashima Plastic Bushings and Plain Bearings",
+    shortTitle: "Plain Bearings",
+    description:
+      "Plastic bushings and plain-bearing materials, characteristics, selection guidance, dimensions, and application references.",
+    pageCount: 10,
+    sourceUrl: "/api/catalogs/kashima-plain-bushings",
+  },
+  {
+    id: "pillow-blocks",
+    title: "Kashima Low-Maintenance UKB Pillow Blocks",
+    shortTitle: "UKB Pillow Blocks",
+    description:
+      "Self-aligning, low-maintenance UKB pillow blocks with product features, available materials, dimensions, and selection data.",
+    pageCount: 8,
+    sourceUrl: "/api/catalogs/kashima-pillow-blocks",
+  },
+  {
+    id: "ball-bearings",
+    title: "Kashima UKB Ball Bearings",
+    shortTitle: "UKB Ball Bearings",
+    description:
+      "Self-lubricating plastic ball bearings for dry, wet, chemical, magnetic, and other special environments, with dimensions and technical data.",
+    pageCount: 18,
+    sourceUrl: "/api/catalogs/kashima-ball-bearings",
+  },
+]

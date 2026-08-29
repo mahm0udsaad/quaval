@@ -18,6 +18,9 @@ const catalogSources: Record<string, string> = {
   "fsq-bearing-housings": "/catalog-documents/fsq/bearing-housings.bin",
   "fsq-pillow-blocks": "/catalog-documents/fsq/pillow-blocks.bin",
   iko: "/catalog-documents/iko/source.bin",
+  "kashima-plain-bushings": "/catalog-documents/kashima/plain-bushings.bin",
+  "kashima-pillow-blocks": "/catalog-documents/kashima/pillow-blocks.bin",
+  "kashima-ball-bearings": "/catalog-documents/kashima/ball-bearings.bin",
 }
 
 type CatalogRouteContext = {
