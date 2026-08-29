@@ -28,6 +28,7 @@ const catalogSources: Record<string, string> = {
   "nadella-needle-bearings": "/catalog-documents/nadella/needle-bearings.bin",
   "nadella-cam-followers": "/catalog-documents/nadella/cam-followers-it.bin",
   stieber: "/catalog-documents/stieber/clutch-bearings-2011.bin",
+  morse: "/catalog-documents/morse/kk-clutch-bearings.bin",
 }
 
 type CatalogRouteContext = {

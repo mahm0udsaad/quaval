@@ -392,3 +392,15 @@ export const stieberCatalogs: PdfCatalog[] = [
     sourceUrl: "/api/catalogs/stieber",
   },
 ]
+
+export const morseCatalogs: PdfCatalog[] = [
+  {
+    id: "kk-cam-clutches",
+    title: "Morse KK Cam Clutches Product Specification Guide",
+    shortTitle: "KK Cam Clutches",
+    description:
+      "Morse KK cam-clutch operating data, torque and speed ratings, shaft and housing dimensions, mounting guidance, and application information.",
+    pageCount: 6,
+    sourceUrl: "/api/catalogs/morse",
+  },
+]
