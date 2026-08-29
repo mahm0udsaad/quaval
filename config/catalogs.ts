@@ -227,3 +227,15 @@ export const dodgeCatalogs: PdfCatalog[] = [
     sourceUrl: "/api/catalogs/dodge",
   },
 ]
+
+export const mcgillCatalogs: PdfCatalog[] = [
+  {
+    id: "cam-follower-bearings",
+    title: "McGill Cam Follower Bearings Catalog",
+    shortTitle: "Cam Follower Bearings",
+    description:
+      "CAMROL cam followers, yoke rollers, inch and metric product ranges, dimensions, load ratings, selection guidance, and engineering data.",
+    pageCount: 156,
+    sourceUrl: "/api/catalogs/mcgill",
+  },
+]
