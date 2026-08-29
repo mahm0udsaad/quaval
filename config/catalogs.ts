@@ -404,3 +404,15 @@ export const morseCatalogs: PdfCatalog[] = [
     sourceUrl: "/api/catalogs/morse",
   },
 ]
+
+export const gmnCatalogs: PdfCatalog[] = [
+  {
+    id: "high-precision-ball-bearings",
+    title: "GMN High Precision Ball Bearings Catalog",
+    shortTitle: "High Precision Ball Bearings",
+    description:
+      "GMN spindle and deep-groove ball bearings, materials, designs, engineering guidance, lubrication, speed limits, bearing calculations, and dimensions.",
+    pageCount: 100,
+    sourceUrl: "/api/catalogs/gmn",
+  },
+]
