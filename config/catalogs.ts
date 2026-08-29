@@ -380,3 +380,15 @@ export const nadellaCatalogs: PdfCatalog[] = [
     sourceUrl: "/api/catalogs/nadella-cam-followers",
   },
 ]
+
+export const stieberCatalogs: PdfCatalog[] = [
+  {
+    id: "overrunning-clutches-backstops",
+    title: "Stieber Overrunning Clutches and Backstops Catalog",
+    shortTitle: "Clutches & Backstops",
+    description:
+      "Stieber overrunning-clutch and backstop designs, selection guidance, operating principles, applications, technical data, and dimensions.",
+    pageCount: 96,
+    sourceUrl: "/api/catalogs/stieber",
+  },
+]
