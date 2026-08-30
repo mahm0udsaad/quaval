@@ -437,3 +437,15 @@ export const ringspannCatalogs: PdfCatalog[] = [
     sourceUrl: "/api/catalogs/ringspann-shaft-hub",
   },
 ]
+
+export const rollwayCatalogs: PdfCatalog[] = [
+  {
+    id: "general-catalog",
+    title: "Rollway General Bearing Catalog",
+    shortTitle: "General Bearing Catalog",
+    description:
+      "Rollway ball and roller bearing ranges, accessories, designation guidance, load and speed data, engineering information, and dimensions.",
+    pageCount: 169,
+    sourceUrl: "/api/catalogs/rollway",
+  },
+]
