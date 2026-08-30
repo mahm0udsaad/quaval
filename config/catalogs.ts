@@ -554,3 +554,15 @@ export const auroraCatalogs: PdfCatalog[] = [
     sourceUrl: "/api/catalogs/aurora",
   },
 ]
+
+export const carterCatalogs: PdfCatalog[] = [
+  {
+    id: "bearing-products",
+    title: "Carter Bearing Products Catalog",
+    shortTitle: "Bearing Products",
+    description:
+      "Carter cam followers, yoke rollers, custom and stainless bearings, Hi-Rollers, Neverlube products, and engineering resources.",
+    pageCount: 4,
+    sourceUrl: "/api/catalogs/carter",
+  },
+]
