@@ -461,3 +461,15 @@ export const zenCatalogs: PdfCatalog[] = [
     sourceUrl: "/api/catalogs/zen",
   },
 ]
+
+export const tsubakiCatalogs: PdfCatalog[] = [
+  {
+    id: "general-catalog",
+    title: "U.S. Tsubaki General Catalog",
+    shortTitle: "General Catalog",
+    description:
+      "Tsubaki drive and conveyor chains, sprockets, power-transmission components, selection guidance, engineering data, and dimensions.",
+    pageCount: 362,
+    sourceUrl: "/api/catalogs/tsubaki",
+  },
+]
