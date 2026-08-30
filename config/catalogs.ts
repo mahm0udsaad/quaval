@@ -473,3 +473,60 @@ export const tsubakiCatalogs: PdfCatalog[] = [
     sourceUrl: "/api/catalogs/tsubaki",
   },
 ]
+
+export const nikoCatalogs: PdfCatalog[] = [
+  {
+    id: "linear-guideways",
+    title: "NIKO Linear Guideways Catalog",
+    shortTitle: "Linear Guideways",
+    description:
+      "NIKO linear-guideway series, product construction, selection data, load ratings, accuracy, preload, and dimensions.",
+    pageCount: 28,
+    sourceUrl: "/api/catalogs/niko-linear-guideways",
+  },
+  {
+    id: "miniature-linear-guideways",
+    title: "NIKO Miniature Linear Guideways Catalog",
+    shortTitle: "Miniature Linear Guideways",
+    description:
+      "Miniature linear-guideway products, technical characteristics, load ratings, accuracy, preload, and dimensions.",
+    pageCount: 14,
+    sourceUrl: "/api/catalogs/niko-miniature-guideways",
+  },
+  {
+    id: "cage-roller-guideways",
+    title: "NIKO Cage Roller Guideways Catalog",
+    shortTitle: "Cage Roller Guideways",
+    description:
+      "Cage roller guideway construction, product series, technical characteristics, selection data, and dimensions.",
+    pageCount: 18,
+    sourceUrl: "/api/catalogs/niko-cage-roller-guideways",
+  },
+  {
+    id: "stainless-steel-linear-guideways",
+    title: "NIKO Stainless Steel Linear Guideways Catalog",
+    shortTitle: "Stainless Steel Guideways",
+    description:
+      "Stainless-steel linear guideway designs, product series, materials, load ratings, accuracy, and dimensions.",
+    pageCount: 24,
+    sourceUrl: "/api/catalogs/niko-stainless-guideways",
+  },
+  {
+    id: "ground-ball-screws",
+    title: "NIKO Ground Ball Screws Catalog",
+    shortTitle: "Ground Ball Screws",
+    description:
+      "Ground ball-screw construction, accuracy, preload, selection guidance, technical data, support units, and dimensions.",
+    pageCount: 60,
+    sourceUrl: "/api/catalogs/niko-ground-ball-screws",
+  },
+  {
+    id: "precision-shafts",
+    title: "NIKO Precision Shafts Catalog",
+    shortTitle: "Precision Shafts",
+    description:
+      "Precision-shaft materials, treatments, tolerances, machining options, product series, and dimensions.",
+    pageCount: 6,
+    sourceUrl: "/api/catalogs/niko-precision-shafts",
+  },
+]

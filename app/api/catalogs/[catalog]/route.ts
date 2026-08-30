@@ -35,6 +35,12 @@ const catalogSources: Record<string, string> = {
   rollway: "/catalog-documents/rollway/bearing-catalog.bin",
   zen: "/catalog-documents/zen/bearing-catalog.bin",
   tsubaki: "/catalog-documents/tsubaki/roller-chain-catalog.bin",
+  "niko-linear-guideways": "/catalog-documents/niko/catalog-1.bin",
+  "niko-miniature-guideways": "/catalog-documents/niko/catalog-2.bin",
+  "niko-cage-roller-guideways": "/catalog-documents/niko/catalog-3.bin",
+  "niko-stainless-guideways": "/catalog-documents/niko/catalog-4.bin",
+  "niko-ground-ball-screws": "/catalog-documents/niko/catalog-5.bin",
+  "niko-precision-shafts": "/catalog-documents/niko/catalog-6.bin",
 }
 
 type CatalogRouteContext = {
