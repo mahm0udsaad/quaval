@@ -449,3 +449,15 @@ export const rollwayCatalogs: PdfCatalog[] = [
     sourceUrl: "/api/catalogs/rollway",
   },
 ]
+
+export const zenCatalogs: PdfCatalog[] = [
+  {
+    id: "standard-catalogue",
+    title: "ZEN Standard Catalogue",
+    shortTitle: "Standard Catalogue",
+    description:
+      "ZEN ball and roller bearing ranges, materials, seals, lubrication, tolerances, engineering guidance, load data, and dimensions.",
+    pageCount: 153,
+    sourceUrl: "/api/catalogs/zen",
+  },
+]

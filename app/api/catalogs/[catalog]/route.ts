@@ -33,6 +33,7 @@ const catalogSources: Record<string, string> = {
   "ringspann-freewheels": "/catalog-documents/ringspann/catalog-1.bin",
   "ringspann-shaft-hub": "/catalog-documents/ringspann/catalog-2.bin",
   rollway: "/catalog-documents/rollway/bearing-catalog.bin",
+  zen: "/catalog-documents/zen/bearing-catalog.bin",
 }
 
 type CatalogRouteContext = {
