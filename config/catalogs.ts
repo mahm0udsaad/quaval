@@ -530,3 +530,15 @@ export const nikoCatalogs: PdfCatalog[] = [
     sourceUrl: "/api/catalogs/niko-precision-shafts",
   },
 ]
+
+export const sealmasterCatalogs: PdfCatalog[] = [
+  {
+    id: "bearing-products",
+    title: "Sealmaster Bearing Products Catalog",
+    shortTitle: "Bearing Products",
+    description:
+      "Sealmaster mounted ball and roller bearings, rod ends, spherical bearings, application solutions, engineering guidance, and dimensions.",
+    pageCount: 141,
+    sourceUrl: "/api/catalogs/sealmaster",
+  },
+]
