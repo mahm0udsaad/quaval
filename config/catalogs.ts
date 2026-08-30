@@ -542,3 +542,15 @@ export const sealmasterCatalogs: PdfCatalog[] = [
     sourceUrl: "/api/catalogs/sealmaster",
   },
 ]
+
+export const auroraCatalogs: PdfCatalog[] = [
+  {
+    id: "rod-end-spherical-bearings",
+    title: "Aurora Rod End & Spherical Bearing Catalog",
+    shortTitle: "Rod Ends & Spherical Bearings",
+    description:
+      "Aurora commercial, military, and aircraft rod ends, spherical bearings, accessories, engineering data, and technical resources.",
+    pageCount: 128,
+    sourceUrl: "/api/catalogs/aurora",
+  },
+]

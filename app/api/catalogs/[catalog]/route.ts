@@ -42,6 +42,7 @@ const catalogSources: Record<string, string> = {
   "niko-ground-ball-screws": "/catalog-documents/niko/catalog-5.bin",
   "niko-precision-shafts": "/catalog-documents/niko/catalog-6.bin",
   sealmaster: "/catalog-documents/sealmaster/bearing-catalog.bin",
+  aurora: "/catalog-documents/aurora/rod-end-spherical-bearing-catalog.bin",
 }
 
 type CatalogRouteContext = {
