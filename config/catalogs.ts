@@ -578,3 +578,15 @@ export const smithCatalogs: PdfCatalog[] = [
     sourceUrl: "/api/catalogs/smith",
   },
 ]
+
+export const krwCatalogs: PdfCatalog[] = [
+  {
+    id: "bearing-delivery-programme",
+    title: "KRW Bearings Delivery Programme",
+    shortTitle: "Bearings Delivery Programme",
+    description:
+      "KRW rolling-bearing ranges, product dimensions, technical guidance, accessories, application data, and reference information.",
+    pageCount: 298,
+    sourceUrl: "/api/catalogs/krw",
+  },
+]
