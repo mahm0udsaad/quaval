@@ -566,3 +566,15 @@ export const carterCatalogs: PdfCatalog[] = [
     sourceUrl: "/api/catalogs/carter",
   },
 ]
+
+export const smithCatalogs: PdfCatalog[] = [
+  {
+    id: "product-catalog-2014",
+    title: "Smith Bearing Product Catalog",
+    shortTitle: "Product Catalog",
+    description:
+      "Smith Bearing industrial and aerospace cam followers, needle bearings, track rollers, guide rails, stainless products, and special assemblies.",
+    pageCount: 116,
+    sourceUrl: "/api/catalogs/smith",
+  },
+]

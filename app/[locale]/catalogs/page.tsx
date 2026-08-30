@@ -638,6 +638,26 @@ export default async function CatalogsPage({ params }: CatalogsPageProps) {
               </span>
             </Link>
 
+            <Link
+              href={`/${locale}/catalogs/smith`}
+              className="group flex min-h-64 flex-col justify-between rounded-3xl border-2 border-primary bg-white p-8 shadow-sm transition-colors hover:bg-background"
+            >
+              <div>
+                <div className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+                  Available now
+                </div>
+                <h3 className="mt-4 text-3xl font-bold text-secondary">SMITH BEARING</h3>
+                <p className="mt-3 max-w-xl text-sm leading-6 text-text-light">
+                  Industrial and aerospace cam followers, needle bearings, track rollers, guide
+                  rails, stainless products, and special assemblies — 116 pages.
+                </p>
+              </div>
+              <span className="mt-6 inline-flex items-center gap-2 font-semibold text-primary">
+                Browse catalog
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </span>
+            </Link>
+
             {upcomingCatalogs.map((brand) => (
               <div
                 key={brand}
