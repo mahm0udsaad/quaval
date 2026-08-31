@@ -590,3 +590,15 @@ export const krwCatalogs: PdfCatalog[] = [
     sourceUrl: "/api/catalogs/krw",
   },
 ]
+
+export const kbcCatalogs: PdfCatalog[] = [
+  {
+    id: "full-line-bearing-catalog",
+    title: "KBC Full Line Bearing Catalog",
+    shortTitle: "Full Line Bearing Catalog",
+    description:
+      "KBC ball, roller, thrust, unit, water-pump, clutch, ceramic, and vacuum bearings with selection guidance, engineering data, dimensions, and load ratings.",
+    pageCount: 244,
+    sourceUrl: "/api/catalogs/kbc",
+  },
+]

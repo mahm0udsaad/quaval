@@ -46,6 +46,7 @@ const catalogSources: Record<string, string> = {
   carter: "/catalog-documents/carter/bearing-catalog.bin",
   smith: "/catalog-documents/smith/product-catalog-2014.bin",
   krw: "/catalog-documents/krw/bearing-delivery-programme.bin",
+  kbc: "/catalog-documents/kbc/full-line-bearing-catalog.bin",
 }
 
 type CatalogRouteContext = {
