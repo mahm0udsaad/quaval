@@ -602,3 +602,15 @@ export const kbcCatalogs: PdfCatalog[] = [
     sourceUrl: "/api/catalogs/kbc",
   },
 ]
+
+export const niceCatalogs: PdfCatalog[] = [
+  {
+    id: "precision-products-and-solutions",
+    title: "NICE Precision Products and Solutions",
+    shortTitle: "Precision Products & Solutions",
+    description:
+      "NICE precision, semi-ground, and unground ball bearings alongside RBC cam followers, roller bearings, rod ends, self-lubricating bearings, and custom solutions.",
+    pageCount: 60,
+    sourceUrl: "/api/catalogs/nice",
+  },
+]
