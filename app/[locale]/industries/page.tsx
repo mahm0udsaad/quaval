@@ -1,44 +1,13 @@
-"use client"
-
 import Image from "next/image"
+import { ArrowRight, Factory, ShieldCheck } from "lucide-react"
+
+const industries = [
+  ["Manufacturing", "Industries1.jpg"], ["Mining", "Industries3.jpg"], ["Steel & Metal Processing", "Industries4.jpg"], ["Automotive", "Industries5.jpg"], ["Pulp & Paper", "Industries6.jpg"], ["Oil & Gas", "Industries8.jpg"], ["Material Handling", "Industries9.jpg"], ["Industrial Machinery", "Industries10.jpg"], ["Forestry & Wood Products", "Industries11.jpg"], ["Agriculture", "Industries13.jpg"], ["Food Processing", "Industries16.jpg"], ["Cement & Construction Materials", "Industries17.jpg"], ["Transportation & Logistics", "Industries19.jpg"], ["HVAC & Industrial Equipment", "Industries20.jpg"], ["Railways", "Industries21.jpg"], ["Power Generation", "Industries24.jpg"], ["Marine & Ports", "Industries25.jpg"], ["Technology & IT", "Industries26.jpg"], ["Pharmaceutical Manufacturing", "Industries27.jpg"], ["Aerospace & Defense", "Industries28.jpg"], ["Robotics", "Industries30.jpg"], ["Fishing", "Industries31.jpg"],
+] as const
 
 export default function IndustriesPage() {
-  return (
-    <div className="bg-background">
-      <div className="relative h-[300px] overflow-hidden">
-        <Image src="https://www.quaval.ca/images/industries/industries-hero.jpg" alt="Industries" fill className="object-cover" />
-        <div className="absolute inset-0 bg-black/50 flex items-center">
-          <div className="container mx-auto px-4">
-            <h1 className="text-4xl font-bold text-white mb-4">Industries</h1>
-            <p className="text-xl text-gray-200">Solutions tailored for key industrial sectors.</p>
-          </div>
-        </div>
-      </div>
-
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {[
-            { title: "Automotive", img: "https://www.quaval.ca/images/industries/automotive.jpg" },
-            { title: "Aerospace", img: "https://www.quaval.ca/images/industries/aerospace.jpg" },
-            { title: "Textile", img: "https://www.quaval.ca/images/industries/textile.jpg" },
-            { title: "Food Processing", img: "https://www.quaval.ca/images/industries/food.jpg" },
-            { title: "Mining", img: "https://www.quaval.ca/images/industries/mining.jpg" },
-            { title: "Railway", img: "https://www.quaval.ca/images/industries/railway.jpg" },
-          ].map((item) => (
-            <div key={item.title} className="bg-white rounded-lg shadow overflow-hidden">
-              <div className="relative h-40">
-                <Image src={item.img} alt={item.title} fill className="object-cover" />
-              </div>
-              <div className="p-6">
-                <h3 className="text-lg font-semibold">{item.title}</h3>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  )
+  return <div className="min-h-screen bg-background text-text">
+    <section className="relative isolate overflow-hidden bg-secondary py-20 sm:py-28"><Image src="/images/industries/Industries34.png" alt="Industrial bearing application" fill priority className="object-cover opacity-30" /><div className="absolute inset-0 bg-secondary/80" /><div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"><div className="max-w-3xl"><div className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-white"><Factory className="h-3.5 w-3.5" /> Industry solutions</div><h1 className="mt-5 text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">Built for the industries that keep the world moving.</h1><p className="mt-5 text-base leading-7 text-white/80 sm:text-lg">Quaval helps demanding industrial teams specify reliable bearing solutions for performance, uptime, and long service life.</p></div></div></section>
+    <main className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8"><section className="grid gap-8 rounded-3xl border border-black/10 bg-white p-6 shadow-sm md:grid-cols-[1fr_280px] md:items-center sm:p-8"><div><div className="inline-flex items-center gap-2 text-sm font-semibold text-primary"><ShieldCheck className="h-5 w-5" /> Engineered for demanding work</div><h2 className="mt-3 text-3xl font-bold text-secondary">Application knowledge across 22 sectors</h2><p className="mt-3 max-w-2xl leading-7 text-text-light">Explore the markets we support with bearing products selected for difficult operating environments and critical equipment.</p></div><div className="relative aspect-[4/3] overflow-hidden rounded-2xl"><Image src="/images/industries/Industries32.jpg" alt="Industrial equipment" fill className="object-cover" /></div></section><section className="mt-12" aria-labelledby="industries-heading"><h2 id="industries-heading" className="text-2xl font-bold text-secondary sm:text-3xl">Industries we serve</h2><div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{industries.map(([title, image]) => <article key={title} className="group overflow-hidden rounded-3xl border border-black/10 bg-white shadow-sm"><div className="relative aspect-[16/10] overflow-hidden"><Image src={`/images/industries/${image}`} alt={title} fill className="object-cover transition-transform duration-500 group-hover:scale-105" /></div><div className="flex items-center justify-between gap-4 p-5"><h3 className="text-lg font-semibold text-secondary">{title}</h3><ArrowRight className="h-5 w-5 shrink-0 text-primary" /></div></article>)}</div></section></main>
+  </div>
 }
-
-
-
