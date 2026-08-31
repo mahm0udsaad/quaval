@@ -614,3 +614,33 @@ export const niceCatalogs: PdfCatalog[] = [
     sourceUrl: "/api/catalogs/nice",
   },
 ]
+
+export const rbcCatalogs: PdfCatalog[] = [
+  {
+    id: "thrust-bearing-solutions",
+    title: "RBC Thrust Bearing Solutions",
+    shortTitle: "Thrust Bearing Solutions",
+    description:
+      "RBC tapered roller thrust, cylindrical roller thrust, ball thrust, and related bearing solutions with product data and engineering guidance.",
+    pageCount: 64,
+    sourceUrl: "/api/catalogs/rbc-thrust-bearings",
+  },
+  {
+    id: "cam-followers",
+    title: "RBC Cam Followers",
+    shortTitle: "Cam Followers",
+    description:
+      "RBC Roller, HexLube, and CamCentric cylindrical and needle roller cam followers in stud and yoke styles, with product data and application guidance.",
+    pageCount: 52,
+    sourceUrl: "/api/catalogs/rbc-cam-followers",
+  },
+  {
+    id: "spherical-plain-bearings",
+    title: "RBC Spherical Plain Bearings",
+    shortTitle: "Spherical Plain Bearings",
+    description:
+      "RBC spherical plain bearings with QuadLube, SpreadLock Seal, ImpactTuff, DuraLube, lubrication options, product data, and application guidance.",
+    pageCount: 84,
+    sourceUrl: "/api/catalogs/rbc-spherical-plain-bearings",
+  },
+]

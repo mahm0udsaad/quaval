@@ -48,6 +48,9 @@ const catalogSources: Record<string, string> = {
   krw: "/catalog-documents/krw/bearing-delivery-programme.bin",
   kbc: "/catalog-documents/kbc/full-line-bearing-catalog.bin",
   nice: "/catalog-documents/nice/precision-products-and-solutions.bin",
+  "rbc-thrust-bearings": "/catalog-documents/rbc/thrust-bearing-solutions.bin",
+  "rbc-cam-followers": "/catalog-documents/rbc/cam-followers.bin",
+  "rbc-spherical-plain-bearings": "/catalog-documents/rbc/spherical-plain-bearings.bin",
 }
 
 type CatalogRouteContext = {
