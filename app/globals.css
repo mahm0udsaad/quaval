@@ -24,6 +24,18 @@ img, canvas {
   user-select: none;
 }
 
+@keyframes partner-marquee {
+  to { transform: translateX(-50%); }
+}
+
+.partner-marquee {
+  animation: partner-marquee 38s linear infinite;
+}
+
+.partner-marquee:hover {
+  animation-play-state: paused;
+}
+
 @layer components {
   .btn-primary {
     @apply bg-primary text-white px-6 py-3 rounded-md hover:bg-primary-dark transition duration-300 font-semibold;

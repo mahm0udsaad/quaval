@@ -8,6 +8,7 @@ import { CurrencyProvider } from "./contexts/CurrencyContext"
 import { AuthProvider } from "./contexts/AuthContext"
 import LanguageSwitcher from "@/components/LanguageSwitcher"
 import ContentProtection from "./components/content-protection"
+import PartnerMarquee from "./components/partner-marquee"
 import type React from "react"
 
 interface LocaleLayoutProps {
@@ -52,6 +53,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
               <CurrencyProvider>
                 <Header />
                 <main className="min-h-screen">{children}</main>
+                <PartnerMarquee />
                 <Footer />
               </CurrencyProvider>
             </CountryProvider>
