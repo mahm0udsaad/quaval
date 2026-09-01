@@ -1,0 +1,18 @@
+import Image from "next/image"
+import Link from "next/link"
+import { ArrowRight, Gauge, Layers3, Settings2, ThermometerSun, Wind } from "lucide-react"
+
+const factors = [
+  [Gauge, "Load and operating forces", "Radial, axial, shock, and combined loads determine the bearing type, clearance, and rating required."],
+  [Settings2, "Speed and duty cycle", "Rotational speed, start-stop frequency, and expected service life guide the selection of design and lubrication."],
+  [ThermometerSun, "Temperature", "Ambient and operating temperatures affect material choices, internal clearance, seals, and lubricant performance."],
+  [Wind, "Environment", "Contamination, moisture, corrosion, vibration, and washdown conditions determine the protection needed."],
+  [Layers3, "Space and mounting", "Available envelope, shaft and housing fits, alignment, and maintenance access complete the application review."],
+] as const
+
+export default function ApplicationPage() {
+  return <div className="bg-background">
+    <section className="relative isolate overflow-hidden bg-secondary py-20 sm:py-28"><Image src="/images/gallery/batch3-03.jpg" alt="Industrial application" fill priority className="object-cover opacity-25" /><div className="absolute inset-0 bg-secondary/80" /><div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"><div className="max-w-3xl"><p className="text-sm font-semibold uppercase tracking-[0.18em] text-blue-200">Application engineering</p><h1 className="mt-4 text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">The right bearing starts with the right application data.</h1><p className="mt-5 text-base leading-7 text-white/80 sm:text-lg">Quaval helps teams turn operating conditions into reliable bearing selections for performance, uptime, and service life.</p></div></div></section>
+    <main className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8"><section className="grid gap-8 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm md:grid-cols-[1fr_320px] md:items-center sm:p-8"><div><p className="text-sm font-semibold uppercase tracking-[0.16em] text-primary">Selection factors</p><h2 className="mt-2 text-3xl font-bold text-secondary">Every operating condition matters.</h2><p className="mt-3 max-w-2xl leading-7 text-text-light">Bearing selection depends on more than dimensions. Our review considers the full machine, its operating environment, and the maintenance plan before recommending a solution.</p></div><div className="relative aspect-[4/3] overflow-hidden rounded-2xl"><Image src="/images/gallery/batch3-01.png" alt="Bearing component" fill className="object-cover" /></div></section><section className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{factors.map(([Icon, title, description])=><article key={title} className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"><Icon className="h-7 w-7 text-primary" /><h2 className="mt-5 text-xl font-bold text-secondary">{title}</h2><p className="mt-3 text-sm leading-6 text-text-light">{description}</p></article>)}</section><section className="mt-12 rounded-3xl bg-primary px-6 py-10 text-white sm:px-10"><h2 className="text-3xl font-bold">Need help with a bearing application?</h2><p className="mt-3 max-w-2xl leading-7 text-white/80">Share your load, speed, temperature, environment, and equipment details with our technical team.</p><Link href="/en/contact" className="mt-6 inline-flex items-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-semibold text-primary transition hover:bg-blue-50">Discuss your application <ArrowRight className="h-4 w-4" /></Link></section></main>
+  </div>
+}
