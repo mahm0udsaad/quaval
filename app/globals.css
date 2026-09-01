@@ -19,6 +19,11 @@ body {
   color: var(--color-text);
 }
 
+img, canvas {
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
 @layer components {
   .btn-primary {
     @apply bg-primary text-white px-6 py-3 rounded-md hover:bg-primary-dark transition duration-300 font-semibold;

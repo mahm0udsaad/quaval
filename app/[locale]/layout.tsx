@@ -7,6 +7,7 @@ import { CountryProvider } from "./contexts/CountryContext"
 import { CurrencyProvider } from "./contexts/CurrencyContext"
 import { AuthProvider } from "./contexts/AuthContext"
 import LanguageSwitcher from "@/components/LanguageSwitcher"
+import ContentProtection from "./components/content-protection"
 import type React from "react"
 
 interface LocaleLayoutProps {
@@ -44,6 +45,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
   return (
     <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'}>
       <body>
+        <ContentProtection />
         <AuthProvider>
           <CartProvider>
             <CountryProvider>
@@ -58,4 +60,4 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
       </body>
     </html>
   );
-} 
+}
