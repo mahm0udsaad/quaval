@@ -71,6 +71,9 @@ Status definitions:
 | W04 | 2026-08-27 `1a044e645e450fe1` | Deter direct saving, printing, and image dragging across the site | Complete | `app/[locale]/components/content-protection.tsx`, `app/[locale]/layout.tsx`, `app/globals.css` | Browser-level protections now suppress context menus, save/print keyboard shortcuts, and drag operations for images/canvases. Catalogs remain view-only, range-streamed PDFs; browser-visible content cannot be made absolutely screenshot-proof. |
 | W05 | 2026-08-30 `1a054231043477f9` | Build an Application Page explaining bearing-selection criteria | Complete | `app/[locale]/application/page.tsx` | The page covers the requested load, speed, temperature, environment, and related mounting/duty-cycle factors with a technical contact path. |
 | W06 | 2026-08-30 `1a05452413f73b6c` | Put partner names/logos in a scrolling strip on every page, not a Partners page | Complete | `app/[locale]/components/partner-marquee.tsx`, `app/[locale]/layout.tsx` | A continuously scrolling sitewide partner strip uses supplied brand imagery where available and partner labels throughout the site. |
+| W07 | 2026-08-30 `1a054546da21a9e6` | Build Investment Opportunity Page with hover content | Complete | `app/[locale]/investment/page.tsx` | Strategic-investor content for Egypt and beyond is revealed on hover or keyboard focus. |
+| W08 | 2026-08-30 `1a054553656bce15`, `1a05455f3bfad0b9` | Build News and Blog pages | Complete | `app/[locale]/news/page.tsx`, `app/[locale]/blog/page.tsx` | Both routes are ready for approved announcements/articles; no factual posts were invented because none were supplied. |
+| W09 | 2026-08-30 `1a0545b80071c466`, `1a0545efdff45467` | Build What We Offer page | Complete | `app/[locale]/what-we-offer/page.tsx` | Covers the exact commercial, technical, documentation, delivery, and third-party import offerings named in the emails. |
 
 ## Pending chronological audit
 
