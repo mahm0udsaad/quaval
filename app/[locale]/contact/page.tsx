@@ -4,8 +4,50 @@ import type { ChangeEvent, FormEvent, ReactNode } from "react"
 import { useRef, useState } from "react"
 import { CheckCircle2, MapPin, Phone, Send } from "lucide-react"
 
-type FormState = { name: string; email: string; subject: string; message: string; website: string; robot: boolean }
-const initialForm: FormState = { name: "", email: "", subject: "", message: "", website: "", robot: false }
+type FormState = {
+  title: string
+  fullName: string
+  phone: string
+  fax: string
+  email: string
+  web: string
+  companyName: string
+  contactName: string
+  country: string
+  city: string
+  address: string
+  postalCode: string
+  industrialSector: string
+  preferredLanguage: string
+  subject: string
+  referralSource: string
+  message: string
+  website: string
+  terms: boolean
+  robot: boolean
+}
+const initialForm: FormState = {
+  title: "",
+  fullName: "",
+  phone: "",
+  fax: "",
+  email: "",
+  web: "",
+  companyName: "",
+  contactName: "",
+  country: "",
+  city: "",
+  address: "",
+  postalCode: "",
+  industrialSector: "",
+  preferredLanguage: "",
+  subject: "",
+  referralSource: "",
+  message: "",
+  website: "",
+  terms: false,
+  robot: false,
+}
 const fieldClass = "w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-secondary outline-none transition placeholder:text-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/20"
 
 export default function ContactPage() {
@@ -36,7 +78,7 @@ export default function ContactPage() {
     }
   }
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, type, value } = event.target
     const nextValue = type === "checkbox" ? (event.target as HTMLInputElement).checked : value
     setFormData((current) => ({ ...current, [name]: nextValue }))
@@ -58,20 +100,37 @@ export default function ContactPage() {
       <main className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
         <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
           <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8" aria-labelledby="contact-form-heading">
-            <h2 id="contact-form-heading" className="text-2xl font-bold text-secondary sm:text-3xl">Send us a message</h2>
-            <p className="mt-2 text-sm leading-6 text-text-light">All fields are required. Your email is used only so our team can reply.</p>
+            <h2 id="contact-form-heading" className="text-2xl font-bold text-secondary sm:text-3xl">Get in touch</h2>
+            <p className="mt-2 text-sm leading-6 text-text-light">Fields marked with an asterisk are required. Your email is used only so our team can reply.</p>
             <form onSubmit={handleSubmit} className="mt-8 space-y-5">
               <div className="grid gap-5 sm:grid-cols-2">
-                <Field label="Your name" id="name"><input id="name" name="name" value={formData.name} onChange={handleChange} required autoComplete="name" maxLength={100} className={fieldClass} /></Field>
-                <Field label="Email address" id="email"><input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required autoComplete="email" maxLength={254} className={fieldClass} /></Field>
+                <Field label="Mr/Mrs *" id="title"><select id="title" name="title" value={formData.title} onChange={handleChange} required className={fieldClass}><option value="">Select</option><option>Mr</option><option>Mrs</option><option>Ms</option><option>Dr</option></select></Field>
+                <Field label="Full name *" id="fullName"><input id="fullName" name="fullName" value={formData.fullName} onChange={handleChange} required autoComplete="name" maxLength={100} className={fieldClass} /></Field>
+                <Field label="Phone number *" id="phone"><input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleChange} required autoComplete="tel" maxLength={40} className={fieldClass} /></Field>
+                <Field label="Fax" id="fax"><input type="tel" id="fax" name="fax" value={formData.fax} onChange={handleChange} maxLength={40} className={fieldClass} /></Field>
+                <Field label="Email *" id="email"><input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required autoComplete="email" maxLength={254} className={fieldClass} /></Field>
+                <Field label="Web" id="web"><input type="url" id="web" name="web" value={formData.web} onChange={handleChange} placeholder="https://" maxLength={300} className={fieldClass} /></Field>
+                <Field label="Company name *" id="companyName"><input id="companyName" name="companyName" value={formData.companyName} onChange={handleChange} required autoComplete="organization" maxLength={160} className={fieldClass} /></Field>
+                <Field label="First and last name *" id="contactName"><input id="contactName" name="contactName" value={formData.contactName} onChange={handleChange} required maxLength={100} className={fieldClass} /></Field>
+                <Field label="Country *" id="country"><input id="country" name="country" value={formData.country} onChange={handleChange} required autoComplete="country-name" maxLength={100} className={fieldClass} /></Field>
+                <Field label="City" id="city"><input id="city" name="city" value={formData.city} onChange={handleChange} autoComplete="address-level2" maxLength={100} className={fieldClass} /></Field>
+                <Field label="Address *" id="address"><input id="address" name="address" value={formData.address} onChange={handleChange} required autoComplete="street-address" maxLength={240} className={fieldClass} /></Field>
+                <Field label="Postal code *" id="postalCode"><input id="postalCode" name="postalCode" value={formData.postalCode} onChange={handleChange} required autoComplete="postal-code" maxLength={24} className={fieldClass} /></Field>
+                <Field label="Industrial sector *" id="industrialSector"><input id="industrialSector" name="industrialSector" value={formData.industrialSector} onChange={handleChange} required maxLength={160} className={fieldClass} /></Field>
+                <Field label="Preferred language" id="preferredLanguage"><select id="preferredLanguage" name="preferredLanguage" value={formData.preferredLanguage} onChange={handleChange} className={fieldClass}><option value="">No preference</option><option>English</option><option>French</option><option>Arabic</option></select></Field>
+                <Field label="Subject" id="subject"><input id="subject" name="subject" value={formData.subject} onChange={handleChange} maxLength={160} className={fieldClass} /></Field>
+                <Field label="How did you hear about us? *" id="referralSource"><select id="referralSource" name="referralSource" value={formData.referralSource} onChange={handleChange} required className={fieldClass}><option value="">Select</option><option>Search engine</option><option>Referral</option><option>Industry event</option><option>Social media</option><option>Existing customer</option><option>Other</option></select></Field>
               </div>
-              <Field label="Subject" id="subject"><input id="subject" name="subject" value={formData.subject} onChange={handleChange} required maxLength={160} className={fieldClass} /></Field>
-              <Field label="Message" id="message"><textarea id="message" name="message" value={formData.message} onChange={handleChange} required rows={7} maxLength={5000} className={`${fieldClass} resize-y`} /></Field>
+              <Field label="Message *" id="message"><textarea id="message" name="message" value={formData.message} onChange={handleChange} required rows={7} maxLength={5000} className={`${fieldClass} resize-y`} /></Field>
               <div className="absolute -left-[10000px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
                 <label htmlFor="website">Website</label><input id="website" name="website" value={formData.website} onChange={handleChange} tabIndex={-1} autoComplete="off" />
               </div>
               <label className="flex w-fit cursor-pointer items-center gap-3 rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm font-medium text-secondary">
                 <input type="checkbox" name="robot" checked={formData.robot} onChange={handleChange} required className="h-4 w-4 rounded border-slate-300 text-primary focus:ring-primary" />I&apos;m not a robot
+              </label>
+              <label className="flex cursor-pointer items-start gap-3 text-sm leading-6 text-secondary">
+                <input type="checkbox" name="terms" checked={formData.terms} onChange={handleChange} required className="mt-1 h-4 w-4 shrink-0 rounded border-slate-300 text-primary focus:ring-primary" />
+                I agree to the company&apos;s policies, terms, and conditions.
               </label>
               {message && <p role="status" className={`rounded-xl px-4 py-3 text-sm ${status === "success" ? "bg-emerald-50 text-emerald-800" : "bg-red-50 text-red-800"}`}>{message}</p>}
               <button type="submit" disabled={status === "sending"} className="inline-flex items-center rounded-xl bg-primary px-6 py-3 font-semibold text-white transition hover:bg-primary-dark disabled:cursor-not-allowed disabled:opacity-60">

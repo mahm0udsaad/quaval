@@ -13,20 +13,20 @@ export async function POST(request: Request) {
     return NextResponse.json({ message: "Please submit the contact form again." }, { status: 400 })
   }
 
-  const name = String(body.name ?? "").trim()
-  const email = String(body.email ?? "").trim()
-  const subject = String(body.subject ?? "").trim()
-  const message = String(body.message ?? "").trim()
+  const requiredFields = ["title", "fullName", "phone", "email", "companyName", "contactName", "country", "address", "postalCode", "industrialSector", "referralSource", "message"] as const
+  const values = Object.fromEntries(Object.entries(body).map(([key, value]) => [key, typeof value === "string" ? value.trim() : value]))
+  const email = String(values.email ?? "")
+  const message = String(values.message ?? "")
   const website = String(body.website ?? "").trim()
   const startedAt = Number(body.startedAt)
 
   // Silently accept honeypot submissions so automated senders cannot tune around it.
   if (website) return NextResponse.json({ ok: true })
 
-  if (!name || !email || !subject || !message || body.robot !== true) {
-    return NextResponse.json({ message: "Please complete every field and confirm that you are not a robot." }, { status: 400 })
+  if (requiredFields.some((field) => !String(values[field] ?? "")) || body.terms !== true || body.robot !== true) {
+    return NextResponse.json({ message: "Please complete every required field, accept the terms, and confirm that you are not a robot." }, { status: 400 })
   }
-  if (!EMAIL_PATTERN.test(email) || name.length > 100 || email.length > 254 || subject.length > 160 || message.length > 5000) {
+  if (!EMAIL_PATTERN.test(email) || email.length > 254 || message.length > 5000 || Object.values(values).some((value) => typeof value === "string" && value.length > 5000)) {
     return NextResponse.json({ message: "Please check the form values and try again." }, { status: 400 })
   }
   if (!Number.isFinite(startedAt) || Date.now() - startedAt < 1500 || Date.now() - startedAt > 24 * 60 * 60 * 1000) {
@@ -53,8 +53,14 @@ export async function POST(request: Request) {
       from: process.env.CONTACT_SMTP_FROM ?? process.env.CAREERS_SMTP_FROM ?? smtpUser,
       to: recipient,
       replyTo: email,
-      subject: `Website inquiry: ${subject}`,
-      text: `Name: ${name}\nReply email: ${email}\nSubject: ${subject}\n\n${message}`,
+      subject: `Website inquiry: ${String(values.subject || values.companyName)}`,
+      text: [
+        ["Title", values.title], ["Full name", values.fullName], ["Phone", values.phone], ["Fax", values.fax],
+        ["Email", email], ["Web", values.web], ["Company name", values.companyName], ["First and last name", values.contactName],
+        ["Country", values.country], ["City", values.city], ["Address", values.address], ["Postal code", values.postalCode],
+        ["Industrial sector", values.industrialSector], ["Preferred language", values.preferredLanguage], ["Subject", values.subject],
+        ["How they heard about Quaval", values.referralSource], ["Message", message],
+      ].map(([label, value]) => `${label}: ${String(value || "—")}`).join("\n"),
     })
   } catch (error) {
     console.error("Unable to deliver contact message", error)
