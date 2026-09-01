@@ -27,6 +27,19 @@ const galleryItems = [
 ] as const
 
 const additionalItems = [
+  ["taper_roller_bearing.webp", "Taper roller bearing", "Product"] as const,
+  ["brg.webp", "Bearing product detail", "Product"] as const,
+  ["mcgill.webp", "McGill bearing solution", "Product"] as const,
+  ["p-bu-rhp-self-lube-5comp.webp", "RHP Self-Lube bearing components", "Product"] as const,
+  ["rodamientos-iko-japan.webp", "IKO Japan bearing solution", "Product"] as const,
+  ["SA-208-JIB-BEARING.webp", "JIB SA-208 bearing", "Product"] as const,
+  ["ozak-linear-motion-systems-500x500.webp", "OZAK linear motion system", "Product"] as const,
+  ["Rollway.webp", "Rollway bearing solution", "Product"] as const,
+  ["Needle Roller Bearings with Angular Contact Thrust Bearings.avif", "Needle roller and angular contact thrust bearings", "Product"] as const,
+  ["STIEBER.avif", "Stieber bearing solution", "Product"] as const,
+  ["O1CN01LuUU9U1Cp80NJNvKO_!!6000000000129-0-icbu_video_cover.avif", "Industrial bearing assembly", "Product"] as const,
+  ["S101e6849963148e699c3e9deab4cc0cdo.avif", "Precision bearing product", "Product"] as const,
+  ["Bearings for Rolling Stock.avif", "Bearings for rolling stock", "Industry"] as const,
   ...[[1, "png"], [2, "jpg"], [3, "jpg"], [4, "jpg"], [5, "png"], [6, "jpg"], [7, "png"], [8, "jpg"], [9, "png"], [10, "png"], [11, "jpg"], [12, "jpg"], [13, "png"], [14, "jpg"], [15, "jpg"], [16, "png"], [17, "jpg"], [18, "jpg"], [19, "jpg"], [20, "jpg"], [21, "jpg"], [22, "jpg"], [23, "jpg"], [24, "jpg"], [25, "jpg"], [26, "jpg"], [27, "jpg"], [28, "jpg"], [29, "jpg"], [30, "jpg"], [31, "png"], [32, "jpg"], [33, "jpg"], [34, "jpg"], [35, "png"], [36, "jpg"], [37, "jpg"], [38, "jpg"]].map(([index, extension]) => [`batch1-${String(index).padStart(2, "0")}.${extension}`, "Industrial bearing and product reference", "Product"] as const),
   ...[[15, "png"], [16, "jpg"], [17, "png"], [18, "jpg"], [19, "jpg"], [20, "jpg"], [21, "jpg"], [22, "jpg"]].map(([index, extension]) => [`batch2-${String(index).padStart(2, "0")}.${extension}`, "Industrial bearing and product reference", "Product"] as const),
 ]

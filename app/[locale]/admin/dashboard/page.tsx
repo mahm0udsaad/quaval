@@ -87,7 +87,7 @@ export default function AdminDashboardPage() {
               </div>
               <div className="border-b pb-2">
                 <p className="font-medium">Product inventory updated</p>
-                <p className="text-sm text-gray-500">admin@quaval.ca - 6 hours ago</p>
+                <p className="text-sm text-gray-500">Site administrator - 6 hours ago</p>
               </div>
             </div>
           </CardContent>

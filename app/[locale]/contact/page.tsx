@@ -1,158 +1,104 @@
 "use client"
 
-import type React from "react"
+import type { ChangeEvent, FormEvent, ReactNode } from "react"
+import { useRef, useState } from "react"
+import { CheckCircle2, MapPin, Phone, Send } from "lucide-react"
 
-import { useState } from "react"
-import { Mail, Phone, MapPin, Send } from "lucide-react"
+type FormState = { name: string; email: string; subject: string; message: string; website: string; robot: boolean }
+const initialForm: FormState = { name: "", email: "", subject: "", message: "", website: "", robot: false }
+const fieldClass = "w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-secondary outline-none transition placeholder:text-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/20"
 
 export default function ContactPage() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
-  })
+  const [formData, setFormData] = useState(initialForm)
+  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle")
+  const [message, setMessage] = useState("")
+  const startedAt = useRef(Date.now())
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Handle form submission here
-    console.log("Form submitted:", formData)
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    setStatus("sending")
+    setMessage("")
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...formData, startedAt: startedAt.current }),
+      })
+      const result = await response.json().catch(() => ({}))
+      if (!response.ok) throw new Error(result.message || "We could not send your message. Please try again.")
+      setFormData(initialForm)
+      startedAt.current = Date.now()
+      setStatus("success")
+      setMessage("Thank you. Your message has been sent to the Quaval team.")
+    } catch (error) {
+      setStatus("error")
+      setMessage(error instanceof Error ? error.message : "We could not send your message. Please try again.")
+    }
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    })
+  const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, type, value } = event.target
+    const nextValue = type === "checkbox" ? (event.target as HTMLInputElement).checked : value
+    setFormData((current) => ({ ...current, [name]: nextValue }))
   }
 
   return (
     <div className="bg-background">
-      <div className="relative h-[300px] overflow-hidden">
-        <div className="absolute inset-0 bg-secondary">
-          <div className="container mx-auto px-4 h-full flex items-center">
-            <div className="max-w-2xl">
-              <h1 className="text-4xl font-bold text-white mb-4">Contact Us</h1>
-              <p className="text-xl text-gray-200">
-                Get in touch with our team for any inquiries about our products and services.
-              </p>
-            </div>
+      <section className="relative isolate overflow-hidden bg-secondary py-20 sm:py-28">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(0,86,179,0.55),_transparent_45%)]" />
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-200">Contact Quaval</p>
+            <h1 className="mt-4 text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">Let&apos;s keep industry moving.</h1>
+            <p className="mt-5 max-w-2xl text-base leading-7 text-white/80 sm:text-lg">Tell us what you need and our team will follow up about products, technical support, sourcing, or commercial opportunities.</p>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid md:grid-cols-2 gap-12">
-          <div>
-            <h2 className="text-2xl font-bold mb-6">Send us a Message</h2>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                  Your Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                />
+      <main className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
+        <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
+          <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8" aria-labelledby="contact-form-heading">
+            <h2 id="contact-form-heading" className="text-2xl font-bold text-secondary sm:text-3xl">Send us a message</h2>
+            <p className="mt-2 text-sm leading-6 text-text-light">All fields are required. Your email is used only so our team can reply.</p>
+            <form onSubmit={handleSubmit} className="mt-8 space-y-5">
+              <div className="grid gap-5 sm:grid-cols-2">
+                <Field label="Your name" id="name"><input id="name" name="name" value={formData.name} onChange={handleChange} required autoComplete="name" maxLength={100} className={fieldClass} /></Field>
+                <Field label="Email address" id="email"><input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required autoComplete="email" maxLength={254} className={fieldClass} /></Field>
               </div>
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                  Email Address
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                />
+              <Field label="Subject" id="subject"><input id="subject" name="subject" value={formData.subject} onChange={handleChange} required maxLength={160} className={fieldClass} /></Field>
+              <Field label="Message" id="message"><textarea id="message" name="message" value={formData.message} onChange={handleChange} required rows={7} maxLength={5000} className={`${fieldClass} resize-y`} /></Field>
+              <div className="absolute -left-[10000px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
+                <label htmlFor="website">Website</label><input id="website" name="website" value={formData.website} onChange={handleChange} tabIndex={-1} autoComplete="off" />
               </div>
-              <div>
-                <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">
-                  Subject
-                </label>
-                <input
-                  type="text"
-                  id="subject"
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                />
-              </div>
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                  rows={6}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                ></textarea>
-              </div>
-              <button
-                type="submit"
-                className="bg-primary text-white px-6 py-3 rounded-md hover:bg-primary-dark transition duration-300 inline-flex items-center"
-              >
-                <Send className="w-4 h-4 mr-2" />
-                Send Message
+              <label className="flex w-fit cursor-pointer items-center gap-3 rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm font-medium text-secondary">
+                <input type="checkbox" name="robot" checked={formData.robot} onChange={handleChange} required className="h-4 w-4 rounded border-slate-300 text-primary focus:ring-primary" />I&apos;m not a robot
+              </label>
+              {message && <p role="status" className={`rounded-xl px-4 py-3 text-sm ${status === "success" ? "bg-emerald-50 text-emerald-800" : "bg-red-50 text-red-800"}`}>{message}</p>}
+              <button type="submit" disabled={status === "sending"} className="inline-flex items-center rounded-xl bg-primary px-6 py-3 font-semibold text-white transition hover:bg-primary-dark disabled:cursor-not-allowed disabled:opacity-60">
+                {status === "sending" ? "Sending…" : "Send message"}<Send className="ml-2 h-4 w-4" />
               </button>
             </form>
-          </div>
+          </section>
 
-          <div>
-            <h2 className="text-2xl font-bold mb-6">Contact Information</h2>
-            <div className="space-y-6 mb-8">
-              <div className="flex items-start">
-                <MapPin className="w-6 h-6 text-primary mt-1" />
-                <div className="ml-4">
-                  <h3 className="font-semibold">Address</h3>
-                  <p className="text-gray-600">3055 Saint-Martin West, Suite T500</p>
-                  <p className="text-gray-600">Laval, Quebec, Canada, H7T 0J3</p>
-                </div>
+          <aside className="space-y-6">
+            <section className="rounded-3xl bg-secondary p-6 text-white shadow-sm sm:p-8">
+              <h2 className="text-2xl font-bold">Contact information</h2>
+              <div className="mt-6 space-y-5">
+                <div className="flex items-start gap-4"><MapPin className="mt-0.5 h-6 w-6 shrink-0 text-blue-300" /><div><h3 className="font-semibold">Laval office</h3><p className="mt-1 text-sm leading-6 text-white/75">3055 Saint-Martin West, Suite T500<br />Laval, Quebec, Canada H7T 0J3</p></div></div>
+                <div className="flex items-start gap-4"><Phone className="mt-0.5 h-6 w-6 shrink-0 text-blue-300" /><div><h3 className="font-semibold">Phone</h3><a href="tel:+15142086840" className="mt-1 block text-sm text-white/75 transition hover:text-white">+1 (514) 208-6840</a></div></div>
+                <div className="flex items-start gap-4"><CheckCircle2 className="mt-0.5 h-6 w-6 shrink-0 text-blue-300" /><div><h3 className="font-semibold">Direct response</h3><p className="mt-1 text-sm leading-6 text-white/75">Use the secure form and your inquiry will be routed to the appropriate Quaval representative.</p></div></div>
               </div>
-              <div className="flex items-start">
-                <Phone className="w-6 h-6 text-primary mt-1" />
-                <div className="ml-4">
-                  <h3 className="font-semibold">Phone</h3>
-                  <p className="text-gray-600">+1 (514) 208-6840</p>
-                </div>
-              </div>
-              {/* <div className="flex items-start">
-                <Mail className="w-6 h-6 text-primary mt-1" />
-                <div className="ml-4">
-                  <h3 className="font-semibold">Email</h3>
-                  <p className="text-gray-600">ceo@quaval.ca</p>
-                </div>
-              </div> */}
+            </section>
+            <div className="h-[360px] overflow-hidden rounded-3xl border border-slate-200 bg-slate-100 shadow-sm">
+              <iframe title="Quaval office location in Laval, Quebec" src="https://www.google.com/maps?q=3055%20Boulevard%20Saint-Martin%20Ouest%2C%20Laval%2C%20QC%20H7T%200J3&output=embed" width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
             </div>
-
-            <div className="h-[400px] w-full rounded-lg overflow-hidden">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2793.5340374609314!2d-73.74215541507547!3d45.55969833508796!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cc923b7c1251a89%3A0x58037d71e372fb76!2zMzA1NSBCb3VsZXZhcmQgU2FpbnQtTWFydGluIE8gVDUwMC1BLCBMYXZhbCwgUUMgSDdUIDBKM9iMINmD2YbYr9in!5e0!3m2!1sar!2seg!4v1635930176461!5m2!1sar!2seg"
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              ></iframe>
-            </div>
-          </div>
+          </aside>
         </div>
-      </div>
+      </main>
     </div>
   )
+}
+
+function Field({ label, id, children }: { label: string; id: string; children: ReactNode }) {
+  return <div><label htmlFor={id} className="mb-1.5 block text-sm font-medium text-secondary">{label}</label>{children}</div>
 }
