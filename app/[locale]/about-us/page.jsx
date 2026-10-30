@@ -25,7 +25,7 @@ import { useTranslate } from "@/lib/i18n-client";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
-const SUPABASE_STORAGE = "https://rvhmhbtacshzcicwrdjn.supabase.co/storage/v1/object/public/product-images";
+const SUPABASE_STORAGE = "https://eegghglepswzquyredal.supabase.co/storage/v1/object/public/product-images";
 
 // Brand logos for the "Who We Are" section - imported brands
 const importedBrands = [

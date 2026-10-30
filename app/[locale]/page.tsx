@@ -129,7 +129,7 @@ export default function Home() {
     },
   ];
 
-  const STORAGE = "https://rvhmhbtacshzcicwrdjn.supabase.co/storage/v1/object/public/product-images";
+  const STORAGE = "https://eegghglepswzquyredal.supabase.co/storage/v1/object/public/product-images";
   const clients = [
     { name: "NTN", src: `${STORAGE}/media/ntn-snr.jpg` },
     { name: "STC-STEYR", src: `${STORAGE}/stc-steyr/deep-groove-ball-bearings.webp` },
