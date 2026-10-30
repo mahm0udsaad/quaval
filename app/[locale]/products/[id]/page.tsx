@@ -53,8 +53,13 @@ export default function ProductPage() {
   }
 
   // Update the handleAddToCart function
+  const isPurchasable =
+    !!product &&
+    product.stock_quantity > 0 &&
+    !["Not Available", "Out of Stock"].includes(product.stock_status)
+
   const handleAddToCart = useCallback(() => {
-    if (!product) return
+    if (!product || !isPurchasable) return
 
     addToCart({
       id: product.id,
@@ -65,7 +70,7 @@ export default function ProductPage() {
       partNumber: product.part_number,
     })
     setAddedToCart(true)
-  }, [addToCart, product, quantity])
+  }, [addToCart, product, quantity, isPurchasable])
 
   useEffect(() => {
     if (addedToCart) {
@@ -190,7 +195,7 @@ export default function ProductPage() {
               <button
                 onClick={handleAddToCart}
                 className="btn-primary flex items-center justify-center"
-                disabled={product.stock_status !== "In Stock"}
+                disabled={!isPurchasable}
               >
                 <ShoppingCart className="mr-2 h-5 w-5" />
                 {t('general.addToCart')}
@@ -300,7 +305,7 @@ export default function ProductPage() {
               </div>
               <div>
                 <span className="text-gray-700 font-medium">{t('products.availability')}:</span>{" "}
-                <span className={product.stock_status === "In Stock" ? "text-green-600" : "text-red-600"}>
+                <span className={isPurchasable ? "text-green-600" : "text-red-600"}>
                   {product.stock_status}
                 </span>
               </div>
